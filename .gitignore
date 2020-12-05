@@ -54,4 +54,11 @@
 # Idea
 .idea
 
+# Local .env file
 .env.local
+
+# Codeclimate CLI code analysis
+/codeclimate-master
+
+# PHPCSFixer cache file
+.php_cs.cache
