@@ -62,6 +62,8 @@ Encore
         };
     })
 
+    .enableVersioning()
+
     // enables Sass/SCSS support
     //.enableSassLoader()
 
