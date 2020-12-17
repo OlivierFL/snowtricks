@@ -13,4 +13,12 @@ class IndexControllerTest extends WebTestCase
 
         self::assertResponseIsSuccessful();
     }
+
+    public function testTricksPage(): void
+    {
+        $client = static::createClient();
+        $client->request('GET', '/');
+
+        self::assertResponseIsSuccessful();
+    }
 }

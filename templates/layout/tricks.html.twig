@@ -1,15 +1,15 @@
 {% extends('base.html.twig') %}
 
 {%- block meta_title -%}
-  SnowTricks - Le site communautaire pour apprendre tous les tricks de snowboard
+  Tous les tricks - SnowTricks - Le site communautaire pour apprendre tous les tricks de snowboard
 {%- endblock -%}
 
 {%- block meta_description -%}
-  Grâce à SnowTricks, apprenez à faire tous les tricks de snowboard. Des vidéos et des images partagées par la communauté SnowTricks.
+  Retrouvez la liste complète des tricks de snowboard
 {%- endblock -%}
 
 {%- block og_title -%}
-  SnowTricks - accueil
+  SnowTricks - Tous les tricks
 {%- endblock -%}
 
 {%- block og_type -%}
@@ -21,7 +21,7 @@
 {%- endblock -%}
 
 {%- block title -%}
-  Accueil
+  Tous les tricks
 {%- endblock -%}
 
 {% block body %}
@@ -52,7 +52,7 @@
     </div>
   </section>
   <section class="mb-20 container max-w-screen-xl mx-auto mt-10 md:mt-20 px-4 lg:px-8 xl:px-0" id="tricks">
-    <h2 class="text-3xl md:text-4xl text-center md:text-left mb-10 md:mb-20 uppercase font-jura font-bold">Les derniers tricks ajoutés</h2>
+    <h2 class="text-3xl md:text-4xl text-center md:text-left mb-10 md:mb-20 uppercase font-jura font-bold">Tous les tricks</h2>
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 lg:gap-6">
       <div class="bg-gray-100 rounded-md shadow-lg">
         <img src="{{ asset('build/images/hero.jpg') }}"
