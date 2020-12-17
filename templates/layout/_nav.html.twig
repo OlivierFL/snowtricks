@@ -1,0 +1,47 @@
+<div class="w-full mx-auto bg-gray-700 p-2 shadow-md" id="navbar">
+  <nav class="max-w-screen-2xl mx-auto flex flex-row justify-between items-center text-white">
+    <div>
+      <a href="{{ path('home') }}" class="flex flex-row items-center">
+        <img src="{{ asset('build/images/logo.png') }}"
+             alt="SnowTricks logo"
+             class="w-10 h-10 md:w-16 md:h-16"
+             width="40"
+             height="40"
+        >
+        <p class="pl-4 text-2xl font-bold font-jura">SnowTricks</p></a>
+    </div>
+
+    <button type="button"
+            class="sm:hidden w-10 h-10 flex flex-col justify-center items-center navbar-toggle cursor-pointer"
+            aria-label="Open navigation menu">
+      <span class="block w-6 h-0.5 m-1 bg-yellow-500 transition ease-in-out icon-bar"></span>
+      <span class="block w-6 h-0.5 m-1 bg-yellow-500 transition ease-in-out icon-bar"></span>
+      <span class="block w-6 h-0.5 m-1 bg-yellow-500 transition ease-in-out icon-bar"></span>
+    </button>
+
+    <div class="navbar-menu flex flex-col justify-center items-center sm:pt-0">
+      <ul class="text-center justify-center md:flex md:flex-row navbar-links font-jura font-bold">
+        <li class="mb-10 sm:mb-0">
+          <a href="{{ path('home') }}"
+             class="text-xl sm:text-base rounded-md transition duration-500 delay-100 ease-out hover:bg-yellow-500 hover:text-white px-8 sm:px-5 py-6 sm:py-3">Accueil</a>
+        </li>
+        <li class="mb-10 sm:mb-0">
+          <a href=""
+             class="text-xl sm:text-base rounded-md transition duration-500 delay-100 ease-out hover:bg-yellow-500 hover:text-white px-8 sm:px-5 py-6 sm:py-3">Figures</a>
+        </li>
+        <li class="mb-10 sm:mb-0">
+          <a href=""
+             class="text-xl sm:text-base rounded-md transition duration-500 delay-100 ease-out hover:bg-yellow-500 hover:text-white px-8 sm:px-5 py-6 sm:py-3">Connexion</a>
+        </li>
+        <li class="mb-10 sm:mb-0">
+          <a href=""
+             class="text-xl sm:text-base rounded-md transition duration-500 delay-100 ease-out hover:bg-yellow-500 hover:text-white px-8 sm:px-5 py-6 sm:py-3">Inscription</a>
+        </li>
+        <li class="mb-10 sm:mb-0">
+          <a href=""
+             class="text-xl sm:text-base rounded-md transition duration-500 delay-100 ease-out hover:bg-yellow-500 hover:text-white px-8 sm:px-5 py-6 sm:py-3">Déconnexion</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</div>

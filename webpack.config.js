@@ -64,21 +64,29 @@ Encore
 
     .enableVersioning()
 
-    // enables Sass/SCSS support
-    //.enableSassLoader()
+    .copyFiles({
+        from: './assets/img',
+        // if versioning is enabled, add the file hash too
+        to: 'images/[path][name].[hash:8].[ext]',
+        // only copy files matching this pattern
+        pattern: /\.(png|jpg|jpeg)$/
+    })
 
-    // uncomment if you use TypeScript
-    //.enableTypeScriptLoader()
+// enables Sass/SCSS support
+//.enableSassLoader()
 
-    // uncomment if you use React
-    //.enableReactPreset()
+// uncomment if you use TypeScript
+//.enableTypeScriptLoader()
 
-    // uncomment to get integrity="..." attributes on your script & link tags
-    // requires WebpackEncoreBundle 1.4 or higher
-    //.enableIntegrityHashes(Encore.isProduction())
+// uncomment if you use React
+//.enableReactPreset()
 
-    // uncomment if you're having problems with a jQuery plugin
-    //.autoProvidejQuery()
+// uncomment to get integrity="..." attributes on your script & link tags
+// requires WebpackEncoreBundle 1.4 or higher
+//.enableIntegrityHashes(Encore.isProduction())
+
+// uncomment if you're having problems with a jQuery plugin
+//.autoProvidejQuery()
 ;
 
 module.exports = Encore.getWebpackConfig();
