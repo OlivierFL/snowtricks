@@ -15,12 +15,4 @@ class IndexController extends AbstractController
     {
         return $this->render('layout/index.html.twig');
     }
-
-    /**
-     * @Route("/tricks", name="tricks")
-     */
-    public function tricks(): Response
-    {
-        return $this->render('layout/tricks.html.twig');
-    }
 }

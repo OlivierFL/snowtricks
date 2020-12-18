@@ -16,7 +16,9 @@ module.exports = {
             'jura': 'Jura',
             'sans': 'Roboto'
         },
-        extend: {},
+        extend: {
+            transform: ['hover'],
+        },
     },
     variants: {
         extend: {},
