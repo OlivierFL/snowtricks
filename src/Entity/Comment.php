@@ -26,6 +26,18 @@ class Comment
      */
     private ?string $content;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="comments")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private ?User $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Trick::class, inversedBy="comments")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private ?Trick $trick;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -39,6 +51,30 @@ class Comment
     public function setContent(string $content): self
     {
         $this->content = $content;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getTrick(): ?Trick
+    {
+        return $this->trick;
+    }
+
+    public function setTrick(?Trick $trick): self
+    {
+        $this->trick = $trick;
 
         return $this;
     }

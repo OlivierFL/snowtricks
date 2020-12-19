@@ -26,6 +26,12 @@ class Token
      */
     private ?string $value;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="tokens")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private ?User $user;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -39,6 +45,18 @@ class Token
     public function setValue(string $value): self
     {
         $this->value = $value;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
