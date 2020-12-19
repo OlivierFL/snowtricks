@@ -1,0 +1,54 @@
+{% extends('admin/admin_layout.html.twig') %}
+
+{%- block title -%}
+  Dashboard - SnowTricks
+{%- endblock -%}
+
+{% block admin_body %}
+  <h1 class="uppercase mb-4 font-jura font-bold text-2xl lg:text-4xl">Dashboard</h1>
+  <hr class="border border-yellow-500 w-1/12 mx-auto">
+  <div class="lg:flex lg:flex-row lg:justify-between mt-4 lg:mt-14">
+    <div class="mb-4 lg:w-1/2">
+      <h2 class="font-jura font-bold mb-4 text-xl lg:text-2xl">Les derniers
+        tricks publiés</h2>
+      <ul>
+        <li class="lg:mb-6">
+          <a href=""
+             class="inline-block p-2 lg:px-8 hover:shadow-lg lg:py-2 rounded-md transition duration-500 delay-100 ease-out hover:bg-yellow-500">Nom
+            du trick</a>
+        </li>
+        <li class="lg:mb-6">
+          <a href=""
+             class="inline-block p-2 lg:px-8 hover:shadow-lg lg:py-2 rounded-md transition duration-500 delay-100 ease-out hover:bg-yellow-500">Nom
+            du trick</a>
+        </li>
+        <li class="lg:mb-6">
+          <a href=""
+             class="inline-block p-2 lg:px-8 hover:shadow-lg lg:py-2 rounded-md transition duration-500 delay-100 ease-out hover:bg-yellow-500">Nom
+            du trick</a>
+        </li>
+      </ul>
+    </div>
+    <div class="lg:w-1/2">
+      <h2 class="font-jura font-bold mb-4 text-xl lg:text-2xl">Les derniers
+        commentaires publiés</h2>
+      <ul>
+        <li class="lg:mb-6">
+          <a href=""
+             class="inline-block p-2 lg:px-8 hover:shadow-lg lg:py-2 rounded-md transition duration-500 delay-100 ease-out hover:bg-yellow-500">Lorem
+            ipsum dolor sit amet, consec...</a>
+        </li>
+        <li class="lg:mb-6">
+          <a href=""
+             class="inline-block p-2 lg:px-8 hover:shadow-lg lg:py-2 rounded-md transition duration-500 delay-100 ease-out hover:bg-yellow-500">Lorem
+            ipsum dolor sit amet, consec...</a>
+        </li>
+        <li class="lg:mb-6">
+          <a href=""
+             class="inline-block p-2 lg:px-8 hover:shadow-lg lg:py-2 rounded-md transition duration-500 delay-100 ease-out hover:bg-yellow-500">Lorem
+            ipsum dolor sit amet.</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+{% endblock %}

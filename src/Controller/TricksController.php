@@ -11,7 +11,7 @@ class TricksController extends AbstractController
     /**
      * @Route("/tricks", name="tricks")
      */
-    public function tricks(): Response
+    public function showAll(): Response
     {
         return $this->render('layout/tricks.html.twig');
     }
@@ -19,7 +19,7 @@ class TricksController extends AbstractController
     /**
      * @Route("/trick", name="trick_detail")
      */
-    public function trick(): Response
+    public function show(): Response
     {
         return $this->render('layout/trick_detail.html.twig');
     }
