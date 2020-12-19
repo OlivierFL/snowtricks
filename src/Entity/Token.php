@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\TokenRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * @ORM\Entity(repositoryClass=TokenRepository::class)
@@ -11,6 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Token
 {
+    use TimestampableEntity;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

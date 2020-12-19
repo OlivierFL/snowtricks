@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\TrickRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * @ORM\Entity(repositoryClass=TrickRepository::class)
@@ -11,6 +13,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Trick
 {
+    use TimestampableEntity;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -30,6 +34,7 @@ class Trick
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Gedmo\Slug(fields={"name"})
      */
     private ?string $slug;
 
