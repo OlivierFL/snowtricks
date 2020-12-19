@@ -1,0 +1,59 @@
+<div class="w-full relative z-10 bg-gray-600 text-white">
+  <div class="container max-w-screen-xl mx-auto px-8 md:px-0 py-10 flex flex-col md:flex-row justify-center">
+    <div class="w-full text-center">
+      <h3 class="pb-3 uppercase font-jura font-bold text-lg">Menu</h3>
+      <nav>
+        <ul class="flex flex-wrap flex-col">
+          <li class="py-4">
+            <a href="{{ path('home') }}"
+               class="rounded-md hover:bg-yellow-500 transition duration-500 delay-100 ease-out px-5 py-3">Accueil</a>
+          </li>
+          <li class="py-4">
+            <a href="{{ path('home') }}#tricks"
+               class="rounded-md hover:bg-yellow-500 transition duration-500 delay-100 ease-out px-5 py-3">Figures</a>
+          </li>
+          <li class="py-4">
+            <a href=""
+               class="rounded-md hover:bg-yellow-500 transition duration-500 delay-100 ease-out px-5 py-3">Connexion</a>
+          </li>
+          <li class="py-4">
+            <a href=""
+               class="rounded-md hover:bg-yellow-500 transition duration-500 delay-100 ease-out px-5 py-3">Inscription</a>
+          </li>
+          <li class="py-4">
+            <a href=""
+               class="rounded-md hover:bg-yellow-500 transition duration-500 delay-100 ease-out px-5 py-3">Déconnexion</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div class="w-full text-center mt-8 md:mt-0">
+      <h3 class="pb-3 uppercase font-jura font-bold text-lg">Navigation rapide</h3>
+      <ul class="flex flex-wrap flex-col">
+        <li class="py-4">
+          <a href="#"
+             class="rounded-md hover:bg-yellow-500 transition duration-500 delay-100 ease-out px-5 py-3">Mentions
+            légales</a>
+        </li>
+        <li class="py-4">
+          <a href="#"
+             class="rounded-md hover:bg-yellow-500 transition duration-500 delay-100 ease-out px-5 py-3">Conditions
+            générales d'utilisation</a>
+        </li>
+        <li class="py-4">
+          <a href="#"
+             class="rounded-md hover:bg-yellow-500 transition duration-500 delay-100 ease-out px-5 py-3">Politique de
+            confidentialité</a>
+        </li>
+        <li class="py-4">
+          <a href="#"
+             class="rounded-md hover:bg-yellow-500 transition duration-500 delay-100 ease-out px-5 py-3">Politique de
+            cookies</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="container max-w-screen-xl mx-auto text-center pb-6">
+    <p>copyright SnowTricks&nbsp;|&nbsp;{{ 'now'|date('Y') }}</p>
+  </div>
+</div>

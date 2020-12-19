@@ -1,12 +1,39 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:title" content="{% block og_title %}{% endblock %}">
+    <meta property="og:type" content="{% block og_type %}{% endblock %}">
+    <meta property="og:url" content="{% block og_url %}{% endblock %}">
+    <meta property="og:image" content="{% block og_image %}{% endblock %}">
+    <meta name="title" content="{% block meta_title %}{% endblock %}">
+    <meta name="description" content="{% block meta_description %}{% endblock %}">
+    <title>{% block title %}{% endblock %} - SnowTricks</title>
+    <link rel="shortcut icon" type="image/png" href="{{ asset('build/images/logo.png') }}"/>
+    {% block stylesheets %}
+      <link rel="preconnect" href="https://fonts.gstatic.com">
+      <link href="https://fonts.googleapis.com/css2?family=Jura:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;1,400;1,500;1,700&display=swap"
+            rel="stylesheet">
+      {{ encore_entry_link_tags('tailwind') }}
+    {% endblock %}
+  </head>
+  <body class="font-sans" id="top">
+    <header class="h-10 md:h-16 z-20 sticky top-0">
+      {{ include('layout/_nav.html.twig') }}
+    </header>
+
+    <main class="w-full pb-10">
+      {% block body %}{% endblock %}
+    </main>
+    <footer>
+      {{ include('layout/_footer.html.twig') }}
+    </footer>
+
+    {% block javascripts %}
+      <script src="https://kit.fontawesome.com/f2a6cd36ae.js" crossorigin="anonymous"></script>
+      {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+  </body>
 </html>

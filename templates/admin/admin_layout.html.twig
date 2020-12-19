@@ -1,0 +1,32 @@
+{% extends('base.html.twig') %}
+
+{% block body %}
+  <section class="grid grid-cols-1 lg:grid-cols-6 xl:grid-cols-8 gap-4 bg-white mt-8 sm:mt-12 w-full">
+    <aside class="lg:col-start-1 lg:col-end-2 xl:col-span-1 flex flex-col bg-gray-700 container w-11/12 lg:w-auto lg:h-full mx-auto lg:mx-0 lg:ml-4 mb-2 lg:py-2 rounded-xl shadow-xl">
+      <ul class="flex flex-row lg:flex-col justify-between lg:items-start mx-auto w-full px-6 lg:px-4 lg:pt-2 text-white">
+        <li class="lg:w-full">
+          <a href="{{ path('admin_dashboard') }}"
+             class="p-6 lg:px-2 lg:py-6 inline-block rounded-md transition duration-500 delay-100 ease-out hover:bg-yellow-500 w-full text-sm hover:shadow-lg"><i
+                    class="fas fa-home text-lg sm:text-base lg:mr-4"></i><span
+                    class="hidden lg:inline-block">Dashboard</span></a>
+        </li>
+        <li class="lg:w-full">
+          <a href="{{ path('admin_tricks') }}"
+             class="p-6 lg:px-2 lg:py-6 inline-block rounded-md transition duration-500 delay-100 ease-out hover:bg-yellow-500 w-full text-sm hover:shadow-lg"><i
+                    class="fas fa-snowboarding text-lg sm:text-base lg:mr-4"></i><span
+                    class="hidden lg:inline-block">Tricks</span></a>
+        </li>
+        <li class="lg:w-full">
+          <a href="{{ path('admin_comments') }}"
+             class="p-6 lg:px-2 lg:py-6 inline-block rounded-md transition duration-500 delay-100 ease-out hover:bg-yellow-500 w-full text-sm hover:shadow-lg"><i
+                    class="fas fa-comments text-lg sm:text-base lg:mr-4"></i><span
+                    class="hidden lg:inline-block">Commentaires</span></a>
+        </li>
+      </ul>
+    </aside>
+    <div class="lg:col-start-2 lg:col-end-7 xl:col-start-2 xl:col-end-9 flex flex-col bg-gray-200 w-11/12 mx-auto lg:mx-0 lg:w-auto lg:h-full rounded-xl shadow-xl lg:mr-4 py-10 px-4 xl:px-0 lg:pb-96 text-black text-center">
+      {% block admin_body %}
+      {% endblock %}
+    </div>
+  </section>
+{% endblock %}

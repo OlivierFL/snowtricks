@@ -1,0 +1,174 @@
+{% extends('base.html.twig') %}
+
+{%- block meta_title -%}
+  Nom du trick - SnowTricks - Le site communautaire pour apprendre tous les tricks de snowboard
+{%- endblock -%}
+
+{%- block meta_description -%}
+  Retrouvez la liste complète des tricks de snowboard
+{%- endblock -%}
+
+{%- block og_title -%}
+  SnowTricks - Nom du trick
+{%- endblock -%}
+
+{%- block og_type -%}
+  website
+{%- endblock -%}
+
+{%- block og_url -%}
+  {{ app.request.schemeAndHttpHost }}
+{%- endblock -%}
+
+{%- block title -%}
+  Nom du trick - SnowTricks
+{%- endblock -%}
+
+{% block body %}
+  <section class="fixed w-full h-screen opacity-50 z-0 -mt-10 md:-mt-24">
+    <picture>
+      <source media="(max-width:640px)" srcset="{{ asset('build/images/hero_02.jpg') }}">
+      <img src="{{ asset('build/images/hero_02.jpg') }}"
+           alt="SnowTricks hero image"
+           class="w-full h-full object-cover"
+           width="1920"
+           height="1280"
+      >
+    </picture>
+  </section>
+  <div class="container w-5/6 mx-auto mt-10 md:mt-24 rounded-md shadow-2xl">
+    <section class="relative bg-gray-300 overflow-hidden z-10 rounded-t-md">
+      <div class="container max-w-screen-xl mx-auto z-10 relative my-20 lg:my-60 px-8 md:px-0">
+        <div class="text-center border-2 rounded-md border-yellow-500 px-10 py-6 sm:10/12 md:w-2/3 lg:w-1/2 mx-auto bg-gray-100 bg-opacity-40">
+          <h1 class="text-3xl text-yellow-500 font-bold font-jura sm:text-5xl lg:text-7xl">Nom du trick</h1>
+          <hr class="border border-yellow-500 w-1/4 mx-auto my-3">
+          <h2 class="text-sm lg:text-xl font-jura">Catégorie</h2>
+        </div>
+      </div>
+      <div class="z-0 absolute inset-0">
+        <picture>
+          <source media="(max-width:640px)" srcset="{{ asset('build/images/hero_02.jpg') }}">
+          <img src="{{ asset('build/images/hero_02.jpg') }}"
+               alt="SnowTricks hero image"
+               class="w-full h-full object-cover"
+               width="1920"
+               height="1280"
+          >
+        </picture>
+        <div class="flex flex-row absolute top-2 right-2 bg-white px-4 py-2 rounded-sm shadow-md justify-between">
+          <i class="fas fa-pen mr-4 text-blue-700 hover:text-blue-800"></i>
+          <i class="fas fa-trash-alt text-red-600 hover:text-red-700"></i>
+        </div>
+      </div>
+    </section>
+    <section
+            class="relative z-10 pb-20 container w-full mx-auto pt-10 md:pt-10 px-10 md:px-44 bg-white rounded-b-md"
+            id="tricks">
+      <h3 class="font-jura font-bold text-center lg:text-left text-xl lg:text-2xl mb-10 mb-6 lg:border-l-4 border-yellow-500 lg:pl-4">Le trick en images</h3>
+      <div class="hidden xl:grid xl:grid-cols-3 2xl:grid-cols-4 gap-3 flex-wrap mb-10 justify-start">
+        <div class="overflow-hidden w-60 border-l-4 border-yellow-500">
+          <img src="{{ asset('build/images/hero.jpg') }}"
+               alt="SnowTricks hero image"
+               class="w-full h-auto object-cover transform duration-500 ease hover:scale-105"
+               width="300"
+               height="200"
+          >
+        </div>
+        <div class="overflow-hidden w-60 border-l-4 border-yellow-500">
+          <img src="{{ asset('build/images/hero.jpg') }}"
+               alt="SnowTricks hero image"
+               class="w-full h-auto object-cover transform duration-500 ease hover:scale-105"
+               width="300"
+               height="200"
+          >
+        </div>
+        <div class="overflow-hidden w-60 border-l-4 border-yellow-500">
+          <img src="{{ asset('build/images/hero.jpg') }}"
+               alt="SnowTricks hero image"
+               class="w-full h-auto object-cover transform duration-500 ease hover:scale-105"
+               width="300"
+               height="200"
+          >
+        </div>
+        <div class="overflow-hidden w-60 border-l-4 border-yellow-500">
+          <img src="{{ asset('build/images/hero.jpg') }}"
+               alt="SnowTricks hero image"
+               class="w-full h-auto object-cover transform duration-500 ease hover:scale-105"
+               width="300"
+               height="200"
+          >
+        </div>
+        <div class="overflow-hidden w-60 border-l-4 border-yellow-500">
+          <img src="{{ asset('build/images/hero.jpg') }}"
+               alt="SnowTricks hero image"
+               class="w-full h-auto object-cover transform duration-500 ease hover:scale-105"
+               width="300"
+               height="200"
+          >
+        </div>
+        <div class="w-60 border-l-4 border-yellow-500 h-auto">
+          <iframe width="240" height="160" src="https://www.youtube.com/embed/SQyTWk7OxSI" frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen></iframe>
+        </div>
+      </div>
+      <div class="text-center xl:hidden">
+        <button class="px-6 py-2 transition duration-500 delay-100 ease-out bg-yellow-500 hover:bg-yellow-600 rounded-md text-white mb-10 md:mb-20">
+          Photos / Vidéos
+        </button>
+      </div>
+      <hr class="border w-1/2 mx-auto my-10">
+      <h3 class="font-jura font-bold text-center lg:text-left text-xl lg:text-2xl mb-6 lg:border-l-4 border-yellow-500 lg:pl-4">Comment réaliser le trick</h3>
+      <div class="text-left mb-8">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta fugit labore maxime? Animi architecto
+          deserunt dolorum error ipsa maxime mollitia, nulla obcaecati odit omnis rem, similique sunt veritatis? Atque
+          culpa cupiditate dicta ex magnam numquam sint tempore. Consectetur delectus impedit magnam officiis pariatur
+          sequi tempora totam veniam. Cum hic neque nisi provident quaerat! Aperiam deserunt eveniet nesciunt sapiente
+          sequi. Aliquam at aut delectus, deleniti dicta dolor incidunt maiores modi molestiae natus neque nulla
+          perferendis quas quisquam sed similique, sunt ullam!</p>
+      </div>
+      <div class="flex flex-col lg:flex-row justify-around text-gray-500 mb-6">
+        <p class="pb-2 text-sm font-light">Catégorie : Backflip</p>
+        <p class="pb-2 text-sm font-light">Contributeurs : toto, toto2, toto3</p>
+        <p class="pb-2 text-sm font-light">Date de création : {{ 'now'|date('d/m/Y à H:i', 'Europe/Paris') }}</p>
+        <p class="text-sm font-light">Date de modification : {{ 'now'|date('d/m/Y à H:i', 'Europe/Paris') }}</p>
+      </div>
+      <hr class="border w-1/2 mx-auto my-10">
+      <div class="flex flex-col w-full xl:w-1/2 md:mx-auto md:justify-start">
+        <div class="flex flex-row mb-10">
+          <div class="w-2/12 flex flex-col justify-center items-center text-center text-gray-500 mr-2">
+            <i class="fas fa-user border border-gray-500 rounded-full p-2"></i>
+            <p class="font-light text-sm">User name</p>
+          </div>
+          <div class="w-10/12 p-2 border-b-2 border-l-2 border-yellow-500 text-sm">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur debitis doloribus enim error harum
+              iste iusto mollitia officiis pariatur vero.</p>
+          </div>
+        </div>
+        <div class="flex flex-row mb-10">
+          <div class="w-2/12 flex flex-col justify-center items-center text-center text-gray-500 mr-2">
+            <i class="fas fa-user border border-gray-500 rounded-full p-2"></i>
+            <p class="font-light text-sm">User name</p>
+          </div>
+          <div class="w-10/12 p-2 border-b-2 border-l-2 border-yellow-500 text-sm">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex incidunt iste minus!</p>
+          </div>
+        </div>
+        <div class="flex flex-row mb-10">
+          <div class="w-2/12 flex flex-col justify-center items-center text-center text-gray-500 mr-2">
+            <i class="fas fa-user border border-gray-500 rounded-full p-2 w-8 h-8"></i>
+            <p class="font-light text-sm">User name</p>
+          </div>
+          <div class="w-10/12 p-2 border-b-2 border-l-2 border-yellow-500 text-sm">
+            <p>Lorem ipsum dolor sit amet, consectetur.</p>
+          </div>
+        </div>
+        <div class="text-center">
+          <button class="px-6 py-2 transition duration-500 delay-100 ease-out bg-yellow-500 hover:bg-yellow-600 rounded-md text-white">
+            Plus
+          </button>
+        </div>
+      </div>
+    </section>
+  </div>
+{% endblock %}
