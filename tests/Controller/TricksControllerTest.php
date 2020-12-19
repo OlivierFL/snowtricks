@@ -9,7 +9,7 @@ class TricksControllerTest extends WebTestCase
     public function testTricksPage(): void
     {
         $client = static::createClient();
-        $client->request('GET', '/');
+        $client->request('GET', '/#tricks');
 
         self::assertResponseIsSuccessful();
     }
