@@ -52,8 +52,10 @@
     </div>
   </section>
   <section class="mb-20 container max-w-screen-xl mx-auto mt-10 md:mt-20 px-4 lg:px-8 xl:px-0" id="tricks">
-    <h2 class="text-3xl md:text-4xl text-center md:text-left mb-10 md:mb-20 uppercase font-jura font-bold">Les derniers tricks ajoutés</h2>
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 lg:gap-6">
+    <h2 class="text-3xl md:text-4xl text-center md:text-left mb-10 md:mb-20 uppercase font-jura font-bold lg:border-l-4 border-yellow-500 lg:pl-4">
+      Les derniers
+      tricks ajoutés</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6">
       <div class="bg-gray-100 rounded-md shadow-lg">
         <img src="{{ asset('build/images/hero.jpg') }}"
              alt=""
@@ -216,4 +218,9 @@
       </div>
     </div>
   </section>
+  <div class="relative">
+    <a href="#top" class="absolute text-center sm:text-right bottom-8 sm:bottom-12 inset-x-0 sm:right-20">
+      <i class="fas fa-arrow-circle-up text-yellow-500 text-4xl"></i>
+    </a>
+  </div>
 {% endblock %}
