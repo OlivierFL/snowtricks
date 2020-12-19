@@ -172,11 +172,9 @@ class User
 
     public function removeComment(Comment $comment): self
     {
-        if ($this->comments->removeElement($comment)) {
-            // set the owning side to null (unless already changed)
-            if ($comment->getUser() === $this) {
-                $comment->setUser(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->comments->removeElement($comment) && $comment->getUser() === $this) {
+            $comment->setUser(null);
         }
 
         return $this;
@@ -202,11 +200,9 @@ class User
 
     public function removeToken(Token $token): self
     {
-        if ($this->tokens->removeElement($token)) {
-            // set the owning side to null (unless already changed)
-            if ($token->getUser() === $this) {
-                $token->setUser(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->tokens->removeElement($token) && $token->getUser() === $this) {
+            $token->setUser(null);
         }
 
         return $this;
