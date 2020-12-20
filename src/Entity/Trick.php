@@ -41,11 +41,6 @@ class Trick
     private ?string $slug;
 
     /**
-     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="tricks")
-     */
-    private ArrayCollection $users;
-
-    /**
      * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="trick", orphanRemoval=true)
      */
     private ArrayCollection $comments;
@@ -63,7 +58,6 @@ class Trick
 
     public function __construct()
     {
-        $this->users = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->medias = new ArrayCollection();
     }
@@ -105,33 +99,6 @@ class Trick
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|User[]
-     */
-    public function getUsers(): Collection
-    {
-        return $this->users;
-    }
-
-    public function addUser(User $user): self
-    {
-        if (!$this->users->contains($user)) {
-            $this->users[] = $user;
-            $user->addTrick($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUser(User $user): self
-    {
-        if ($this->users->removeElement($user)) {
-            $user->removeTrick($this);
-        }
 
         return $this;
     }
