@@ -30,6 +30,12 @@ class Media
      */
     private ?string $altText;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Trick::class, inversedBy="medias")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private ?Trick $trick;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -55,6 +61,18 @@ class Media
     public function setAltText(string $altText): self
     {
         $this->altText = $altText;
+
+        return $this;
+    }
+
+    public function getTrick(): ?Trick
+    {
+        return $this->trick;
+    }
+
+    public function setTrick(?Trick $trick): self
+    {
+        $this->trick = $trick;
 
         return $this;
     }

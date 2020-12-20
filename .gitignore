@@ -74,3 +74,6 @@ yarn-error.log
 ###> phpunit/phpunit ###
 .phpunit.result.cache
 ###< phpunit/phpunit ###
+
+# Directory created for MySQL Docker data persistence
+/var/mysql
