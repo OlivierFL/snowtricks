@@ -18,7 +18,7 @@ class IndexController extends AbstractController
     public function index(TrickRepository $repository): Response
     {
         return $this->render('layout/index.html.twig', [
-            'tricks' => $repository->findAllRecentWithMedia(),
+            'tricks' => $repository->findBy([], ['createdAt' => 'DESC']),
         ]);
     }
 }
