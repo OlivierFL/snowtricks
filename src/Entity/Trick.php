@@ -41,11 +41,6 @@ class Trick
     private ?string $slug;
 
     /**
-     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="tricks")
-     */
-    private Collection $users;
-
-    /**
      * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="trick", orphanRemoval=true)
      */
     private Collection $comments;
