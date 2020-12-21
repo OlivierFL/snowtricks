@@ -18,4 +18,17 @@ class TrickRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Trick::class);
     }
+
+    /**
+     * @return int|mixed|string
+     */
+    public function findAllRecentWithMedia()
+    {
+        return $this->createQueryBuilder('t')
+            ->addOrderBy('t.createdAt', 'DESC')
+            ->leftJoin('t.medias', 'm')
+            ->addSelect('m')
+            ->getQuery()
+            ->getResult();
+    }
 }
