@@ -4,7 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Trick;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\Tools\Pagination\Paginator;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -23,18 +23,12 @@ class TrickRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param int $page
-     *
-     * @return int|mixed|string
+     * @return Query
      */
-    public function findLastTricksPaginated(int $page = 1)
+    public function getLastTricksQuery(): Query
     {
-        $query = $this->createQueryBuilder('t')
+        return $this->createQueryBuilder('t')
             ->addOrderBy('t.createdAt', 'DESC')
-            ->setFirstResult(self::TRICKS_PER_PAGE * ($page - 1))
-            ->setMaxResults(self::TRICKS_PER_PAGE)
             ->getQuery();
-
-        return new Paginator($query);
     }
 }

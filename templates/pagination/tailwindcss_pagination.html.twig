@@ -1,0 +1,42 @@
+{# tailwindcss Sliding pagination control implementation #}
+{% if pageCount > 1 %}
+  <div class="inline-block">
+    <div class="flex items-baseline flex-row border border-yellow-500 rounded-md w-auto">
+      {% if first is defined and current != first %}
+        <span class="bg-white text-yellow-500 py-2 text-lg border-r border-yellow-500 rounded-tl-md rounded-bl-md font-bold transition duration-500 delay-100 ease-out hover:bg-yellow-500 hover:text-white">
+                <a href="{{ path(route, query|merge({(pageParameterName): first})) }}" class="px-3 py-2">&lt;&lt;</a>
+            </span>
+      {% endif %}
+
+      {% if previous is defined %}
+        <span class="bg-white text-yellow-500 text-lg py-2 border-r border-yellow-500 transition duration-500 delay-100 ease-out hover:bg-yellow-500 hover:text-white">
+                <a rel="prev" href="{{ path(route, query|merge({(pageParameterName): previous})) }}" class="px-3 py-2">&lt;</a>
+            </span>
+      {% endif %}
+
+      {% for page in pagesInRange %}
+        {% if page != current %}
+          <span class="bg-white text-yellow-500 py-2 text-lg border-r border-yellow-500 transition duration-500 delay-100 ease-out hover:bg-yellow-500 hover:text-white">
+                    <a href="{{ path(route, query|merge({(pageParameterName): page})) }}"
+                       class="px-3 py-2">{{ page }}</a>
+                </span>
+        {% else %}
+          <span class="bg-yellow-500 text-white px-3 py-2 text-lg font-bold">{{ page }}</span>
+        {% endif %}
+      {% endfor %}
+
+      {% if next is defined %}
+        <span class="bg-white text-yellow-500 py-2 text-lg border-r border-yellow-500 transition duration-500 delay-100 ease-out hover:bg-yellow-500 hover:text-white">
+                <a rel="next" href="{{ path(route, query|merge({(pageParameterName): next})) }}"
+                   class="px-3 py-2">&gt;</a>
+            </span>
+      {% endif %}
+
+      {% if last is defined and current != last %}
+        <span class="bg-white text-yellow-500 py-2 text-lg border-yellow-500 rounded-tr-md rounded-br-md transition duration-500 delay-100 ease-out hover:bg-yellow-500 hover:text-white font-bold">
+                <a href="{{ path(route, query|merge({(pageParameterName): last})) }}" class="px-3 py-2">&gt;&gt;</a>
+            </span>
+      {% endif %}
+    </div>
+  </div>
+{% endif %}
