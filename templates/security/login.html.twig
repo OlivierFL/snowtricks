@@ -1,0 +1,91 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+  <section class="container lg:max-w-screen-xl mx-auto mt-10 md:mt-24">
+    <form method="post">
+      {% if app.user %}
+        <div class="mb-3">
+          <p>
+            Vous êtes connecté en tant que : <span class="font-bold">{{ app.user.username }}</span>, <a
+                    href="{{ path('app_logout') }}">Déconnexion</a>
+          </p>
+        </div>
+      {% endif %}
+
+      <h1 class="font-jura font-bold text-center lg:text-left text-2xl lg:text-4xl mb-10 mb-6 lg:border-l-4 border-yellow-500 lg:pl-4">
+        Connexion</h1>
+      <div class="container mx-auto flex flex-col w-10/12 lg:w-1/4 text-center lg:text-left mb-8">
+        {% if error %}
+          <div class="bg-red-500 rounded-md text-white font-bold text-xl mb-6 p-2 text-center">
+            <p>{{ error.messageKey|trans(error.messageData, 'security') }}</p>
+          </div>
+        {% endif %}
+
+        <label for="inputUsername"
+               class="font-jura font-light text-2xl mb-2"
+        >
+          Nom d'utilisateur <span class="text-red-500">*</span>
+        </label>
+        <div class="relative mb-8 mx-auto w-full">
+          <div class="absolute inset-y-0 flex items-center pointer-events-none">
+            <i class="fas fa-user text-gray-500 w-5 h-5 pl-4"></i>
+          </div>
+          <input type="text"
+                 value="{{ last_username }}"
+                 name="username"
+                 id="inputUsername"
+                 class="block border border-gray-500 text-gray-500 rounded-md pl-10 py-2 focus:border-yellow-500 focus:shadow-md focus:ring-2 focus:ring-yellow-500 w-full"
+                 required
+                 autofocus
+          >
+        </div>
+        <label for="inputPassword"
+               class="font-jura font-light text-2xl mb-2"
+        >
+          Mot de passe <span class="text-red-500">*</span>
+        </label>
+        <div class="relative mb-4 mx-auto w-full">
+          <div class="absolute inset-y-0 flex items-center pointer-events-none">
+            <i class="fas fa-key text-gray-500 w-5 h-5 pl-4"></i>
+          </div>
+          <input type="password"
+                 name="password"
+                 id="inputPassword"
+                 class="block border border-gray-500 text-gray-500 rounded-md pl-10 py-2 focus:border-yellow-500 focus:shadow-md focus:ring-2 focus:ring-yellow-500 w-full"
+                 autocomplete="current-password"
+                 required
+          >
+        </div>
+
+        <input type="hidden" name="_csrf_token"
+               value="{{ csrf_token('authenticate') }}"
+        >
+
+
+        <!--        {#- ->
+        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.-->
+<!--        See https://symfony.com/doc/current/security/remember_me.html-->
+<!--  -->
+<!--        <div class="checkbox mb-3">-->
+<!--            <label>-->
+<!--                <input type="checkbox" name="_remember_me"> Remember me-->
+<!--            </label>-->
+<!--        </div>-->
+<!-- #}-->
+        <div class="text-sm font-light text-gray-500">
+          <p>Les champs marqués d'un "*" sont obligatoires</p>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <button class="inline-block bg-yellow-500 hover:bg-yellow-600 transition duration-500 delay-100 ease-out text-white px-6 py-2 rounded-md"
+                type="submit">
+          Connection
+        </button>
+      </div>
+
+    </form>
+  </section>
+{% endblock %}
