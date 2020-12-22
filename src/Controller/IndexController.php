@@ -19,8 +19,8 @@ class IndexController extends AbstractController
      */
     public function index(TrickRepository $repository, Request $request): Response
     {
-        $offset = max(0, $request->query->getInt('offset', 0));
-        $paginator = $repository->findLastTricksPaginated($offset);
+        $page = max(1, $request->query->getInt('page', 1));
+        $paginator = $repository->findLastTricksPaginated($page);
 
         return $this->render('layout/index.html.twig', [
             'tricks' => $paginator,

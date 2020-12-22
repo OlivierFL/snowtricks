@@ -15,7 +15,7 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class TrickRepository extends ServiceEntityRepository
 {
-    public const PAGINATOR_PER_PAGE = 10;
+    public const TRICKS_PER_PAGE = 10;
 
     public function __construct(ManagerRegistry $registry)
     {
@@ -23,16 +23,16 @@ class TrickRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param int $offset
+     * @param int $page
      *
      * @return int|mixed|string
      */
-    public function findLastTricksPaginated(int $offset)
+    public function findLastTricksPaginated(int $page = 1)
     {
         $query = $this->createQueryBuilder('t')
             ->addOrderBy('t.createdAt', 'DESC')
-            ->setMaxResults(self::PAGINATOR_PER_PAGE)
-            ->setFirstResult($offset)
+            ->setFirstResult(self::TRICKS_PER_PAGE * ($page - 1))
+            ->setMaxResults(self::TRICKS_PER_PAGE)
             ->getQuery();
 
         return new Paginator($query);
