@@ -57,6 +57,9 @@
 # Local .env file
 .env.local
 
+# Local .env.test file
+.env.test.local
+
 # Codeclimate CLI code analysis
 /codeclimate-master
 
