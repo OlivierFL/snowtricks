@@ -23,7 +23,7 @@ class IndexController extends AbstractController
     {
         $page = max(1, $request->query->getInt('page', 1));
 
-        $query = $repository->getLastTricksQuery();
+        $query = $repository->findBy([], ['createdAt' => 'DESC']);
 
         $tricksPaginated = $paginator->paginate(
             $query,
