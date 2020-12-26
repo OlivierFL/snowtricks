@@ -1,20 +1,20 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Connexion{% endblock %}
+{% block title %}Inscription{% endblock %}
 
 {% block body %}
-  <section class="container lg:max-w-screen-xl mx-auto mt-10 md:mt-16 mb-24 lg:mb-40">
+  <section class="container lg:max-w-screen-xl mx-auto mt-10 md:mt-16 mb-10 lg:mb-40">
     <div class="flex flex-col lg:grid lg:grid-cols-4 lg:gap-4 lg:rounded-2xl lg:shadow-2xl p-10 lg:mx-10 lg:bg-gray-50">
       <div class="hidden lg:block lg:col-start-1 lg:col-end-2 lg:-my-10 lg:-ml-10 lg:rounded-l-2xl">
-        <img src="{{ asset('build/images/login.jpg') }}"
+        <img src="{{ asset('build/images/signup.jpg') }}"
              alt="Snowboard trick"
              class="object-cover h-full w-full lg:rounded-l-2xl"
         >
       </div>
       <div class="lg:col-start-2 lg:col-end-5">
         <h1 class="font-jura font-bold text-center lg:text-left text-2xl lg:text-4xl mb-10 mb-6 lg:border-l-4 border-yellow-500 lg:ml-10 lg:pl-4">
-          Connexion</h1>
-        {{ include('form/_login_form.html.twig') }}
+          Inscription</h1>
+        {{ include('form/_register_form.html.twig') }}
       </div>
     </div>
   </section>
