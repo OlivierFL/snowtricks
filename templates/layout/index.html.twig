@@ -27,7 +27,7 @@
 {% block body %}
   <section class="relative bg-yellow-300 overflow-hidden h-screen -mt-16">
     <div class="container max-w-screen-xl mx-auto z-10 relative mt-40 lg:mt-60 px-8 sm:px-0">
-      <div class="text-center lg:text-left">
+      <div class="text-center lg:pl-10 lg:text-left">
         <h1 class="text-6xl text-yellow-500 font-bold font-jura sm:text-7xl">
           Snow<br><span class="uppercase md:text-9xl">Tricks</span>
         </h1>
@@ -41,14 +41,20 @@
         <source media="(max-width:640px)" srcset="{{ asset('build/images/hero_02_vertical.jpg') }}">
         <img src="{{ asset('build/images/hero_02.jpg') }}"
              alt="SnowTricks hero image"
-             class="w-full h-full sm:h-auto object-cover"
+             class="w-full h-full 2xl:h-auto object-cover"
              width="1920"
              height="1280"
         >
       </picture>
-      <a href="#tricks" class="absolute text-center sm:text-right bottom-8 sm:bottom-12 inset-x-0 sm:right-20">
-        <i class="fas fa-arrow-circle-down text-yellow-500 text-4xl animate-bounce"></i>
-      </a>
+      <div class="pt-6 md:pt-0">
+        <div class="absolute text-center lg:text-right bottom-8 sm:bottom-12 inset-x-0 lg:right-20">
+          <a href="#tricks"
+             aria-label="Voir les derniers tricks ajoutés"
+          >
+            <i class="fas fa-arrow-circle-down text-yellow-500 text-4xl animate-bounce"></i>
+          </a>
+        </div>
+      </div>
     </div>
   </section>
   <section class="mb-20 container max-w-screen-xl mx-auto mt-10 md:mt-20 px-4 lg:px-8 xl:px-0" id="tricks">
@@ -58,25 +64,27 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6 mb-10">
       {% for trick in tricks %}
         <div class="bg-gray-100 rounded-md shadow-lg overflow-hidden">
-          {% if trick.medias is not empty %}
-            <div class="container">
-              <img src="{{ asset('build/images/' ~ trick.medias.0.url) }}"
-                   alt="{{ trick.medias.0.altText }}"
-                   class="w-full h-auto max-h-48 object-cover transform duration-500 ease hover:scale-105 rounded-t-md"
+          <a href="{{ path('trick_detail', { slug: trick.slug }) }}">
+            {% if trick.medias is not empty %}
+              <div class="container">
+                <img src="{{ asset('build/images/' ~ trick.medias.0.url) }}"
+                     alt="{{ trick.medias.0.altText }}"
+                     class="w-full h-auto max-h-48 object-cover transform duration-500 ease hover:scale-105 rounded-t-md"
+                     loading="lazy"
+                     width="600"
+                     height="400"
+                >
+              </div>
+            {% else %}
+              <img src="{{ asset('build/images/hero.jpg') }}"
+                   alt="alt_text"
+                   class="w-full h-auto object-cover transform duration-500 ease hover:scale-105 rounded-t-md"
                    loading="lazy"
                    width="600"
                    height="400"
               >
-            </div>
-          {% else %}
-            <img src="{{ asset('build/images/hero.jpg') }}"
-                 alt="alt_text"
-                 class="w-full h-auto object-cover transform duration-500 ease hover:scale-105 rounded-t-md"
-                 loading="lazy"
-                 width="600"
-                 height="400"
-            >
-          {% endif %}
+            {% endif %}
+          </a>
           <div class="flex flex-row justify-between items-center p-4">
             <a href="{{ path('trick_detail', { slug: trick.slug }) }}" class="p-2 font-bold">{{ trick.name }}</a>
             <div class="ml-auto">
@@ -88,14 +96,18 @@
       {% endfor %}
     </div>
     <div class="mb-10 text-center">
-      <button class="px-6 py-2 transition duration-500 delay-100 ease-out bg-yellow-500 hover:bg-yellow-600 rounded-md text-white shadow-lg">
+      <button class="px-6 py-2 transition duration-500 delay-100 ease-out bg-yellow-500 hover:bg-yellow-600 rounded-md text-white shadow-lg"
+              aria-label="Voir plus de tricks"
+      >
         Plus
       </button>
     </div>
   </section>
   <div class="relative pt-6 md:pt-0">
     <div class="absolute text-center sm:text-right bottom-8 sm:bottom-12 inset-x-0 sm:right-20">
-      <a href="#top" class="">
+      <a href="#top"
+         aria-label="Retourner en haut de la page"
+      >
         <i class="fas fa-arrow-circle-up text-yellow-500 text-4xl"></i>
       </a>
     </div>
