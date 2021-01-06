@@ -11,6 +11,7 @@ class TricksController extends AbstractController
 {
     /**
      * @Route("/tricks/{slug}",
+     *     options={"expose"=true},
      *     name="trick_detail")
      * @param Trick $trick
      *

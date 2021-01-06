@@ -72,7 +72,7 @@
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
-/tests-coverage/
+/coverage/
 
 ###> phpunit/phpunit ###
 .phpunit.result.cache
