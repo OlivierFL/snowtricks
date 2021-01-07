@@ -56,10 +56,16 @@ class Trick
      */
     private ?Category $category;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="tricks")
+     */
+    private Collection $users;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
         $this->medias = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -167,6 +173,33 @@ class Trick
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->addTrick($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->removeElement($user)) {
+            $user->removeTrick($this);
+        }
 
         return $this;
     }
