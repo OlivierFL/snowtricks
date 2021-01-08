@@ -12,18 +12,27 @@
             <a href="{{ path('home') }}#tricks"
                class="rounded-md hover:bg-yellow-500 transition duration-500 delay-100 ease-out px-5 py-3">Figures</a>
           </li>
-          <li class="py-4">
-            <a href="{{ path('app_login') }}"
-               class="rounded-md hover:bg-yellow-500 transition duration-500 delay-100 ease-out px-5 py-3">Connexion</a>
-          </li>
-          <li class="py-4">
-            <a href="{{ path('app_register') }}"
-               class="rounded-md hover:bg-yellow-500 transition duration-500 delay-100 ease-out px-5 py-3">Inscription</a>
-          </li>
-          <li class="py-4">
-            <a href="{{ path('app_logout') }}"
-               class="rounded-md hover:bg-yellow-500 transition duration-500 delay-100 ease-out px-5 py-3">Déconnexion</a>
-          </li>
+          {% if is_granted('IS_AUTHENTICATED_FULLY') == false %}
+            <li class="py-4">
+              <a href="{{ path('app_login') }}"
+                 class="rounded-md hover:bg-yellow-500 transition duration-500 delay-100 ease-out px-5 py-3">Connexion</a>
+            </li>
+            <li class="py-4">
+              <a href="{{ path('app_register') }}"
+                 class="rounded-md hover:bg-yellow-500 transition duration-500 delay-100 ease-out px-5 py-3">Inscription</a>
+            </li>
+          {% endif %}
+          {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <li class="py-4">
+              <a href="{{ path('app_logout') }}"
+                 class="rounded-md hover:bg-yellow-500 transition duration-500 delay-100 ease-out px-5 py-3">Mon
+                profil</a>
+            </li>
+            <li class="py-4">
+              <a href="{{ path('app_logout') }}"
+                 class="rounded-md hover:bg-yellow-500 transition duration-500 delay-100 ease-out px-5 py-3">Déconnexion</a>
+            </li>
+          {% endif %}
         </ul>
       </nav>
     </div>
