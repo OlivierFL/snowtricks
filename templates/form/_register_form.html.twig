@@ -7,8 +7,11 @@
     </div>
   {% endfor %}
 
+  <div class="text-sm font-light text-gray-500 mb-4">
+    <p><i class="fas fa-info-circle pr-2"></i>Tous les champs sont obligatoires</p>
+  </div>
   <div class="lg:col-start-1 lg:col-end-2">
-    {{ form_label(registrationForm.firstName, 'Prénom *', {
+    {{ form_label(registrationForm.firstName, null, {
       'label_attr': {'class': 'font-jura font-light text-2xl mb-2'
       }}) }}
     <div class="mb-4">
@@ -36,7 +39,7 @@
     </div>
   </div>
   <div class="lg:col-start-2 lg:col-end-3">
-    {{ form_label(registrationForm.lastName, 'Nom *', {
+    {{ form_label(registrationForm.lastName, null, {
       'label_attr': {'class': 'font-jura font-light text-2xl mb-2'
       }}) }}
     <div class="mb-4">
@@ -60,7 +63,7 @@
     </div>
   </div>
   <div class="lg:col-start-1 lg:col-end-3">
-    {{ form_label(registrationForm.username, 'Nom d\'utilisateur *', {
+    {{ form_label(registrationForm.username, null, {
       'label_attr': {'class': 'font-jura font-light text-2xl mb-2'
       }}) }}
     <div class="mb-4">
@@ -84,7 +87,7 @@
     </div>
   </div>
   <div class="lg:col-start-1 lg:col-end-3">
-    {{ form_label(registrationForm.email, 'Email *', {
+    {{ form_label(registrationForm.email, null, {
       'label_attr': {'class': 'font-jura font-light text-2xl mb-2'
       }}) }}
     <div class="mb-4">
@@ -108,7 +111,7 @@
     </div>
   </div>
   <div class="lg:col-start-1 lg:col-end-3">
-    {{ form_label(registrationForm.plainPassword, 'Mot de Passe *', {
+    {{ form_label(registrationForm.plainPassword, null, {
       'label_attr': {'class': 'font-jura font-light text-2xl mb-2'
       }}) }}
     <div class="mb-4">
@@ -130,9 +133,6 @@
         {{ form_errors(registrationForm.plainPassword) }}
       </div>
     </div>
-  </div>
-  <div class="text-sm font-light text-gray-500">
-    <p>Les champs marqués d'un "*" sont obligatoires</p>
   </div>
 </div>
 <div class="text-center">

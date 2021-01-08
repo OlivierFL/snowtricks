@@ -1,0 +1,3 @@
+There is already an account with this username or email: Le nom d'utilisateur est déjà utilisé
+Your username must be at least {{ limit }} characters long: Le nom d'utilisateur doit contenir au moins {{ limit }} caractères
+Your password should be at least {{ limit }} characters: Le mot de passe doit contenir au moins {{ limit }} caractères
