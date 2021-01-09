@@ -31,6 +31,13 @@
         <h1 class="text-6xl text-yellow-500 font-bold font-jura sm:text-7xl">
           Snow<br><span class="uppercase md:text-9xl">Tricks</span>
         </h1>
+        {% if app.request.hasPreviousSession %}
+          {% for message in app.flashes('notice') %}
+            <div class="text-red-500">
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
         <p class="mt-3 text-gray-800 italic sm:mt-5 sm:text-lg md:mt-5 md:text-2xl lg:mx-0">
           <span class="font-bold uppercase">Le</span> site pour apprendre facilement tous les tricks de snowboard&nbsp;!
         </p>
