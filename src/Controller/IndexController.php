@@ -5,11 +5,9 @@ namespace App\Controller;
 use App\Repository\TrickRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\SerializerInterface;
 
 class IndexController extends AbstractController
 {
@@ -36,35 +34,5 @@ class IndexController extends AbstractController
         return $this->render('layout/index.html.twig', [
             'tricks' => $tricksPaginated,
         ]);
-    }
-
-    /**
-     * @Route("/tricks/load-more/{offset}/{limit}",
-     *     name="load_more_tricks",
-     *     options={"expose"=true},
-     *     requirements={"offset"="\d+", "limit"="\d+"}
-     * )
-     * @param TrickRepository     $repository
-     * @param int                 $offset
-     * @param int                 $limit
-     * @param SerializerInterface $serializer
-     *
-     * @return JsonResponse
-     */
-    public function tricks(
-        TrickRepository $repository,
-        SerializerInterface $serializer,
-        int $offset = 0,
-        int $limit = 4
-    ): JsonResponse {
-        $query = $repository->findBy([], ['createdAt' => 'DESC'], $limit, $offset);
-
-        $data = $serializer->serialize($query, 'json', [
-            'circular_reference_handler' => function ($object) {
-                return $object->getId();
-            },
-        ]);
-
-        return new JsonResponse($data, 200, [], true);
     }
 }
