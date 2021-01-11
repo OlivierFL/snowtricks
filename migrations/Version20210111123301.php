@@ -12,12 +12,12 @@ use Doctrine\Migrations\AbstractMigration;
  */
 final class Version20210111123301 extends AbstractMigration
 {
-    public function getDescription() : string
+    public function getDescription(): string
     {
         return '';
     }
 
-    public function up(Schema $schema) : void
+    public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE comments ADD author_id INT NOT NULL');
@@ -28,7 +28,7 @@ final class Version20210111123301 extends AbstractMigration
         $this->addSql('CREATE INDEX IDX_E1D902C1F675F31B ON tricks (author_id)');
     }
 
-    public function down(Schema $schema) : void
+    public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE `comments` DROP FOREIGN KEY FK_5F9E962AF675F31B');
