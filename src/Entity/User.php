@@ -107,10 +107,16 @@ class User implements UserInterface
      */
     private Collection $authorTricks;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="author", orphanRemoval=true)
+     */
+    private Collection $comments;
+
     public function __construct()
     {
         $this->tricks = new ArrayCollection();
         $this->authorTricks = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -282,6 +288,34 @@ class User implements UserInterface
         // set the owning side to null (unless already changed)
         if ($this->authorTricks->removeElement($authorTrick) && $authorTrick->getAuthor() === $this) {
             $authorTrick->setAuthor(null);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        // set the owning side to null (unless already changed)
+        if ($this->comments->removeElement($comment) && $comment->getAuthor() === $this) {
+            $comment->setAuthor(null);
         }
 
         return $this;
