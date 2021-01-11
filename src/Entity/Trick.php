@@ -57,9 +57,19 @@ class Trick
     private ?Category $category;
 
     /**
+     * The list of contributors of the Trick.
+     *
      * @ORM\ManyToMany(targetEntity=User::class, mappedBy="tricks")
      */
     private Collection $users;
+
+    /**
+     * The author of the Trick.
+     *
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="authorTricks")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private ?User $author;
 
     public function __construct()
     {
@@ -200,6 +210,18 @@ class Trick
         if ($this->users->removeElement($user)) {
             $user->removeTrick($this);
         }
+
+        return $this;
+    }
+
+    public function getAuthor(): ?User
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?User $author): self
+    {
+        $this->author = $author;
 
         return $this;
     }

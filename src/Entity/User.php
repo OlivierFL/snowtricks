@@ -92,13 +92,25 @@ class User implements UserInterface
     private bool $isVerified = false;
 
     /**
+     * The tricks modified by the User.
+     * Used to get the contributors list of the tricks.
+     *
      * @ORM\ManyToMany(targetEntity=Trick::class, inversedBy="users")
      */
     private Collection $tricks;
 
+    /**
+     * The tricks created by the User.
+     * Used to get the author of the tricks.
+     *
+     * @ORM\OneToMany(targetEntity=Trick::class, mappedBy="author", orphanRemoval=true)
+     */
+    private Collection $authorTricks;
+
     public function __construct()
     {
         $this->tricks = new ArrayCollection();
+        $this->authorTricks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -243,6 +255,34 @@ class User implements UserInterface
     public function removeTrick(Trick $trick): self
     {
         $this->tricks->removeElement($trick);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Trick[]
+     */
+    public function getAuthorTricks(): Collection
+    {
+        return $this->authorTricks;
+    }
+
+    public function addAuthorTrick(Trick $authorTrick): self
+    {
+        if (!$this->authorTricks->contains($authorTrick)) {
+            $this->authorTricks[] = $authorTrick;
+            $authorTrick->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAuthorTrick(Trick $authorTrick): self
+    {
+        // set the owning side to null (unless already changed)
+        if ($this->authorTricks->removeElement($authorTrick) && $authorTrick->getAuthor() === $this) {
+            $authorTrick->setAuthor(null);
+        }
 
         return $this;
     }
