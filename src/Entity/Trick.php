@@ -43,12 +43,12 @@ class Trick
     /**
      * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="trick", orphanRemoval=true)
      */
-    private ArrayCollection $comments;
+    private Collection $comments;
 
     /**
      * @ORM\OneToMany(targetEntity=Media::class, mappedBy="trick", orphanRemoval=true)
      */
-    private ArrayCollection $medias;
+    private Collection $medias;
 
     /**
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="tricks")

@@ -57,6 +57,9 @@
 # Local .env file
 .env.local
 
+# Local .env.test file
+.env.test.local
+
 # Codeclimate CLI code analysis
 /codeclimate-master
 
@@ -69,7 +72,7 @@
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
-/tests-coverage/
+/coverage/
 
 ###> phpunit/phpunit ###
 .phpunit.result.cache

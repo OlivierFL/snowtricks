@@ -4,12 +4,12 @@ namespace Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class IndexControllerTest extends WebTestCase
+class AjaxControllerTest extends WebTestCase
 {
-    public function testHomePage(): void
+    public function testLoadMoreTricks(): void
     {
         $client = static::createClient();
-        $client->request('GET', '/');
+        $client->xmlHttpRequest('GET', '/tricks/load-more/4');
 
         self::assertResponseIsSuccessful();
     }
