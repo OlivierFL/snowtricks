@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\User;
+use Rollerworks\Component\PasswordStrength\Validator\Constraints\PasswordRequirements;
+use Rollerworks\Component\PasswordStrength\Validator\Constraints\PasswordStrength;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -42,6 +44,12 @@ class RegistrationFormType extends AbstractType
                         'minMessage' => 'Your password should be at least {{ limit }} characters',
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
+                    ]),
+                    new PasswordStrength([
+                        'minStrength' => 3,
+                    ]),
+                    new PasswordRequirements([
+                        'requireCaseDiff' => true,
                     ]),
                     new NotCompromisedPassword(),
                 ],
