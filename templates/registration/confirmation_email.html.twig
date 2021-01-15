@@ -1,11 +1,28 @@
-<h1>Hi! Please confirm your email!</h1>
+{% extends 'emails/base.html.twig' %}
 
-<p>
-    Please confirm your email address by clicking the following link: <br><br>
-    <a href="{{ signedUrl|raw }}">Confirm my Email</a>.
-    This link will expire in {{ expiresAt|date('g') }} hour(s).
-</p>
+{% block email_title %}confirmation d'inscription{% endblock %}
 
-<p>
-    Cheers!
-</p>
+{% block body %}
+  <container class="text-center w-100 flex justify-content-center align-items-center bg-blue mb-2">
+    <row>
+      <columns class="text-center flex justify-content-center align-items-center py-1">
+        <h1 class="text-center title ml-1">SnowTricks</h1>
+      </columns>
+    </row>
+  </container>
+  <container>
+    <row>
+      <columns class="text-center">
+        <h2 class="text-center mb-2">Félicitations {{ username }}, vous êtes inscrit sur Snowtricks !</h2>
+        <p class="font-size-1-3">Afin de confirmer votre inscription et pouvoir accéder à votre compte, veuillez
+          confirmer votre
+          email en cliquant sur le lien
+          ci-dessous&nbsp;:</p>
+        <p class="text-center">
+          <a href="{{ signedUrl|raw }}" target="_blank">Confirmer mon email</a>.
+        </p>
+        <p>Ce lien est valide {{ expiresAt|date('g') }} heure(s).</p>
+      </columns>
+    </row>
+  </container>
+{% endblock %}

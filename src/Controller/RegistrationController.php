@@ -25,7 +25,7 @@ class RegistrationController extends AbstractController
     }
 
     /**
-     * @Route("/register", name="app_register")
+     * @Route("/inscription", name="app_register")
      * @param Request                      $request
      * @param UserPasswordEncoderInterface $passwordEncoder
      *
@@ -56,12 +56,13 @@ class RegistrationController extends AbstractController
                 (new TemplatedEmail())
                     ->from(new Address('mail@example.com', 'SnowTricks'))
                     ->to($user->getEmail())
-                    ->subject('Please Confirm your Email')
+                    ->subject('Confirmation d\'inscription')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
-            // do anything else you need here, like send an email
 
-            return $this->redirectToRoute('home');
+            $this->addFlash('notice', 'Pour terminer votre inscription, veuillez confirmer votre adresse email via l\'email qui vous a été envoyé.');
+
+            return $this->redirectToRoute('app_login');
         }
 
         return $this->render('registration/register.html.twig', [
