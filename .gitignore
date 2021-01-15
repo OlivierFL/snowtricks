@@ -80,3 +80,24 @@ yarn-error.log
 
 # Directory created for MySQL Docker data persistence
 /var/mysql
+/coverage/.css/bootstrap.min.css
+/coverage/.css/custom.css
+/coverage/.css/nv.d3.min.css
+/coverage/.css/octicons.css
+/coverage/.css/style.css
+/coverage/.icons/file-code.svg
+/coverage/.icons/file-directory.svg
+/coverage/.js/bootstrap.min.js
+/coverage/.js/d3.min.js
+/coverage/.js/file.js
+/coverage/.js/jquery.min.js
+/coverage/.js/nv.d3.min.js
+/coverage/.js/popper.min.js
+/coverage/Controller/AdminController.php.html
+/coverage/Controller/dashboard.html
+/coverage/Controller/index.html
+/coverage/Controller/IndexController.php.html
+/coverage/Controller/TricksController.php.html
+/coverage/dashboard.html
+/coverage/index.html
+/coverage/Kernel.php.html
