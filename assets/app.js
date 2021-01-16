@@ -11,5 +11,8 @@ import './styles/tailwind.css';
 // Responsive navbar import
 import './js/nav';
 
+// Homepage load more tricks
+import './js/load_more_tricks';
+
 // start the Stimulus application
 import './bootstrap';
