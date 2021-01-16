@@ -95,7 +95,11 @@ class AppAuthenticator extends AbstractFormLoginAuthenticator implements Passwor
     }
 
     /**
-     * @throws Exception
+     * @param Request        $request
+     * @param TokenInterface $token
+     * @param string         $providerKey
+     *
+     * @return RedirectResponse
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $providerKey): RedirectResponse
     {

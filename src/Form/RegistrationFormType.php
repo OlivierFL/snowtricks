@@ -53,7 +53,8 @@ class RegistrationFormType extends AbstractType
                     ]),
                     new NotCompromisedPassword(),
                 ],
-            ]);
+            ])
+        ;
     }
 
     /**

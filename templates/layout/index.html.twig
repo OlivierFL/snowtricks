@@ -26,6 +26,22 @@
 
 {% block body %}
   <section class="relative bg-yellow-300 overflow-hidden h-screen -mt-16">
+    {% if app.request.hasPreviousSession %}
+      {% for message in app.flashes('notice') %}
+        <div class="container mx-auto max-w-md text-center pt-24 absolute inset-0 z-10" id="notification">
+          <div class="text-white bg-gray-700 py-4 rounded-2xl shadow-md">
+            <p class="text-xl">{{ message }}</p>
+          </div>
+        </div>
+      {% endfor %}
+      {% for message in app.flashes('success') %}
+        <div class="container mx-auto max-w-md text-center pt-24 absolute inset-0 z-10" id="notification">
+          <div class="text-white bg-gray-700 py-4 rounded-2xl shadow-md">
+            <p class="text-xl">{{ message }}</p>
+          </div>
+        </div>
+      {% endfor %}
+    {% endif %}
     <div class="container max-w-screen-xl mx-auto z-10 relative mt-40 lg:mt-60 px-8 sm:px-0">
       <div class="text-center lg:pl-10 lg:text-left">
         <h1 class="text-6xl text-yellow-500 font-bold font-jura sm:text-7xl">
