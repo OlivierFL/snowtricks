@@ -20,6 +20,11 @@
           <p>{{ message }}</p>
         </div>
       {% endfor %}
+      {% for message in app.flashes('success') %}
+        <div class="bg-green-500 rounded-md text-white font-bold text-xl text-center mx-6 py-2">
+          <p>{{ message }}</p>
+        </div>
+      {% endfor %}
     {% endif %}
   </div>
 
@@ -68,10 +73,15 @@
     </div>
   </div>
 
+  <div class="text-center mb-6">
+    <a href="{{ path('app_forgot_password_request') }}"
+       class="hover:text-yellow-500 transition duration-500 delay-100 ease-out">Mot de passe oublié ?</a>
+  </div>
+
   <div class="text-center">
     <button class="inline-block bg-yellow-500 hover:bg-yellow-600 transition duration-500 delay-100 ease-out text-white px-6 py-2 rounded-md"
             type="submit">
-      Connection
+      Connexion
     </button>
   </div>
 </form>

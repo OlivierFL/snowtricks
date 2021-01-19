@@ -4,3 +4,4 @@ Your username must be at least {{ limit }} characters long: Le nom d'utilisateur
 Your password should be at least {{ limit }} characters: Le mot de passe doit contenir au moins {{ limit }} caractères
 Please enter a password: Veuillez renseigner un mot de passse
 The password fields must match: Les deux mots de passe doivent être identiques
+Please enter your email: Veuillez renseigner votre email

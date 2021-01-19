@@ -1,0 +1,9 @@
+{% extends 'security_layout.html.twig' %}
+
+{% block title %}Mot de passe oublié{% endblock %}
+
+{% block main_image %}{{ asset('build/images/login.jpg') }}{% endblock %}
+
+{% block page_title %}Mot de passe oublié{% endblock %}
+
+{% block content %}{{ include('reset_password/_request_form.html.twig') }}{% endblock %}
