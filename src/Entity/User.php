@@ -81,6 +81,11 @@ class User implements UserInterface
     private string $password;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private string $avatar;
+
+    /**
      * @ORM\Column(type="boolean")
      */
     private bool $isVerified = false;
@@ -201,6 +206,18 @@ class User implements UserInterface
     public function setPassword(string $password): self
     {
         $this->password = $password;
+
+        return $this;
+    }
+
+    public function getAvatar(): string
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar(string $avatar): User
+    {
+        $this->avatar = $avatar;
 
         return $this;
     }

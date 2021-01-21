@@ -8,29 +8,14 @@
   <h1 class="font-jura font-bold text-center lg:text-left text-2xl lg:text-4xl mb-10 mb-6 lg:border-l-4 border-yellow-500 lg:ml-10 lg:pl-4">
     Mon profil
   </h1>
-  <div class="lg:flex lg:flex-row lg:justify-between items-center mt-4 lg:mt-14">
-    <div class="lg:w-1/2 flex flex-col justify-center items-center">
-      {% if app.user.avatar is defined %}
-        <img src="{{ asset('build/images/') ~ app.user.avatar }}"
-             alt=""
-             class="object-cover h-full w-full lg:rounded-l-2xl"
-             width="100"
-             height="100"
-        >
-      {% else %}
-        <div class="flex justify-center items-center w-24 h-24 lg:w-36 lg:h-36 rounded-full border-2 border-yellow-500 bg-gray-500 text-white p-4 lg:p-8">
-          <p class="text-2xl lg:text-4xl">{{ app.user.firstName|slice(0, 1)|capitalize }} {{ app.user.lastName|slice(0, 1)|capitalize }}</p>
+  <div class="mt-4 lg:mt-14">
+    {% if app.request.hasPreviousSession %}
+      {% for message in app.flashes('success') %}
+        <div class="bg-green-500 rounded-md text-white font-bold text-xl text-center mb-8 py-2">
+          <p>{{ message }}</p>
         </div>
-        <div class="mb-8 lg:mb-0 pt-2 cursor-pointer">
-          <p class="text-gray-500 text-sm"><i class="fas fa-plus pr-2"></i> Ajouter une photo de profil</p>
-        </div>
-      {% endif %}
-    </div>
-    <div class="lg:w-1/2">
-      <p class="text-gray-500 lg:text-xl pb-4">Prénom&nbsp;: <span class="text-black">{{ app.user.firstName }}</span>
-      </p>
-      <p class="text-gray-500 lg:text-xl pb-4">Nom&nbsp;: <span class="text-black">{{ app.user.lastName }}</span></p>
-      <p class="text-gray-500 lg:text-xl">Email&nbsp;: <span class="text-black">{{ app.user.email }}</span></p>
-    </div>
+      {% endfor %}
+    {% endif %}
+    {{ include('profile/_profile_form.html.twig') }}
   </div>
 {% endblock %}

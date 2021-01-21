@@ -5,3 +5,4 @@ Your password should be at least {{ limit }} characters: Le mot de passe doit co
 Please enter a password: Veuillez renseigner un mot de passse
 The password fields must match: Les deux mots de passe doivent être identiques
 Please enter your email: Veuillez renseigner votre email
+Please upload a valid image file: Format d'image invalide
