@@ -82,4 +82,12 @@ class Category
 
         return $this;
     }
+
+    /**
+     * Temporary fix for "Typed property must not be accessed before initialization" error.
+     */
+    public function __sleep(): array
+    {
+        return [];
+    }
 }

@@ -43,8 +43,22 @@ class UserProfileController extends AbstractController
             return $this->redirectToRoute('profile_index');
         }
 
-        return $this->render('/profile/index.html.twig', [
+        return $this->render('profile/profile_index.html.twig', [
             'editProfileForm' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/profil/tricks", name="profile_tricks")
+     *
+     * @return Response
+     */
+    public function tricks(): Response
+    {
+        $tricks = $this->getUser()->getAuthorTricks();
+
+        return $this->render('profile/profile_tricks.html.twig', [
+            'tricks' => $tricks,
         ]);
     }
 }
