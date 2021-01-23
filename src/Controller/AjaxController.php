@@ -13,25 +13,38 @@ use Symfony\Component\Serializer\SerializerInterface;
 class AjaxController extends AbstractController
 {
     /**
+     * @var SerializerInterface
+     */
+    private SerializerInterface $serializer;
+
+    /**
+     * AjaxController constructor.
+     *
+     * @param SerializerInterface $serializer
+     */
+    public function __construct(SerializerInterface $serializer)
+    {
+        $this->serializer = $serializer;
+    }
+
+    /**
      * @Route("/tricks/load-more/{offset}/{limit}",
      *     name="load_more_tricks",
      *     options={"expose"=true},
      *     requirements={"offset"="\d+", "limit"="\d+"}
      * )
-     * @param TrickRepository     $repository
-     * @param SerializerInterface $serializer
-     * @param int                 $offset
-     * @param int                 $limit
+     * @param TrickRepository $repository
+     * @param int             $offset
+     * @param int             $limit
      *
      * @return JsonResponse
      */
     public function loadMoreTricks(
         TrickRepository $repository,
-        SerializerInterface $serializer,
         int $offset = 0,
         int $limit = 4
     ): JsonResponse {
-        return $this->loadMoreResults($repository, $limit, $offset, $serializer);
+        return $this->loadMoreResults($repository, $limit, $offset, 'createdAt');
     }
 
     /**
@@ -40,35 +53,37 @@ class AjaxController extends AbstractController
      *     options={"expose"=true},
      *     requirements={"offset"="\d+", "limit"="\d+"}
      * )
-     * @param CommentRepository   $repository
-     * @param SerializerInterface $serializer
-     * @param int                 $offset
-     * @param int                 $limit
+     * @param CommentRepository $repository
+     * @param int               $offset
+     * @param int               $limit
      *
      * @return JsonResponse
      */
     public function loadMoreComments(
         CommentRepository $repository,
-        SerializerInterface $serializer,
         int $offset = 0,
         int $limit = 4
     ): JsonResponse {
-        return $this->loadMoreResults($repository, $limit, $offset, $serializer);
+        return $this->loadMoreResults($repository, $limit, $offset, 'updatedAt');
     }
 
     /**
      * @param ServiceEntityRepositoryInterface $repository
      * @param int                              $limit
      * @param int                              $offset
-     * @param SerializerInterface              $serializer
+     * @param string                           $param
      *
      * @return JsonResponse
      */
-    private function loadMoreResults(ServiceEntityRepositoryInterface $repository, int $limit, int $offset, SerializerInterface $serializer): JsonResponse
-    {
-        $query = $repository->findBy([], ['createdAt' => 'DESC'], $limit, $offset);
+    private function loadMoreResults(
+        ServiceEntityRepositoryInterface $repository,
+        int $limit,
+        int $offset,
+        string $param
+    ): JsonResponse {
+        $query = $repository->findBy([], [$param => 'DESC'], $limit, $offset);
 
-        $data = $serializer->serialize($query, 'json', [
+        $data = $this->serializer->serialize($query, 'json', [
             'circular_reference_handler' => function ($object) {
                 return $object->getId();
             },
