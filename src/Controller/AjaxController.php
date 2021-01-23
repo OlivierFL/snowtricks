@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Repository\CommentRepository;
 use App\Repository\TrickRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,9 +19,9 @@ class AjaxController extends AbstractController
      *     requirements={"offset"="\d+", "limit"="\d+"}
      * )
      * @param TrickRepository     $repository
+     * @param SerializerInterface $serializer
      * @param int                 $offset
      * @param int                 $limit
-     * @param SerializerInterface $serializer
      *
      * @return JsonResponse
      */
@@ -29,6 +31,41 @@ class AjaxController extends AbstractController
         int $offset = 0,
         int $limit = 4
     ): JsonResponse {
+        return $this->loadMoreResults($repository, $limit, $offset, $serializer);
+    }
+
+    /**
+     * @Route("/comments/load-more/{offset}/{limit}",
+     *     name="load_more_comments",
+     *     options={"expose"=true},
+     *     requirements={"offset"="\d+", "limit"="\d+"}
+     * )
+     * @param CommentRepository   $repository
+     * @param SerializerInterface $serializer
+     * @param int                 $offset
+     * @param int                 $limit
+     *
+     * @return JsonResponse
+     */
+    public function loadMoreComments(
+        CommentRepository $repository,
+        SerializerInterface $serializer,
+        int $offset = 0,
+        int $limit = 4
+    ): JsonResponse {
+        return $this->loadMoreResults($repository, $limit, $offset, $serializer);
+    }
+
+    /**
+     * @param ServiceEntityRepositoryInterface $repository
+     * @param int                              $limit
+     * @param int                              $offset
+     * @param SerializerInterface              $serializer
+     *
+     * @return JsonResponse
+     */
+    private function loadMoreResults(ServiceEntityRepositoryInterface $repository, int $limit, int $offset, SerializerInterface $serializer): JsonResponse
+    {
         $query = $repository->findBy([], ['createdAt' => 'DESC'], $limit, $offset);
 
         $data = $serializer->serialize($query, 'json', [

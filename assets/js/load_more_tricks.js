@@ -18,7 +18,7 @@ $(document).ready(function () {
             }), function (results) {
                 console.log(results);
                 if (0 === results.length) {
-                    $('#load-more').html('Plus aucun résultat').removeClass('bg-yellow-500 hover:bg-yellow-600').addClass('cursor-not-allowed text-black bg-gray-100');
+                    $('#load-more-tricks-btn').html('Plus aucun résultat').removeClass('bg-yellow-500 hover:bg-yellow-600').addClass('cursor-not-allowed text-black bg-gray-100');
                     return;
                 }
                 display(results);
