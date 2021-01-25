@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\ResetPasswordRequest;
 use App\Entity\User;
 use App\Form\BasePasswordFormType;
 use App\Form\ResetPasswordRequestFormType;
@@ -158,6 +159,21 @@ class ResetPasswordController extends AbstractController
         // Do not reveal whether a user account was found or not.
         if (!$user) {
             return $this->redirectToRoute('app_check_email');
+        }
+
+        $token = $this->getDoctrine()->getRepository(ResetPasswordRequest::class)->findOneBy([
+            'user' => $user,
+        ], [
+            'requestedAt' => 'DESC',
+        ]);
+
+        $now = new \DateTime();
+
+        if ($token && ($now < $token->getExpiresAt())) {
+            $interval = ($now->diff($token->getExpiresAt()))->format('%i minutes');
+            $this->addFlash('notice', 'Un email contenant le lien a déjà été envoyé, veuillez patienter '.$interval);
+
+            return $this->redirectToRoute('app_forgot_password_request');
         }
 
         try {
