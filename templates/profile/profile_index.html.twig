@@ -9,13 +9,6 @@
     Mon profil
   </h1>
   <div class="mt-4 lg:mt-14">
-    {% if app.request.hasPreviousSession %}
-      {% for message in app.flashes('success') %}
-        <div class="bg-green-500 rounded-md text-white font-bold text-xl text-center mb-8 py-2">
-          <p>{{ message }}</p>
-        </div>
-      {% endfor %}
-    {% endif %}
     {{ include('profile/_profile_form.html.twig') }}
   </div>
 {% endblock %}

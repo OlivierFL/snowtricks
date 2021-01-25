@@ -1,12 +1,5 @@
 {{ form_start(registrationForm) }}
 <div class="container mx-auto flex flex-col w-10/12 lg:w-full lg:px-10 lg:grid lg:grid-cols-2 lg:gap-4 text-center lg:text-left mb-8">
-  {% for flashError in app.flashes('verify_email_error') %}
-    <div class="bg-red-500 rounded-md text-white font-bold text-xl mb-6 p-2 text-center"
-         role="alert">
-      <p>{{ flashError }}</p>
-    </div>
-  {% endfor %}
-
   <div class="text-sm font-light text-gray-500 mb-4">
     <p><i class="fas fa-info-circle pr-2"></i>Tous les champs sont obligatoires</p>
   </div>
