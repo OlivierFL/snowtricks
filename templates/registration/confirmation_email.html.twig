@@ -1,0 +1,28 @@
+{% extends 'emails/base.html.twig' %}
+
+{% block email_title %}confirmation d'inscription{% endblock %}
+
+{% block body %}
+  <container class="text-center w-100 flex justify-content-center align-items-center bg-blue mb-2">
+    <row>
+      <columns class="text-center flex justify-content-center align-items-center py-1">
+        <h1 class="text-center title ml-1">SnowTricks</h1>
+      </columns>
+    </row>
+  </container>
+  <container>
+    <row>
+      <columns class="text-center">
+        <h2 class="text-center mb-2">Félicitations {{ username }}, vous êtes inscrit sur Snowtricks !</h2>
+        <p class="font-size-1-3">Afin de confirmer votre inscription et pouvoir accéder à votre compte, veuillez
+          confirmer votre
+          email en cliquant sur le lien
+          ci-dessous&nbsp;:</p>
+        <p class="text-center">
+          <a href="{{ signedUrl|raw }}" target="_blank">Confirmer mon email</a>.
+        </p>
+        <p>Ce lien est valide {{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}.</p>
+      </columns>
+    </row>
+  </container>
+{% endblock %}

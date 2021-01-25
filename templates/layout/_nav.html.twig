@@ -29,18 +29,32 @@
           <a href="{{ path('home') }}#tricks"
              class="text-xl sm:text-base rounded-md transition duration-500 delay-100 ease-out hover:bg-yellow-500 hover:text-white px-8 sm:px-5 py-6 sm:py-3">Figures</a>
         </li>
-        <li class="mb-10 sm:mb-0">
-          <a href=""
-             class="text-xl sm:text-base rounded-md transition duration-500 delay-100 ease-out hover:bg-yellow-500 hover:text-white px-8 sm:px-5 py-6 sm:py-3">Connexion</a>
-        </li>
-        <li class="mb-10 sm:mb-0">
-          <a href=""
-             class="text-xl sm:text-base rounded-md transition duration-500 delay-100 ease-out hover:bg-yellow-500 hover:text-white px-8 sm:px-5 py-6 sm:py-3">Inscription</a>
-        </li>
-        <li class="mb-10 sm:mb-0">
-          <a href=""
-             class="text-xl sm:text-base rounded-md transition duration-500 delay-100 ease-out hover:bg-yellow-500 hover:text-white px-8 sm:px-5 py-6 sm:py-3">Déconnexion</a>
-        </li>
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+          <li class="mb-10 sm:mb-0">
+            <a href="{{ path('profile_index') }}"
+               class="text-xl sm:text-base rounded-md transition duration-500 delay-100 ease-out hover:bg-yellow-500 hover:text-white px-8 sm:px-5 py-6 sm:py-3">Mon
+              profil</a>
+          </li>
+          {% if is_granted('ROLE_ADMIN') %}
+            <li class="mb-10 sm:mb-0">
+              <a href="{{ path('admin_dashboard') }}"
+                 class="text-xl sm:text-base rounded-md transition duration-500 delay-100 ease-out hover:bg-yellow-500 hover:text-white px-8 sm:px-5 py-6 sm:py-3">Admin</a>
+            </li>
+          {% endif %}
+          <li class="mb-10 sm:mb-0">
+            <a href="{{ path('app_logout') }}"
+               class="text-xl sm:text-base rounded-md transition duration-500 delay-100 ease-out hover:bg-yellow-500 hover:text-white px-8 sm:px-5 py-6 sm:py-3">Déconnexion</a>
+          </li>
+        {% else %}
+          <li class="mb-10 sm:mb-0">
+            <a href="{{ path('app_login') }}"
+               class="text-xl sm:text-base rounded-md transition duration-500 delay-100 ease-out hover:bg-yellow-500 hover:text-white px-8 sm:px-5 py-6 sm:py-3">Connexion</a>
+          </li>
+          <li class="mb-10 sm:mb-0">
+            <a href="{{ path('app_register') }}"
+               class="text-xl sm:text-base rounded-md transition duration-500 delay-100 ease-out hover:bg-yellow-500 hover:text-white px-8 sm:px-5 py-6 sm:py-3">Inscription</a>
+          </li>
+        {% endif %}
       </ul>
     </div>
   </nav>

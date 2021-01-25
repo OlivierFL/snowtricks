@@ -56,10 +56,26 @@ class Trick
      */
     private ?Category $category;
 
+    /**
+     * The list of contributors of the Trick.
+     *
+     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="tricks")
+     */
+    private Collection $users;
+
+    /**
+     * The author of the Trick.
+     *
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="authorTricks")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private ?User $author;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
         $this->medias = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -167,6 +183,45 @@ class Trick
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->addTrick($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->removeElement($user)) {
+            $user->removeTrick($this);
+        }
+
+        return $this;
+    }
+
+    public function getAuthor(): ?User
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?User $author): self
+    {
+        $this->author = $author;
 
         return $this;
     }

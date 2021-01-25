@@ -15,6 +15,7 @@
         "friendsofsymfony/jsrouting-bundle": "^2.7",
         "knplabs/knp-paginator-bundle": "^5.4",
         "phpdocumentor/reflection-docblock": "^5.2",
+        "rollerworks/password-strength-bundle": "^2.2",
         "sensio/framework-extra-bundle": "^5.1",
         "stof/doctrine-extensions-bundle": "^1.5",
         "symfony/apache-pack": "^1.0",
@@ -43,7 +44,10 @@
         "symfony/web-link": "5.2.*",
         "symfony/webpack-encore-bundle": "^1.8",
         "symfony/yaml": "5.2.*",
-        "twig/extra-bundle": "^2.12|^3.0",
+        "symfonycasts/verify-email-bundle": "^1.1",
+        "twig/cssinliner-extra": "^3.2",
+        "twig/extra-bundle": "^3.2",
+        "twig/inky-extra": "^3.2",
         "twig/twig": "^2.12|^3.0"
     },
     "require-dev": {
