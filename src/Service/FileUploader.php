@@ -33,6 +33,10 @@ class FileUploader
         $safeFilename = $this->slugger->slug($originalFilename);
         $newFilename = $safeFilename.'-'.uniqid('', false).'.'.$file->guessExtension();
 
+        if (!$this->fileSystem->exists($this->targetDirectory)) {
+            $this->fileSystem->mkdir($this->targetDirectory);
+        }
+
         try {
             $file->move(
                 $this->targetDirectory,
