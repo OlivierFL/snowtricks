@@ -1,12 +1,5 @@
 {{ form_start(registrationForm) }}
 <div class="container mx-auto flex flex-col w-10/12 lg:w-full lg:px-10 lg:grid lg:grid-cols-2 lg:gap-4 text-center lg:text-left mb-8">
-  {% for flashError in app.flashes('verify_email_error') %}
-    <div class="bg-red-500 rounded-md text-white font-bold text-xl mb-6 p-2 text-center"
-         role="alert">
-      <p>{{ flashError }}</p>
-    </div>
-  {% endfor %}
-
   <div class="text-sm font-light text-gray-500 mb-4">
     <p><i class="fas fa-info-circle pr-2"></i>Tous les champs sont obligatoires</p>
   </div>
@@ -111,7 +104,7 @@
     </div>
   </div>
   <div class="lg:col-start-1 lg:col-end-3">
-    {{ form_label(registrationForm.plainPassword.first, null, {
+    {{ form_label(registrationForm.password.plainPassword.first, null, {
       'label_attr': {'class': 'font-jura font-light text-2xl mb-2'
       }}) }}
     <div class="mb-4">
@@ -119,7 +112,7 @@
         <div class="absolute inset-y-0 flex items-center pointer-events-none">
           <i class="fas fa-key text-gray-500 w-5 h-5 pl-4"></i>
         </div>
-        {{ form_widget(registrationForm.plainPassword.first, {
+        {{ form_widget(registrationForm.password.plainPassword.first, {
           'attr': {
             'autocomplete': 'new-password',
             'class': 'block border-b border-gray-500 text-gray-500 bg-gray-100 pl-10 py-2 focus:border-yellow-500 focus:shadow-md focus:ring-2 focus:ring-yellow-500 w-full'
@@ -128,26 +121,26 @@
     </div>
   </div>
   <div class="lg:col-start-1 lg:col-end-3">
-    {{ form_label(registrationForm.plainPassword.second, null, {
+    {{ form_label(registrationForm.password.plainPassword.second, null, {
       'label_attr': {'class': 'font-jura font-light text-2xl mb-2'
       }}) }}
     <div class="mb-4">
       <div class="relative mb-1 mx-auto w-full">
         <div class="absolute inset-y-0 flex items-center pointer-events-none">
-          {% if form_errors(registrationForm.plainPassword.first) %}
+          {% if form_errors(registrationForm.password.plainPassword.first) %}
             <i class="fas fa-exclamation-circle text-red-500 w-5 h-5 pl-4"></i>
           {% else %}
             <i class="fas fa-key text-gray-500 w-5 h-5 pl-4"></i>
           {% endif %}
         </div>
-        {{ form_widget(registrationForm.plainPassword.second, {
+        {{ form_widget(registrationForm.password.plainPassword.second, {
           'attr': {
             'autocomplete': 'new-password',
             'class': 'block border-b border-gray-500 text-gray-500 bg-gray-100 pl-10 py-2 focus:border-yellow-500 focus:shadow-md focus:ring-2 focus:ring-yellow-500 w-full'
           }}) }}
       </div>
       <div class="text-red-500 font-bold p-2 text-center lg:text-left">
-        {{ form_errors(registrationForm.plainPassword.first) }}
+        {{ form_errors(registrationForm.password.plainPassword.first) }}
       </div>
     </div>
   </div>

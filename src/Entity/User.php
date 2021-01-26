@@ -82,9 +82,9 @@ class User implements UserInterface
     private string $password;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private string $avatar;
+    private ?string $avatar;
 
     /**
      * @ORM\Column(type="boolean")
@@ -212,7 +212,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getAvatar(): string
+    public function getAvatar(): ?string
     {
         return $this->avatar;
     }

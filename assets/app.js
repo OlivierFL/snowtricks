@@ -20,5 +20,8 @@ import './js/load_more_tricks';
 // Trick detail page load more comments
 import './js/load_more_comments';
 
+// Used to display file name in edit profile form
+import './js/avatar';
+
 // start the Stimulus application
 import './bootstrap';
