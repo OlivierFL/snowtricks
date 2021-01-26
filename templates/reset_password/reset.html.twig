@@ -1,0 +1,10 @@
+{% extends 'security_layout.html.twig' %}
+
+{% block title %}Réinitialisez votre mot de passe{% endblock %}
+
+{% block main_image %}{{ asset('build/images/login.jpg') }}{% endblock %}
+
+{% block page_title %}Réinitialisez votre mot de passe{% endblock %}
+
+{% block content %}{{ include('reset_password/_reset_form.html.twig') }}{% endblock %}
+

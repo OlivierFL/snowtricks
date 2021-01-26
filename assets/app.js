@@ -14,5 +14,8 @@ import './js/nav';
 // Homepage load more tricks
 import './js/load_more_tricks';
 
+// Used to display file name in edit profile form
+import './js/avatar';
+
 // start the Stimulus application
 import './bootstrap';

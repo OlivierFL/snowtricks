@@ -1,0 +1,25 @@
+{% extends 'emails/base.html.twig' %}
+
+{% block email_title %}Réinitialisation du mot de passe{% endblock %}
+
+{% block body %}
+  <container class="text-center w-100 flex justify-content-center align-items-center bg-blue mb-2">
+    <row>
+      <columns class="text-center flex justify-content-center align-items-center py-1">
+        <h1 class="text-center title ml-1">SnowTricks</h1>
+      </columns>
+    </row>
+  </container>
+  <container>
+    <row>
+      <columns class="text-center">
+        <h2 class="text-center mb-2">Pour réinitialiser votre mot de passe, veuillez cliquer sur le lien ci-dessous</h2>
+        <p class="text-center">
+          <a href="{{ url('app_reset_password', {token: resetToken.token}) }}">{{ url('app_reset_password', {token: resetToken.token}) }}</a>
+        </p>
+        <p class="text-center">Ce lien expire
+          dans {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.</p>
+      </columns>
+    </row>
+  </container>
+{% endblock %}

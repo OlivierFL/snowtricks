@@ -6,6 +6,7 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\OrderBy;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -81,6 +82,11 @@ class User implements UserInterface
     private string $password;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private ?string $avatar;
+
+    /**
      * @ORM\Column(type="boolean")
      */
     private bool $isVerified = false;
@@ -98,6 +104,7 @@ class User implements UserInterface
      * Used to get the author of the tricks.
      *
      * @ORM\OneToMany(targetEntity=Trick::class, mappedBy="author", orphanRemoval=true)
+     * @OrderBy({"updatedAt" = "DESC"})
      */
     private Collection $authorTricks;
 
@@ -201,6 +208,18 @@ class User implements UserInterface
     public function setPassword(string $password): self
     {
         $this->password = $password;
+
+        return $this;
+    }
+
+    public function getAvatar(): ?string
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar(string $avatar): User
+    {
+        $this->avatar = $avatar;
 
         return $this;
     }

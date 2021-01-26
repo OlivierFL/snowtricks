@@ -14,13 +14,6 @@
         <p>{{ error.messageKey|trans(error.messageData, 'security') }}</p>
       </div>
     {% endif %}
-    {% if app.request.hasPreviousSession %}
-      {% for message in app.flashes('notice') %}
-        <div class="bg-yellow-500 rounded-md text-white font-bold text-xl text-center mx-6 py-2">
-          <p>{{ message }}</p>
-        </div>
-      {% endfor %}
-    {% endif %}
   </div>
 
   <div class="container mx-auto flex flex-col w-10/12 lg:w-1/4 text-center lg:text-left mb-8">
@@ -68,10 +61,15 @@
     </div>
   </div>
 
+  <div class="text-center mb-6">
+    <a href="{{ path('app_forgot_password_request') }}"
+       class="hover:text-yellow-500 transition duration-500 delay-100 ease-out">Mot de passe oublié ?</a>
+  </div>
+
   <div class="text-center">
     <button class="inline-block bg-yellow-500 hover:bg-yellow-600 transition duration-500 delay-100 ease-out text-white px-6 py-2 rounded-md"
             type="submit">
-      Connection
+      Connexion
     </button>
   </div>
 </form>

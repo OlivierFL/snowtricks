@@ -54,7 +54,7 @@ class Trick
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="tricks")
      * @ORM\JoinColumn(nullable=false)
      */
-    private ?Category $category;
+    private Category $category;
 
     /**
      * The list of contributors of the Trick.

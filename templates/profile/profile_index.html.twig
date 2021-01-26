@@ -1,0 +1,14 @@
+{% extends('profile/profile_layout.html.twig') %}
+
+{%- block title -%}
+  Mon profil - SnowTricks
+{%- endblock -%}
+
+{% block profile_body %}
+  <h1 class="font-jura font-bold text-center lg:text-left text-2xl lg:text-4xl mb-10 mb-6 lg:border-l-4 border-yellow-500 lg:ml-10 lg:pl-4">
+    Mon profil
+  </h1>
+  <div class="mt-4 lg:mt-14">
+    {{ include('profile/_profile_form.html.twig') }}
+  </div>
+{% endblock %}
