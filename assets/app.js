@@ -15,7 +15,7 @@ import './js/nav';
 import './js/load_more_tricks';
 
 // Used to display file name in edit profile form
-import './js/avatar_file_name';
+import './js/avatar';
 
 // start the Stimulus application
 import './bootstrap';

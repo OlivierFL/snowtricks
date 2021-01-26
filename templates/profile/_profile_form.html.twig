@@ -3,6 +3,7 @@
   <div class="lg:w-1/3 flex flex-col justify-center items-center">
     {% if app.user.avatar is defined and app.user.avatar is not empty %}
       <img src="{{ asset('/uploads/avatars/') ~ app.user.avatar }}"
+           id="avatar"
            alt="Image de profil"
            class="object-cover h-24 w-24 lg:w-36 lg:h-36 rounded-full border-yellow-500 border-2"
            width="144"
@@ -10,7 +11,16 @@
       >
       {{ include('profile/_file_upload_field.html.twig') }}
     {% else %}
-      <div class="flex justify-center items-center w-24 h-24 lg:w-36 lg:h-36 rounded-full border-2 border-yellow-500 bg-gray-500 text-white p-4 lg:p-8">
+      <img src="#"
+           id="avatar"
+           alt="Image de profil"
+           class="object-cover h-24 w-24 lg:w-36 lg:h-36 rounded-full border-yellow-500 border-2 z-50 hidden"
+           width="144"
+           height="144"
+      >
+      <div class="flex justify-center items-center w-24 h-24 lg:w-36 lg:h-36 rounded-full border-2 border-yellow-500 bg-gray-500 text-white p-4 lg:p-8 cursor-default"
+           id="initials"
+      >
         <p class="text-2xl lg:text-4xl">{{ app.user.firstName|slice(0, 1)|capitalize }} {{ app.user.lastName|slice(0, 1)|capitalize }}</p>
       </div>
       {{ include('profile/_file_upload_field.html.twig') }}
