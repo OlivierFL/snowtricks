@@ -33,7 +33,7 @@ class TricksController extends AbstractController
             $page,
             2);
 
-        return $this->render('layout/trick_detail.html.twig', [
+        return $this->render('tricks/trick.html.twig', [
             'trick' => $trick,
             'comments' => $comments,
         ]);

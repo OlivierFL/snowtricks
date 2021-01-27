@@ -21,7 +21,7 @@
   </head>
   <body class="font-sans" id="top">
     <header class="h-10 md:h-16 z-20 sticky top-0">
-      {{ include('layout/_nav.html.twig') }}
+      {{ include('_parts/_nav.html.twig') }}
     </header>
 
     <main class="w-full pb-10">
@@ -52,7 +52,7 @@
       {% block body %}{% endblock %}
     </main>
     <footer>
-      {{ include('layout/_footer.html.twig') }}
+      {{ include('_parts/_footer.html.twig') }}
     </footer>
 
     {% block javascripts %}
