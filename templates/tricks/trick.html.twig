@@ -173,8 +173,8 @@
       <hr class="border w-1/2 mx-auto my-10">
       <div class="flex flex-col w-full md:mx-auto md:justify-start" id="comments-list">
         {% for comment in comments %}
-          <div class="flex flex-row justify-center mb-10 comment">
-            <div class="w-2/12 flex flex-col justify-center items-center text-center text-gray-500 mr-2 pr-4">
+          <div class="flex flex-col lg:flex-row justify-center items-center mb-10 comment">
+            <div class="lg:w-2/12 flex flex-col justify-center items-center text-center text-gray-500 mr-2 pr-4">
               {% if comment.author.avatar %}
                 <img src="{{ asset('/uploads/avatars/') ~ comment.author.avatar }}"
                      alt="{{ comment.author.username }}"
@@ -193,7 +193,7 @@
               <p class="font-light text-sm mb-2">{{ comment.author.username|capitalize }}</p>
               <p class="font-light text-sm">{{ comment.updatedAt|date('d/m/Y à H:i') }}</p>
             </div>
-            <div class="w-10/12 p-2 border-b-2 border-l-2 border-yellow-500 text-sm ml-auto">
+            <div class="lg:w-10/12 p-2 border-b-2 border-l-2 border-yellow-500 text-sm ml-auto">
               <p>{{ comment.content }}</p>
             </div>
           </div>
