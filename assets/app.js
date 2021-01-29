@@ -8,20 +8,14 @@
 // any CSS you import will output into a single css file (tailwind.css in this case)
 import './styles/tailwind.css';
 
-// AlpineJs used for modals
-import 'alpinejs';
-
 // Responsive navbar import
 import './js/nav';
 
 // Modal
 import './js/modal';
 
-// Homepage load more tricks
-import './js/load_more_tricks';
-
-// Trick detail page load more comments
-import './js/load_more_comments';
+// Load more tricks and comments
+import './js/load_more';
 
 // Used to display file name in edit profile form
 import './js/avatar';

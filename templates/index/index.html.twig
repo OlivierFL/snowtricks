@@ -65,7 +65,7 @@
          id="tricks-list"
     >
       {% for trick in tricks %}
-        <div class="bg-gray-100 rounded-md shadow-lg overflow-hidden trick">
+        <div class="bg-gray-100 rounded-md shadow-lg overflow-hidden tricks">
           <a href="{{ path('trick_detail', { slug: trick.slug }) }}">
             {% if trick.medias is not empty %}
               <div class="container">

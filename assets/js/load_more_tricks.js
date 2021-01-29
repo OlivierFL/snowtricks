@@ -1,33 +1,10 @@
-const routes = require('../../public/js/fos_js_routes.json');
 import Routing from '../../vendor/friendsofsymfony/jsrouting-bundle/Resources/public/js/router.min.js';
+
+const routes = require('../../public/js/fos_js_routes.json');
 
 Routing.setRoutingData(routes);
 
-const limit = $('.trick').length;
-let offset = limit;
-let spinner = $('#spinner-tricks');
-
-$("#load-more-tricks-btn").click(function () {
-    spinner.removeClass('hidden');
-    spinner.addClass('animate-spin');
-    $.getJSON(
-        Routing.generate('load_more_tricks', {
-            offset: offset,
-            limit: limit
-        }), function (results) {
-            if (0 === results.length) {
-                $('#load-more-tricks-btn').html('Plus aucun résultat').removeClass('bg-yellow-500 hover:bg-yellow-600').addClass('cursor-not-allowed text-black bg-gray-100');
-                return;
-            }
-            display(results);
-        }).done(function () {
-        spinner.addClass('hidden');
-        spinner.removeClass('animate-spin');
-        offset += limit;
-    });
-});
-
-function display(results) {
+export function displayTricks(results) {
     $.each(results, function (key, result) {
         $('#tricks-list').append(
             `<div class="bg-gray-100 rounded-md shadow-lg overflow-hidden trick">

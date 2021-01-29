@@ -199,7 +199,7 @@
       <hr class="border w-1/2 mx-auto my-10">
       <div class="flex flex-col w-full md:mx-auto md:justify-start" id="comments-list">
         {% for comment in comments %}
-          <div class="flex flex-col lg:flex-row justify-center items-center mb-10 comment">
+          <div class="flex flex-col lg:flex-row justify-center items-center mb-10 comments">
             <div class="lg:w-2/12 flex flex-col justify-center items-center text-center text-gray-500 mr-2 pr-4">
               {% if comment.author.avatar %}
                 <img src="{{ asset('/uploads/avatars/') ~ comment.author.avatar }}"
