@@ -14,6 +14,9 @@ import 'alpinejs';
 // Responsive navbar import
 import './js/nav';
 
+// Modal
+import './js/modal';
+
 // Homepage load more tricks
 import './js/load_more_tricks';
 

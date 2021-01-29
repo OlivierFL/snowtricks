@@ -64,7 +64,7 @@ function display(results) {
                       <p>${result.content}</p>
                     </div>
                 </div>
-                `)
+                `);
         }
 
         function formatUpdatedAt() {
@@ -72,7 +72,7 @@ function display(results) {
             let hour = new Intl.DateTimeFormat('fr-FR', {
                 hour: '2-digit',
                 minute: '2-digit'
-            }).format(new Date(result.updatedAt))
+            }).format(new Date(result.updatedAt));
             return day + ' à ' + hour;
         }
     });

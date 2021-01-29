@@ -82,34 +82,60 @@
             id="tricks">
       <h3 class="font-jura font-bold text-center lg:text-left text-xl lg:text-2xl mb-10 mb-6 lg:border-l-4 border-yellow-500 lg:pl-4">
         Le trick en images</h3>
-      <div class="hidden xl:grid xl:grid-cols-3 2xl:grid-cols-4 gap-3 flex-wrap mb-10 justify-start" x-data="{}">
+      <div class="hidden xl:grid xl:grid-cols-3 2xl:grid-cols-4 gap-3 flex-wrap mb-10 justify-start" id="media-gallery">
         {% if trick.medias is not empty %}
           {% for media in trick.medias %}
-            <div class="overflow-hidden border-l-4 border-yellow-500">
-              <a @click="$dispatch('img-modal', {  imgModalSrc: '/build/images/{{ media.url }}', imgModalDesc: '{{ media.altText }}' })"
-                 class="cursor-pointer">
+            {% if 'image' == media.type %}
+              <div class="overflow-hidden border-l-4 border-yellow-500 modal-open cursor-pointer mb-6 xl:mb-0"
+                   data-media-id="{{ asset('build/images/' ~ media.url) }}"
+                   data-type="{{ media.type }}"
+              >
                 <img src="{{ asset('build/images/' ~ media.url) }}"
                      alt="{{ media.altText }}"
-                     class="w-full h-48 max-h-48 object-cover transform duration-500 ease hover:scale-105"
+                     class="w-full md:h-48 max-h-36 md:max-h-48 object-cover transform duration-500 ease hover:scale-105"
                      width="300"
                      height="200"
                 >
-              </a>
-            </div>
+              </div>
+            {% elseif 'youtube' == media.type %}
+              <div class="overflow-hidden relative border-l-4 border-yellow-500 cursor-pointer mb-6 xl:mb-0">
+                <iframe src="https://www.youtube.com/embed/{{ media.url }}"
+                        class="max-w-full lg:max-w-5xl max-h-screen"
+                        frameborder="0"
+                        width="283"
+                        height="192"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                >
+                </iframe>
+                <div class="modal-open open-video-modal"
+                     data-media-id="{{ media.url }}"
+                     data-type="{{ media.type }}"
+                ></div>
+              </div>
+            {% elseif 'vimeo' == media.type %}
+              <div class="overflow-hidden relative border-l-4 border-yellow-500 cursor-pointer mb-6 xl:mb-0">
+                <iframe src="https://player.vimeo.com/video/{{ media.url }}"
+                        class="max-w-full lg:max-w-5xl max-h-screen"
+                        frameborder="0"
+                        width="283"
+                        height="192"
+                        allow="autoplay; fullscreen; picture-in-picture"
+                        allowfullscreen
+                >
+                </iframe>
+                <div class="modal-open open-video-modal"
+                     data-media-id="{{ media.url }}"
+                     data-type="{{ media.type }}"
+                ></div>
+              </div>
+            {% endif %}
           {% endfor %}
         {% endif %}
-        {# <div class="w-60 border-l-4 border-yellow-500 h-auto"> #}
-        {# <a @click="$dispatch('img-modal', {  imgModalSrc: 'https://www.youtube.com/embed/SQyTWk7OxSI', imgModalDesc: 'Random Image One Description' })" #}
-        {# class="cursor-pointer"> #}
-        {# <iframe width="240" height="160" src="https://www.youtube.com/embed/SQyTWk7OxSI" frameborder="0" #}
-        {# allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" #}
-        {# allowfullscreen></iframe> #}
-        {# <div>toto</div> #}
-        {# </a> #}
-        {# </div> #}
       </div>
       <div class="text-center xl:hidden">
-        <button class="px-6 py-2 transition duration-500 delay-100 ease-out bg-yellow-500 hover:bg-yellow-600 rounded-md text-white mb-10 md:mb-20">
+        <button class="px-6 py-2 transition duration-500 delay-100 ease-out bg-yellow-500 hover:bg-yellow-600 rounded-md text-white mb-10 md:mb-20"
+                id="show-media">
           Photos / Vidéos
         </button>
       </div>

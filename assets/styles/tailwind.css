@@ -75,4 +75,14 @@ html {
     }
 }
 
+.open-video-modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 283px;
+    height: 192px;
+    cursor: pointer;
+    z-index: 50;
+}
+
 @tailwind utilities;
