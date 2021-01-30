@@ -30,7 +30,10 @@ class UserProfileController extends AbstractController
             if ($avatar) {
                 $oldAvatar = $user->getAvatar();
                 $avatarFileName = $uploader->upload($avatar);
-                $uploader->remove($oldAvatar);
+                if ($oldAvatar) {
+                    $uploader->remove($oldAvatar);
+                }
+
                 $user->setAvatar($avatarFileName);
             }
 
@@ -43,7 +46,7 @@ class UserProfileController extends AbstractController
             return $this->redirectToRoute('profile_index');
         }
 
-        return $this->render('profile/profile_index.html.twig', [
+        return $this->render('user_profile/profile_index.html.twig', [
             'editProfileForm' => $form->createView(),
         ]);
     }
@@ -57,7 +60,7 @@ class UserProfileController extends AbstractController
     {
         $tricks = $this->getUser()->getAuthorTricks();
 
-        return $this->render('profile/profile_tricks.html.twig', [
+        return $this->render('user_profile/profile_tricks.html.twig', [
             'tricks' => $tricks,
         ]);
     }
