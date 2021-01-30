@@ -31,7 +31,7 @@ class IndexController extends AbstractController
             4
         );
 
-        return $this->render('layout/index.html.twig', [
+        return $this->render('index/index.html.twig', [
             'tricks' => $tricksPaginated,
         ]);
     }

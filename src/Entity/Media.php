@@ -13,6 +13,10 @@ class Media
 {
     use TimestampableEntity;
 
+    private const IMAGE = 'image';
+    private const YOUTUBE_VIDEO = 'youtube';
+    private const VIMEO_VIDEO = 'vimeo';
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -35,6 +39,11 @@ class Media
      * @ORM\JoinColumn(nullable=false)
      */
     private ?Trick $trick;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private ?string $type;
 
     public function getId(): ?int
     {
@@ -73,6 +82,18 @@ class Media
     public function setTrick(?Trick $trick): self
     {
         $this->trick = $trick;
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }

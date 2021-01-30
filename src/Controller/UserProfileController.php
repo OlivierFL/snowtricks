@@ -5,9 +5,11 @@ namespace App\Controller;
 use App\Form\EditProfileFormType;
 use App\Service\FileUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserProfileController extends AbstractController
 {
@@ -28,9 +30,8 @@ class UserProfileController extends AbstractController
             $avatar = $form->get('avatar')->getData();
 
             if ($avatar) {
-                $oldAvatar = $user->getAvatar();
-                $avatarFileName = $uploader->upload($avatar);
-                $uploader->remove($oldAvatar);
+                $avatarFileName = $this->handleAvatarUpload($user, $uploader, $avatar);
+
                 $user->setAvatar($avatarFileName);
             }
 
@@ -43,7 +44,7 @@ class UserProfileController extends AbstractController
             return $this->redirectToRoute('profile_index');
         }
 
-        return $this->render('profile/profile_index.html.twig', [
+        return $this->render('user_profile/profile_index.html.twig', [
             'editProfileForm' => $form->createView(),
         ]);
     }
@@ -57,8 +58,26 @@ class UserProfileController extends AbstractController
     {
         $tricks = $this->getUser()->getAuthorTricks();
 
-        return $this->render('profile/profile_tricks.html.twig', [
+        return $this->render('user_profile/profile_tricks.html.twig', [
             'tricks' => $tricks,
         ]);
+    }
+
+    /**
+     * @param UserInterface|object|null $user
+     * @param FileUploader              $uploader
+     * @param UploadedFile              $avatar
+     *
+     * @return string
+     */
+    private function handleAvatarUpload(?UserInterface $user, FileUploader $uploader, UploadedFile $avatar): string
+    {
+        $oldAvatar = $user->getAvatar();
+        $avatarFileName = $uploader->upload($avatar);
+        if ($oldAvatar) {
+            $uploader->remove($oldAvatar);
+        }
+
+        return $avatarFileName;
     }
 }

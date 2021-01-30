@@ -11,8 +11,11 @@ import './styles/tailwind.css';
 // Responsive navbar import
 import './js/nav';
 
-// Homepage load more tricks
-import './js/load_more_tricks';
+// Modal
+import './js/modal';
+
+// Load more tricks and comments
+import './js/load_more';
 
 // Used to display file name in edit profile form
 import './js/avatar';

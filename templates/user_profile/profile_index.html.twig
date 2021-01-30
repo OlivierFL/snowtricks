@@ -1,4 +1,4 @@
-{% extends('profile/profile_layout.html.twig') %}
+{% extends('user_profile/profile_layout.html.twig') %}
 
 {%- block title -%}
   Mon profil - SnowTricks
@@ -9,6 +9,6 @@
     Mon profil
   </h1>
   <div class="mt-4 lg:mt-14">
-    {{ include('profile/_profile_form.html.twig') }}
+    {{ include('user_profile/_profile_form.html.twig') }}
   </div>
 {% endblock %}

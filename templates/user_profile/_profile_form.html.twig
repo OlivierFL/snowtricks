@@ -9,7 +9,7 @@
            width="144"
            height="144"
       >
-      {{ include('profile/_file_upload_field.html.twig') }}
+      {{ include('user_profile/_profile_form_file_upload_field.html.twig') }}
     {% else %}
       <img src="#"
            id="avatar"
@@ -23,7 +23,7 @@
       >
         <p class="text-2xl lg:text-4xl">{{ app.user.firstName|slice(0, 1)|capitalize }} {{ app.user.lastName|slice(0, 1)|capitalize }}</p>
       </div>
-      {{ include('profile/_file_upload_field.html.twig') }}
+      {{ include('user_profile/_profile_form_file_upload_field.html.twig') }}
     {% endif %}
   </div>
   <div class="lg:w-2/3">

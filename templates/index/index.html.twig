@@ -65,7 +65,7 @@
          id="tricks-list"
     >
       {% for trick in tricks %}
-        <div class="bg-gray-100 rounded-md shadow-lg overflow-hidden trick">
+        <div class="bg-gray-100 rounded-md shadow-lg overflow-hidden tricks">
           <a href="{{ path('trick_detail', { slug: trick.slug }) }}">
             {% if trick.medias is not empty %}
               <div class="container">
@@ -92,8 +92,12 @@
           <div class="flex flex-row justify-between items-center p-4">
             <a href="{{ path('trick_detail', { slug: trick.slug }) }}" class="p-2 font-bold">{{ trick.name }}</a>
             <div class="ml-auto">
-              <i class="fas fa-pen mr-2 text-blue-700 hover:text-blue-800"></i>
-              <i class="fas fa-trash-alt text-red-600 hover:text-red-700"></i>
+              {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <i class="cursor-pointer fas fa-pen mr-2 text-blue-700 hover:text-blue-800"></i>
+                {% if app.user.username == trick.author.username %}
+                  <i class="cursor-pointer fas fa-trash-alt text-red-600 hover:text-red-700"></i>
+                {% endif %}
+              {% endif %}
             </div>
           </div>
         </div>
@@ -101,10 +105,10 @@
     </div>
     <div class="mb-10 flex flex-row flex-grow-0 justify-center text-center">
       <button class="flex flex-row max-w-2xl items-center px-6 py-2 transition duration-500 delay-100 ease-out bg-yellow-500 hover:bg-yellow-600 rounded-md text-white shadow-lg"
-              id="load-more"
+              id="load-more-tricks-btn"
               aria-label="Voir plus de tricks"
       >
-        <svg class="hidden" id="spinner" version="1.1" xmlns="http://www.w3.org/2000/svg"
+        <svg class="hidden" id="spinner-tricks" version="1.1" xmlns="http://www.w3.org/2000/svg"
              xmlns:xlink="http://www.w3.org/1999/xlink" width="16"
              height="16" viewBox="0 0 16 16">
           <path fill="#FFFFFF"
