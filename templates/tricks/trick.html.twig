@@ -198,7 +198,7 @@
       </div>
       <hr class="border w-1/2 mx-auto my-10">
       {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-        {{ include('tricks/_comment_form.html.twig') }}
+        {% include('tricks/_comment_form.html.twig') %}
       {% else %}
         <div class="text-center">
           <p>Veuillez <a href="{{ path('app_login') }}"
@@ -257,5 +257,5 @@
       </div>
     </section>
   </div>
-  {{ include('_parts/_modal.html.twig') }}
+  {% include('_parts/_modal.html.twig') %}
 {% endblock %}

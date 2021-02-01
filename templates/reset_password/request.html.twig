@@ -6,4 +6,4 @@
 
 {% block page_title %}Mot de passe oublié{% endblock %}
 
-{% block content %}{{ include('reset_password/_request_form.html.twig') }}{% endblock %}
+{% block content %}{% include('reset_password/_request_form.html.twig') %}{% endblock %}
