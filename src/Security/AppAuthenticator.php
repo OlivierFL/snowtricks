@@ -4,7 +4,6 @@ namespace App\Security;
 
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
-use Exception;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -88,6 +87,10 @@ class AppAuthenticator extends AbstractFormLoginAuthenticator implements Passwor
 
     /**
      * Used to upgrade (rehash) the user's password automatically over time.
+     *
+     * @param $credentials
+     *
+     * @return null|string
      */
     public function getPassword($credentials): ?string
     {

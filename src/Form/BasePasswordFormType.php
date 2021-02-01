@@ -42,7 +42,8 @@ class BasePasswordFormType extends AbstractType
                     ]),
                     new NotCompromisedPassword(),
                 ],
-            ]);
+            ])
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

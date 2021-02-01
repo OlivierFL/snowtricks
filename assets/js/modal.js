@@ -1,24 +1,29 @@
+import Routing from '../../vendor/friendsofsymfony/jsrouting-bundle/Resources/public/js/router.min.js';
+
+const routes = require('../../public/js/fos_js_routes.json');
+
+Routing.setRoutingData(routes);
+
 // Handle modal opening when clicking on image/video thumbnails
 let imageElement = $('.modal-body #image');
 let videoElement = $('.modal-body #video');
+let commentElement = $('.modal-body #comment');
 let openModal = document.querySelectorAll('.modal-open');
+
 if (null !== openModal) {
     for (let i = 0; i < openModal.length; i++) {
         openModal[i].addEventListener('click', function (event) {
             event.preventDefault();
             if ($(this).data('media-id')) {
-                let mediaId = $(this).data('media-id');
-                switch ($(this).data('type')) {
-                    case 'image':
-                        imageElement.removeClass('hidden').attr('src', mediaId);
-                        break;
-                    case 'youtube':
-                        videoElement.removeClass('hidden').attr('src', 'https://youtube.com/embed/' + mediaId);
-                        break;
-                    case 'vimeo':
-                        videoElement.removeClass('hidden').attr('src', 'https://player.vimeo.com/video/' + mediaId);
-                        break;
-                }
+                displayMedia({
+                    'type': $(this).data('type'),
+                    'id': $(this).data('media-id')
+                });
+            } else if ('comment' === $(this).data('type')) {
+                handleComment({
+                    'action': $(this).data('action'),
+                    'id': $(this).data('id')
+                });
             }
             toggleModal();
         })
@@ -83,5 +88,49 @@ function clearModalData() {
         imageElement.attr('src', '').addClass('hidden');
     } else if ('' !== videoElement.attr('src')) {
         videoElement.attr('src', '').addClass('hidden');
+    } else if (!commentElement.hasClass('hidden')) {
+        commentElement.addClass('hidden');
+    }
+}
+
+// Display media in modal
+function displayMedia(data) {
+    let mediaId = data.id;
+    switch (data.type) {
+        case 'image':
+            imageElement.removeClass('hidden').attr('src', mediaId);
+            break;
+        case 'youtube':
+            videoElement.removeClass('hidden').attr('src', 'https://youtube.com/embed/' + mediaId);
+            break;
+        case 'vimeo':
+            videoElement.removeClass('hidden').attr('src', 'https://player.vimeo.com/video/' + mediaId);
+            break;
+    }
+}
+
+// Handle comment moderation display in modal
+function handleComment(data) {
+    $("#comment .comment-modal-content").html(getContent(data.action));
+    $("#comment .id-value").val(data.id);
+    commentElement.removeClass('hidden');
+
+    if ('approve' === data.action) {
+        $('#modal-form-comment').attr('action', Routing.generate('admin_moderate_comment', {
+            isValid: 1
+        }));
+    } else if ('delete' === data.action) {
+        $('#modal-form-comment').attr('action', Routing.generate('admin_moderate_comment', {
+            isValid: 0
+        }));
+    }
+}
+
+// Get HTML content for comment moderation in modal
+function getContent(action) {
+    if ('approve' === action) {
+        return 'Confirmer la publication du commentaire ?';
+    } else if ('delete' === action) {
+        return 'Confirmer la modération du commentaire ? Il ne sera plus visible, mais pas définitivement supprimé';
     }
 }

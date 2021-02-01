@@ -38,11 +38,13 @@ class ResetPasswordController extends AbstractController
      * Display & process form to request a password reset.
      *
      * @Route("", name="app_forgot_password_request")
+     *
      * @param Request         $request
      * @param MailerInterface $mailer
      *
-     * @return Response
      * @throws TransportExceptionInterface
+     *
+     * @return Response
      */
     public function request(Request $request, MailerInterface $mailer): Response
     {
@@ -82,9 +84,10 @@ class ResetPasswordController extends AbstractController
      * Validates and process the reset URL that the user clicked in their email.
      *
      * @Route("/reset/{token}", name="app_reset_password")
+     *
      * @param Request                      $request
      * @param UserPasswordEncoderInterface $passwordEncoder
-     * @param string|null                  $token
+     * @param null|string                  $token
      *
      * @return Response
      */
@@ -147,8 +150,9 @@ class ResetPasswordController extends AbstractController
      * @param string          $emailFormData
      * @param MailerInterface $mailer
      *
-     * @return RedirectResponse
      * @throws TransportExceptionInterface
+     *
+     * @return RedirectResponse
      */
     private function processSendingPasswordResetEmail(string $emailFormData, MailerInterface $mailer): RedirectResponse
     {
@@ -200,7 +204,8 @@ class ResetPasswordController extends AbstractController
             ->htmlTemplate('reset_password/reset_password_email.html.twig')
             ->context([
                 'resetToken' => $resetToken,
-            ]);
+            ])
+        ;
 
         $mailer->send($email);
 

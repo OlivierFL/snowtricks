@@ -51,8 +51,6 @@ class FileUploader
 
     /**
      * @param string $fileName
-     *
-     * @return void
      */
     public function remove(string $fileName): void
     {

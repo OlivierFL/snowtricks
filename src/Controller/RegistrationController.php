@@ -27,11 +27,13 @@ class RegistrationController extends AbstractController
 
     /**
      * @Route("/inscription", name="app_register")
+     *
      * @param Request                      $request
      * @param UserPasswordEncoderInterface $passwordEncoder
      *
-     * @return Response
      * @throws TransportExceptionInterface
+     *
+     * @return Response
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
@@ -75,6 +77,7 @@ class RegistrationController extends AbstractController
 
     /**
      * @Route("/verify/email", name="app_verify_email")
+     *
      * @param Request        $request
      * @param UserRepository $userRepository
      *

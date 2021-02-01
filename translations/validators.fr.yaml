@@ -6,3 +6,4 @@ Please enter a password: Veuillez renseigner un mot de passse
 The password fields must match: Les deux mots de passe doivent être identiques
 Please enter your email: Veuillez renseigner votre email
 Please upload a valid image file: Format d'image invalide
+Your comment must be at least {{ limit }} characters long: Le commentaire doit contenir au moins {{ limit }} caractères
