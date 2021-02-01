@@ -1,0 +1,31 @@
+{{ form_start(comment_form) }}
+<div class="container mx-auto flex flex-col w-10/12 lg:w-full text-center lg:text-left">
+  {{ form_label(comment_form.content, null, {
+    'label_attr': {'class': 'font-jura font-light text-2xl mb-2'
+    }}) }}
+  <div class="relative mx-auto w-full">
+    <div class="absolute inset-y-0 flex items-center pointer-events-none">
+      {% if form_errors(comment_form.content) %}
+        <i class="fas fa-exclamation-circle text-red-500 w-5 h-5 pl-4"></i>
+      {% endif %}
+    </div>
+    {{ form_widget(comment_form.content, {
+      'attr': {
+        'class': 'block border-b border-gray-500 text-gray-500 bg-gray-100 pl-10 py-2 focus:border-yellow-500 focus:shadow-md focus:ring-2 focus:ring-yellow-500 w-full'
+      }}) }}
+  </div>
+  <div class="text-red-500 font-bold p-2 text-center lg:text-left">
+    {{ form_errors(comment_form.content) }}
+  </div>
+  <div class="text-sm font-light text-gray-500 mb-4">
+    <p><i class="fas fa-info-circle pr-2"></i>Le commentaire sera soumis pour validation</p>
+  </div>
+</div>
+<div class="text-center">
+  <button class="inline-block bg-yellow-500 hover:bg-yellow-600 transition duration-500 delay-100 ease-out text-white px-6 py-2 rounded-md"
+          type="submit">
+    Soumettre
+  </button>
+</div>
+{{ form_end(comment_form) }}
+

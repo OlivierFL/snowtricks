@@ -13,6 +13,7 @@ class IndexController extends AbstractController
 {
     /**
      * @Route("/", name="home")
+     *
      * @param TrickRepository    $repository
      * @param Request            $request
      * @param PaginatorInterface $paginator

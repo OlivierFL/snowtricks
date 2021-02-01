@@ -27,45 +27,45 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @Assert\Length(
-     *      min = 1,
-     *      max = 255,
-     *      minMessage = "Your first name must be at least {{ limit }} characters long",
-     *      maxMessage = "Your first name cannot be longer than {{ limit }} characters"
+     *     min=1,
+     *     max=255,
+     *     minMessage="Your first name must be at least {{ limit }} characters long",
+     *     maxMessage="Your first name cannot be longer than {{ limit }} characters"
      * )
      */
     private ?string $firstName;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @Assert\Length(
-     *      min = 1,
-     *      max = 255,
-     *      minMessage = "Your last name must be at least {{ limit }} characters long",
-     *      maxMessage = "Your last name cannot be longer than {{ limit }} characters"
+     *     min=1,
+     *     max=255,
+     *     minMessage="Your last name must be at least {{ limit }} characters long",
+     *     maxMessage="Your last name cannot be longer than {{ limit }} characters"
      * )
      */
     private ?string $lastName;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @Assert\Length(
-     *      min = 2,
-     *      max = 255,
-     *      minMessage = "Your username must be at least {{ limit }} characters long",
-     *      maxMessage = "Your username cannot be longer than {{ limit }} characters"
+     *     min=2,
+     *     max=255,
+     *     minMessage="Your username must be at least {{ limit }} characters long",
+     *     maxMessage="Your username cannot be longer than {{ limit }} characters"
      * )
      */
     private string $username;
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @Assert\Email(
-     *     message = "The email '{{ value }}' is not a valid email."
+     *     message="The email '{{ value }}' is not a valid email."
      * )
      */
     private ?string $email;
@@ -104,7 +104,7 @@ class User implements UserInterface
      * Used to get the author of the tricks.
      *
      * @ORM\OneToMany(targetEntity=Trick::class, mappedBy="author", orphanRemoval=true)
-     * @OrderBy({"updatedAt" = "DESC"})
+     * @OrderBy({"updatedAt": "DESC"})
      */
     private Collection $authorTricks;
 
@@ -217,7 +217,7 @@ class User implements UserInterface
         return $this->avatar;
     }
 
-    public function setAvatar(string $avatar): User
+    public function setAvatar(string $avatar): self
     {
         $this->avatar = $avatar;
 

@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\CommentRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=CommentRepository::class)
@@ -23,6 +24,11 @@ class Comment
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank
+     * @Assert\Length(
+     *     min=2,
+     *     minMessage="Your comment must be at least {{ limit }} characters long"
+     * )
      */
     private ?string $content;
 
@@ -37,6 +43,11 @@ class Comment
      * @ORM\JoinColumn(nullable=false)
      */
     private ?User $author;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private ?bool $isValid;
 
     public function getId(): ?int
     {
@@ -75,6 +86,18 @@ class Comment
     public function setAuthor(?User $author): self
     {
         $this->author = $author;
+
+        return $this;
+    }
+
+    public function getIsValid(): ?bool
+    {
+        return $this->isValid;
+    }
+
+    public function setIsValid(bool $isValid): self
+    {
+        $this->isValid = $isValid;
 
         return $this;
     }

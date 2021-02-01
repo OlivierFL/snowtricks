@@ -11,8 +11,8 @@ export function displayComments(results) {
 
 function renderComment(result, updatedAt) {
     $('#comments-list').append(
-        `<div class="flex flex-row justify-center mb-10 comment">
-          <div class="w-2/12 flex flex-col justify-center items-center text-center text-gray-500 mr-2 pr-4">
+        `<div class="flex flex-col lg:flex-row justify-center mb-10 comments">
+          <div class="lg:w-2/12 flex flex-col justify-center items-center text-center text-gray-500 mr-2 pr-4">
              <div class="flex justify-center items-center w-6 h-6 lg:w-8 lg:h-8 rounded-full border-2 border-yellow-500 bg-gray-500 text-white p-5 capitalize"
                  title="${result.author.username}">
             <div class="text-xl cursor-default">${result.author.username.slice(0, 1)}</div>
@@ -20,7 +20,7 @@ function renderComment(result, updatedAt) {
             <p class="font-light text-sm mb-2">${result.author.username}</p>
             <p class="font-light text-sm">${updatedAt}</p>
           </div>
-          <div class="w-10/12 p-2 border-b-2 border-l-2 border-yellow-500 text-sm ml-auto">
+          <div class="w-full lg:w-10/12 p-2 border-b-2 border-l-2 border-yellow-500 text-sm lg:ml-auto">
             <p>${result.content}</p>
           </div>
         </div>
@@ -29,8 +29,8 @@ function renderComment(result, updatedAt) {
 
 function renderCommentWithAvatar(result, updatedAt) {
     $('#comments-list').append(
-        `<div class="flex flex-row justify-center mb-10 comment">
-          <div class="w-2/12 flex flex-col justify-center items-center text-center text-gray-500 mr-2 pr-4">
+        `<div class="flex flex-col lg:flex-row justify-center mb-10 comments">
+          <div class="lg:w-2/12 flex flex-col justify-center items-center text-center text-gray-500 mr-2 pr-4">
             <img src="/uploads/avatars/${result.author.avatar}"
                  alt="${result.author.username}"
                  title="${result.author.username}"
@@ -41,7 +41,7 @@ function renderCommentWithAvatar(result, updatedAt) {
             <p class="font-light text-sm mb-2">${result.author.username}</p>
             <p class="font-light text-sm">${updatedAt}</p>
           </div>
-          <div class="w-10/12 p-2 border-b-2 border-l-2 border-yellow-500 text-sm ml-auto">
+          <div class="w-full lg:w-10/12 p-2 border-b-2 border-l-2 border-yellow-500 text-sm lg:ml-auto">
             <p>${result.content}</p>
           </div>
         </div>

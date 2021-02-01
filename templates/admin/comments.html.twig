@@ -8,10 +8,12 @@
   <h1 class="uppercase mb-4 font-jura font-bold text-2xl lg:text-4xl">Liste des commentaires</h1>
   <hr class="border border-yellow-500 w-1/12 mx-auto">
   <div class="flex flex-col justify-center items-center w-10/12 mx-auto mt-4 lg:mt-14 overflow-x-auto">
-    <table class="border-collapse table-auto border border-white text-left">
+    <table class="border-collapse table-auto xl:table-fixed border border-white text-left">
       <thead>
       <tr>
-        <th class="border border-gray-700 px-6 py-4 font-jura font-bold text-lg bg-gray-700 text-white">Contenu</th>
+        <th class="xl:w-1/2 border border-gray-700 px-6 py-4 font-jura font-bold text-lg bg-gray-700 text-white">
+          Contenu
+        </th>
         <th class="border border-gray-700 px-6 py-4 font-jura font-bold text-lg bg-gray-700 text-white">Auteur</th>
         <th class="border border-gray-700 px-6 py-4 font-jura font-bold text-lg bg-gray-700 text-white">Date de
           création
@@ -20,52 +22,34 @@
       </tr>
       </thead>
       <tbody>
-      <tr>
-        <td class="border border-gray-700 px-6 py-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-          Doloribus, providen...
-        </td>
-        <td class="border border-gray-700 px-6 py-4">UserName</td>
-        <td class="border border-gray-700 px-6 py-4">{{ 'now'|date('d/m/Y à H:i', 'Europe/Paris') }}</td>
-        <td class="border border-gray-700 p-1 lg:px-2 lg:py-4 xl:px-4 text-center">
-          <a href=""
-             class="px-4 py-2 inline-block border border-blue-700 text-blue-700 hover:bg-blue-700 hover:text-white rounded-md hover:shadow-lg transition duration-500 delay-100 ease-out mr-1 lg:mr-2 lg:mb-2"><i
-                    class="fas fa-pen lg:mr-2"></i><span class="hidden lg:inline-block">Modifier</span></a>
-          <a href=""
-             class="px-4 py-2 inline-block border border-red-700 text-red-700 hover:bg-red-700 hover:text-white rounded-md hover:shadow-lg transition duration-500 delay-100 ease-out"><i
-                    class="fas fa-trash lg:mr-2"></i><span class="hidden lg:inline-block">Supprimer</span></a>
-        </td>
-      </tr>
-      <tr>
-        <td class="border border-gray-700 px-6 py-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-          Doloribus, providen...
-        </td>
-        <td class="border border-gray-700 px-6 py-4">UserName</td>
-        <td class="border border-gray-700 px-6 py-4">{{ 'now'|date('d/m/Y à H:i', 'Europe/Paris') }}</td>
-        <td class="border border-gray-700 p-1 lg:px-2 lg:py-4 xl:px-4 text-center">
-          <a href=""
-             class="px-4 py-2 inline-block border border-blue-700 text-blue-700 hover:bg-blue-700 hover:text-white rounded-md hover:shadow-lg transition duration-500 delay-100 ease-out mr-1 lg:mr-2 lg:mb-2"><i
-                    class="fas fa-pen lg:mr-2"></i><span class="hidden lg:inline-block">Modifier</span></a>
-          <a href=""
-             class="px-4 py-2 inline-block border border-red-700 text-red-700 hover:bg-red-700 hover:text-white rounded-md hover:shadow-lg transition duration-500 delay-100 ease-out"><i
-                    class="fas fa-trash lg:mr-2"></i><span class="hidden lg:inline-block">Supprimer</span></a>
-        </td>
-      </tr>
-      <tr>
-        <td class="border border-gray-700 px-6 py-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-          Doloribus, providen...
-        </td>
-        <td class="border border-gray-700 px-6 py-4">UserName</td>
-        <td class="border border-gray-700 px-6 py-4">{{ 'now'|date('d/m/Y à H:i', 'Europe/Paris') }}</td>
-        <td class="border border-gray-700 p-1 lg:px-2 lg:py-4 xl:px-4 text-center">
-          <a href=""
-             class="px-4 py-2 inline-block border border-blue-700 text-blue-700 hover:bg-blue-700 hover:text-white rounded-md hover:shadow-lg transition duration-500 delay-100 ease-out mr-1 lg:mr-2 lg:mb-2"><i
-                    class="fas fa-pen lg:mr-2"></i><span class="hidden lg:inline-block">Modifier</span></a>
-          <a href=""
-             class="px-4 py-2 inline-block border border-red-700 text-red-700 hover:bg-red-700 hover:text-white rounded-md hover:shadow-lg transition duration-500 delay-100 ease-out"><i
-                    class="fas fa-trash lg:mr-2"></i><span class="hidden lg:inline-block">Supprimer</span></a>
-        </td>
-      </tr>
+      {% for comment in comments %}
+        <tr>
+          <td class="border border-gray-700 px-6 py-4 max-w-1/2">{{ comment.content }}</td>
+          <td class="border border-gray-700 px-6 py-4">{{ comment.author.username }}</td>
+          <td class="border border-gray-700 px-6 py-4">{{ comment.createdAt|date('d/m/Y à H:i', 'Europe/Paris') }}</td>
+          <td class="border border-gray-700 p-1 lg:px-2 lg:py-4 xl:px-4 text-center">
+            {% if not comment.isValid %}
+              <button class="modal-open px-4 py-2 inline-block border border-green-500 hover:border-green-600 text-white bg-green-500 hover:bg-green-600 rounded-md hover:shadow-lg transition duration-500 delay-100 ease-out"
+                      data-id="{{ comment.id }}"
+                      data-type="comment"
+                      data-action="approve"
+              ><i
+                        class="fas fa-check lg:mr-2"></i><span class="hidden lg:inline-block">Publier</span>
+              </button>
+            {% else %}
+              <button class="modal-open px-4 py-2 inline-block border border-red-500 hover:border-red-600 text-white bg-red-500 hover:bg-red-600 rounded-md hover:shadow-lg transition duration-500 delay-100 ease-out"
+                      data-id="{{ comment.id }}"
+                      data-type="comment"
+                      data-action="delete"
+              ><i
+                        class="fas fa-times lg:mr-2"></i><span class="hidden lg:inline-block">Modérer</span>
+              </button>
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
       </tbody>
     </table>
   </div>
+  {{ include('_parts/_modal.html.twig') }}
 {% endblock %}

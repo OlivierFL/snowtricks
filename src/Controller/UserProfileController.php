@@ -15,6 +15,7 @@ class UserProfileController extends AbstractController
 {
     /**
      * @Route("/profil", name="profile_index")
+     *
      * @param Request      $request
      * @param FileUploader $uploader
      *
@@ -64,7 +65,7 @@ class UserProfileController extends AbstractController
     }
 
     /**
-     * @param UserInterface|object|null $user
+     * @param null|object|UserInterface $user
      * @param FileUploader              $uploader
      * @param UploadedFile              $avatar
      *

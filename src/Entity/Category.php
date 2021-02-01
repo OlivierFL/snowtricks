@@ -38,6 +38,14 @@ class Category
         $this->tricks = new ArrayCollection();
     }
 
+    /**
+     * Temporary fix for "Typed property must not be accessed before initialization" error.
+     */
+    public function __sleep(): array
+    {
+        return [];
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -81,13 +89,5 @@ class Category
         }
 
         return $this;
-    }
-
-    /**
-     * Temporary fix for "Typed property must not be accessed before initialization" error.
-     */
-    public function __sleep(): array
-    {
-        return [];
     }
 }

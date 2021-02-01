@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\Trick;
+use App\Form\CommentFormType;
 use App\Repository\CommentRepository;
+use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,8 +17,9 @@ class TricksController extends AbstractController
 {
     /**
      * @Route("/tricks/{slug}",
-     *     options={"expose"=true},
-     *     name="trick_detail")
+     *     options={"expose": true},
+     * name="trick_detail")
+     *
      * @param Request            $request
      * @param Trick              $trick
      * @param CommentRepository  $commentRepository
@@ -23,19 +27,66 @@ class TricksController extends AbstractController
      *
      * @return Response
      */
-    public function show(Request $request, Trick $trick, CommentRepository $commentRepository, PaginatorInterface $paginator): Response
-    {
+    public function show(
+        Request $request,
+        Trick $trick,
+        CommentRepository $commentRepository,
+        PaginatorInterface $paginator
+    ): Response {
         $page = max(1, $request->query->getInt('page', 1));
+        $comments = $this->getCommentsPaginated($commentRepository, $trick, $paginator, $page);
 
-        $commentsQuery = $commentRepository->findBy(['trick' => $trick], ['updatedAt' => 'DESC']);
+        $comment = new Comment();
+        $form = $this->createForm(CommentFormType::class, $comment);
 
-        $comments = $paginator->paginate($commentsQuery,
-            $page,
-            2);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+            $comment->setIsValid(false);
+            $comment->setTrick($trick);
+            $comment->setAuthor($this->getUser());
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($comment);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Votre commentaire a été soumis pour validation');
+        }
 
         return $this->render('tricks/trick.html.twig', [
             'trick' => $trick,
             'comments' => $comments,
+            'comment_form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @param CommentRepository  $commentRepository
+     * @param Trick              $trick
+     * @param PaginatorInterface $paginator
+     * @param                    $page
+     *
+     * @return PaginationInterface
+     */
+    private function getCommentsPaginated(
+        CommentRepository $commentRepository,
+        Trick $trick,
+        PaginatorInterface $paginator,
+        $page
+    ): PaginationInterface {
+        $commentsQuery = $commentRepository->findBy([
+            'trick' => $trick,
+            'isValid' => true,
+        ], [
+            'updatedAt' => 'DESC',
+        ]);
+
+        return $paginator->paginate(
+            $commentsQuery,
+            $page,
+            2
+        );
     }
 }

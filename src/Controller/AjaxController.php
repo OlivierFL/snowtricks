@@ -30,9 +30,10 @@ class AjaxController extends AbstractController
     /**
      * @Route("/tricks/load-more/{offset}/{limit}",
      *     name="load_more_tricks",
-     *     options={"expose"=true},
-     *     requirements={"offset"="\d+", "limit"="\d+"}
+     *     options={"expose": true},
+     *     requirements={"offset": "\d+", "limit": "\d+"}
      * )
+     *
      * @param TrickRepository $repository
      * @param int             $offset
      * @param int             $limit
@@ -50,9 +51,10 @@ class AjaxController extends AbstractController
     /**
      * @Route("/comments/load-more/{offset}/{limit}",
      *     name="load_more_comments",
-     *     options={"expose"=true},
-     *     requirements={"offset"="\d+", "limit"="\d+"}
+     *     options={"expose": true},
+     *     requirements={"offset": "\d+", "limit": "\d+"}
      * )
+     *
      * @param CommentRepository $repository
      * @param int               $offset
      * @param int               $limit
@@ -64,14 +66,15 @@ class AjaxController extends AbstractController
         int $offset = 0,
         int $limit = 4
     ): JsonResponse {
-        return $this->loadMoreResults($repository, $limit, $offset, 'updatedAt');
+        return $this->loadMoreResults($repository, $limit, $offset, 'updatedAt', ['isValid' => true]);
     }
 
     /**
      * @param ServiceEntityRepositoryInterface $repository
      * @param int                              $limit
      * @param int                              $offset
-     * @param string                           $param
+     * @param string                           $criteria
+     * @param null|array                       $options
      *
      * @return JsonResponse
      */
@@ -79,9 +82,10 @@ class AjaxController extends AbstractController
         ServiceEntityRepositoryInterface $repository,
         int $limit,
         int $offset,
-        string $param
+        string $criteria,
+        array $options = null
     ): JsonResponse {
-        $query = $repository->findBy([], [$param => 'DESC'], $limit, $offset);
+        $query = $repository->findBy($options ?? [], [$criteria => 'DESC'], $limit, $offset);
 
         $data = $this->serializer->serialize($query, 'json', [
             'circular_reference_handler' => function ($object) {

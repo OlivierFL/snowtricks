@@ -36,7 +36,8 @@ class EditProfileFormType extends AbstractType
                         'mimeTypesMessage' => 'Please upload a valid image file',
                     ]),
                 ],
-            ]);
+            ])
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
