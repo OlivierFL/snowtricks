@@ -58,9 +58,21 @@
     </div>
   </section>
   <section class="mb-20 container max-w-screen-xl mx-auto mt-10 md:mt-20 px-4 lg:px-8 xl:px-0" id="tricks">
-    <h2 class="text-3xl md:text-4xl text-center md:text-left mb-10 md:mb-20 uppercase font-jura font-bold lg:border-l-4 border-yellow-500 lg:pl-4">
-      Les derniers
-      tricks ajoutés</h2>
+    <div class="flex flex-col lg:flex-row items-center lg:items-start">
+      <h2 class="text-3xl md:text-4xl text-center md:text-left mb-10 md:mb-20 uppercase font-jura font-bold lg:border-l-4 border-yellow-500 lg:pl-4">
+        Les derniers
+        tricks ajoutés</h2>
+      {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <div class="lg:ml-auto text-white mb-8 lg:mb-0">
+          <a href="{{ path('trick_new') }}"
+             class="inline-block bg-gray-600 hover:bg-gray-500 border-2 border-gray-600 hover:border-gray-500 transition duration-500 delay-100 ease-out text-white px-6 py-2 rounded-md mr-6"
+          >
+            <i class="fas fa-plus mr-2 text-sm"></i>
+            Ajouter un trick
+          </a>
+        </div>
+      {% endif %}
+    </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6 mb-10"
          id="tricks-list"
     >

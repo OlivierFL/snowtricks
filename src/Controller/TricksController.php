@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Comment;
 use App\Entity\Trick;
 use App\Form\CommentFormType;
+use App\Form\TrickType;
 use App\Repository\CommentRepository;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -59,6 +60,35 @@ class TricksController extends AbstractController
             'trick' => $trick,
             'comments' => $comments,
             'comment_form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/tricks/new",
+     *     name="trick_new",
+     *     priority=1
+     * )
+     *
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function create(Request $request): Response
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $trick = new Trick();
+
+        $form = $this->createForm(TrickType::class, $trick);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $trick->setAuthor($this->getUser());
+            dd($trick);
+        }
+
+        return $this->render('tricks/new.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 

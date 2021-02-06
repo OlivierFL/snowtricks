@@ -8,9 +8,12 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=TrickRepository::class)
+ * @UniqueEntity(fields={"name"}, message="There is already a trick with this name")
  * @ORM\Table(name="`tricks`")
  */
 class Trick
@@ -26,11 +29,23 @@ class Trick
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
+     * @Assert\Length(
+     *     min=2,
+     *     max=255,
+     *     minMessage="The trick name must be at least {{ limit }} characters long",
+     *     maxMessage="The trick name cannot be longer than {{ limit }} characters"
+     * )
      */
     private ?string $name;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank
+     * @Assert\Length(
+     *     min=5,
+     *     minMessage="The trick description must be at least {{ limit }} characters long"
+     * )
      */
     private ?string $description;
 
@@ -46,13 +61,20 @@ class Trick
     private Collection $comments;
 
     /**
-     * @ORM\OneToMany(targetEntity=Media::class, mappedBy="trick", orphanRemoval=true)
+     * @ORM\OneToOne(targetEntity=Media::class, inversedBy="mainTrick", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private ?Media $coverImage;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Media::class, mappedBy="trick", orphanRemoval=true, cascade={"persist"})
      */
     private Collection $medias;
 
     /**
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="tricks")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\Valid
      */
     private Category $category;
 
@@ -147,6 +169,18 @@ class Trick
         return $this;
     }
 
+    public function getCoverImage(): ?Media
+    {
+        return $this->coverImage;
+    }
+
+    public function setCoverImage(Media $coverImage): self
+    {
+        $this->coverImage = $coverImage;
+
+        return $this;
+    }
+
     /**
      * @return Collection|Media[]
      */
@@ -175,12 +209,12 @@ class Trick
         return $this;
     }
 
-    public function getCategory(): ?Category
+    public function getCategory(): Category
     {
         return $this->category;
     }
 
-    public function setCategory(?Category $category): self
+    public function setCategory(Category $category): self
     {
         $this->category = $category;
 

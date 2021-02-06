@@ -1,0 +1,36 @@
+{% extends('base.html.twig') %}
+
+{%- block meta_title -%}
+  Nouveau trick - SnowTricks - Le site communautaire pour apprendre tous les tricks de snowboard
+{%- endblock -%}
+
+{%- block meta_description -%}
+  Création d'un nouveau trick
+{%- endblock -%}
+
+{%- block og_title -%}
+  SnowTricks - Nouveau trick
+{%- endblock -%}
+
+{%- block og_type -%}
+  website
+{%- endblock -%}
+
+{%- block og_url -%}
+  {{ app.request.schemeAndHttpHost }}
+{%- endblock -%}
+
+{%- block title -%}
+  Nouveau trick - SnowTricks
+{%- endblock -%}
+
+{% block body %}
+  <section class="container lg:max-w-screen-xl mx-auto mt-10 md:mt-16 mb-24 lg:mb-40">
+    <div class="flex flex-col items-center rounded-2xl shadow-2xl p-10 mx-4 lg:mx-10 bg-gray-200">
+      <h1 class="font-jura font-bold text-center lg:text-left text-2xl lg:text-4xl mb-10 mb-6 lg:border-l-4 border-yellow-500 lg:pl-4">
+        Nouveau trick
+      </h1>
+      {% include 'tricks/_new_trick_form.html.twig' %}
+    </div>
+  </section>
+{% endblock %}

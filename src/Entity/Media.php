@@ -45,6 +45,11 @@ class Media
      */
     private ?string $type;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Trick::class, mappedBy="coverImage", cascade={"persist", "remove"})
+     */
+    private ?Trick $mainTrick;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -94,6 +99,23 @@ class Media
     public function setType(string $type): self
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getMainTrick(): ?Trick
+    {
+        return $this->mainTrick;
+    }
+
+    public function setMainTrick(Trick $mainTrick): self
+    {
+        // set the owning side of the relation if necessary
+        if ($mainTrick->getCoverImage() !== $this) {
+            $mainTrick->setCoverImage($this);
+        }
+
+        $this->mainTrick = $mainTrick;
 
         return $this;
     }

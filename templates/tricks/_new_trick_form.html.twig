@@ -1,0 +1,110 @@
+{{ form_start(form, {'attr': {'class': 'container w-full lg:px-10'}}) }}
+<div class="flex flex-col lg:flex-row lg:justify-between lg:gap-10 mb-10">
+  <div class="lg:w-1/2 flex flex-col mb-10 lg:mb-0">
+    <h2 class="font-jura font-bold mb-4 text-xl text-center lg:text-left lg:text-2xl">Informations de base</h2>
+    <div class="lg:flex lg:justify-between lg:items-start gap-6 lg:mb-10">
+      <div class="w-full lg:w-1/2">
+        {{ form_label(form.name, null, {
+          'label_attr': {'class': 'font-jura font-light text-2xl block mb-2'
+          }}) }}
+        <div class="mx-auto w-full">
+          {{ form_widget(form.name, {
+          'attr': {
+          'class': 'block border-b border-gray-500 text-gray-500 bg-gray-100 pl-2 py-3 focus:border-yellow-500 focus:shadow-md focus:ring-2 focus:ring-yellow-500 w-full'
+          }}) }}
+        </div>
+        {% if form_errors(form.name) %}
+          <div class="flex items-center text-red-500 font-bold text-left mt-2">
+            <i class="fas fa-exclamation-circle text-red-500 w-5 h-5 pl-2 mr-4"></i> {{ form_errors(form.name) }}
+          </div>
+        {% endif %}
+      </div>
+      <div class="w-full lg:w-1/2">
+        {{ form_label(form.category, null, {
+          'label_attr': {'class': 'font-jura font-light text-2xl block mb-2'
+          }}) }}
+        <div class="relative mx-auto w-full">
+          {{ form_widget(form.category, {
+            'attr': {
+              'class': 'block appearance-none border-b border-gray-500 text-gray-500 bg-gray-100 pl-2 py-3 focus:border-yellow-500 focus:shadow-md focus:ring-2 focus:ring-yellow-500 w-full'
+            }}) }}
+          <div class="absolute right-0 inset-y-0 flex items-center pointer-events-none z-10">
+            <i class="fas fa-chevron-down text-gray-500 w-5 h-5 pr-6 text-sm"></i>
+          </div>
+        </div>
+        {% if form_errors(form.category) %}
+          <div class="flex items-center text-red-500 font-bold text-left mt-2">
+            <i class="fas fa-exclamation-circle text-red-500 w-5 h-5 pl-2 mr-4"></i> {{ form_errors(form.category) }}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+    <div class="w-full">
+      {{ form_label(form.description, null, {
+        'label_attr': {'class': 'font-jura font-light text-2xl block mb-2'
+        }}) }}
+      <div class="mx-auto w-full">
+        {{ form_widget(form.description, {
+        'attr': {
+        'class': 'block border-b border-gray-500 text-gray-500 bg-gray-100 pl-2 py-2 focus:border-yellow-500 focus:shadow-md focus:ring-2 focus:ring-yellow-500 w-full'
+        }}) }}
+      </div>
+      {% if form_errors(form.description) %}
+        <div class="flex items-center text-red-500 font-bold text-left mt-2">
+          <i class="fas fa-exclamation-circle text-red-500 w-5 h-5 pl-2 mr-4"></i> {{ form_errors(form.description) }}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+  <div class="lg:w-1/2 flex flex-col">
+    <h2 class="font-jura font-bold mb-4 text-xl text-center lg:text-left lg:text-2xl">Médias</h2>
+    <div class="lg:flex lg:justify-between mb-10">
+      <div class="w-full">
+        {{ form_label(form.coverImage, null, {
+          'label_attr': {'class': 'font-jura font-light text-2xl block mb-2'
+          }}) }}
+        <div class="mx-auto w-full">
+          {{ form_widget(form.coverImage, {
+          'attr': {
+          'class': 'block border-b border-gray-500 text-gray-500 bg-gray-100 pl-2 py-2 focus:border-yellow-500 focus:shadow-md focus:ring-2 focus:ring-yellow-500 w-full'
+          }}) }}
+        </div>
+        <div class="flex items-center text-gray-500 text-sm font-light text-left mt-2">
+          <i class="fas fa-info-circle text-gray-500 w-5 h-5 pl-2 mr-4"></i> {{ form_help(form.coverImage) }}
+        </div>
+        {% if form_errors(form.coverImage) %}
+          <div class="flex items-center text-red-500 font-bold text-left mt-2">
+            <i class="fas fa-exclamation-circle text-red-500 w-5 h-5 pl-2 mr-4"></i> {{ form_errors(form.coverImage) }}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+    <h2 class="font-jura font-light text-2xl mr-4 mb-4">Ajouter des médias supplémentaires</h2>
+    <button type="button"
+            class="js-add-item-link inline-block w-1/2 bg-gray-600 hover:bg-gray-500 border-2 border-gray-600 hover:border-gray-500 transition duration-500 delay-100 ease-out text-white px-6 py-2 rounded-md mb-6"
+            data-collection-holder-class="medias"
+    >
+      <i class="fas fa-plus mr-2 text-sm"></i>
+      Ajouter une image
+    </button>
+    <div class="lg:flex lg:justify-between lg:mb-10">
+      <!--      Render Media upload fields-->
+      <ul class="medias" data-prototype="{{ form_widget(form.medias.vars.prototype)|e('html_attr') }}"></ul>
+      <!--      Avoid rendering label for medias with form_rest()-->
+      {{ form_widget(form.medias) }}
+    </div>
+  </div>
+</div>
+<div class="flex justify-between lg:justify-end text-center lg:text-right mt-auto">
+  <a href="{{ path('home') }}"
+     class="inline-block bg-none border-2 border-gray-500 hover:border-gray-600 transition duration-500 delay-100 ease-out text-gray-500 hover:text-gray-600 px-2 lg:px-6 py-2 rounded-md mr-6"
+  >
+    Annuler
+  </a>
+  <button class="inline-block border-2 border-green-500 hover:border-green-600 bg-green-500 hover:bg-green-600 transition duration-500 delay-100 ease-out text-white px-2 lg:px-6 py-2 rounded-md"
+          type="submit">
+    <i class="fas fa-save hidden lg:visible pr-2"></i>
+    Créer le trick
+  </button>
+</div>
+{{ form_end(form) }}

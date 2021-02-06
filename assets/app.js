@@ -20,5 +20,7 @@ import './js/load_more';
 // Used to display file name in edit profile form
 import './js/avatar';
 
+import './js/trickForm';
+
 // start the Stimulus application
 import './bootstrap';
