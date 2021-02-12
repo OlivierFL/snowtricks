@@ -70,7 +70,7 @@
           }}) }}
         </div>
         <div class="flex items-center text-gray-500 text-sm font-light text-left mt-2">
-          <i class="fas fa-info-circle text-gray-500 w-5 h-5 pl-2 mr-4"></i> {{ form_help(form.coverImage) }}
+          {{ form_help(form.coverImage) }}
         </div>
         {% if form_errors(form.coverImage) %}
           <div class="flex items-center text-red-500 font-bold text-left mt-2">
@@ -89,7 +89,7 @@
     </button>
     <div class="lg:flex lg:justify-between lg:mb-10">
       <!--      Render Media upload fields-->
-      <ul class="medias" data-prototype="{{ form_widget(form.medias.vars.prototype)|e('html_attr') }}"></ul>
+      <ul class="medias w-full" data-prototype="{{ form_widget(form.medias.vars.prototype)|e('html_attr') }}"></ul>
       <!--      Avoid rendering label for medias with form_rest()-->
       {{ form_widget(form.medias) }}
     </div>

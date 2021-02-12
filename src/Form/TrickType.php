@@ -34,9 +34,9 @@ class TrickType extends AbstractType
             ])
             ->add('coverImage', FileType::class, [
                 'mapped' => false,
-                'required' => false,
+                'required' => true,
                 'label' => 'Add a cover image',
-                'help' => 'This image will be used to illustrate trick on homepage and on trick detail page',
+                'help' => 'Required: this image will be used to illustrate trick on homepage and on trick detail page',
                 'constraints' => [
                     new File([
                         'maxSize' => '2M',
@@ -54,6 +54,7 @@ class TrickType extends AbstractType
                 'entry_type' => MediaType::class,
                 'allow_add' => true,
                 'by_reference' => false,
+                'entry_options' => ['new' => $options['new']],
             ])
         ;
     }
@@ -62,6 +63,7 @@ class TrickType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Trick::class,
+            'new' => false,
         ]);
     }
 }

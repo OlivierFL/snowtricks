@@ -74,9 +74,9 @@ class UserProfileController extends AbstractController
     private function handleAvatarUpload(?UserInterface $user, FileUploader $uploader, UploadedFile $avatar): string
     {
         $oldAvatar = $user->getAvatar();
-        $avatarFileName = $uploader->upload($avatar);
+        $avatarFileName = $uploader->upload($avatar, FileUploader::AVATARS_DIRECTORY);
         if ($oldAvatar) {
-            $uploader->remove($oldAvatar);
+            $uploader->remove($oldAvatar, FileUploader::AVATARS_DIRECTORY);
         }
 
         return $avatarFileName;

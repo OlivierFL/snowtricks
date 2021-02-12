@@ -34,8 +34,7 @@ function addFormToCollection($collectionHolderClass) {
     $collectionHolder.data('index', index + 1);
 
     // Display the form in the page in an li, before the "Add a media" link li
-    let $newFormLi = $('<li class="mb-6"></li>').append(newForm);
+    let $newFormLi = $('<li class="mb-6 js-media-select"></li>').append(newForm);
     // Add the new form at the end of the list
     $collectionHolder.append($newFormLi)
 }
-

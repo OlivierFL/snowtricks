@@ -7,6 +7,8 @@ use App\Entity\Trick;
 use App\Form\CommentFormType;
 use App\Form\TrickType;
 use App\Repository\CommentRepository;
+use App\Service\TrickHandler;
+use JsonException;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -69,22 +71,28 @@ class TricksController extends AbstractController
      *     priority=1
      * )
      *
-     * @param Request $request
+     * @param Request      $request
+     * @param TrickHandler $trickHandler
+     *
+     * @throws JsonException
      *
      * @return Response
      */
-    public function create(Request $request): Response
+    public function create(Request $request, TrickHandler $trickHandler): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         $trick = new Trick();
 
-        $form = $this->createForm(TrickType::class, $trick);
+        $form = $this->createForm(TrickType::class, $trick, ['new' => true]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $trick->setAuthor($this->getUser());
-            dd($trick);
+            $trickHandler->handleNewTrick($trick, $form);
+
+            $this->addFlash('success', 'Nouveau trick créé');
+
+            return $this->redirectToRoute('trick_detail', ['slug' => $trick->getSlug()]);
         }
 
         return $this->render('tricks/new.html.twig', [

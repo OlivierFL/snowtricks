@@ -19,5 +19,14 @@ Description: Description
 Category: Catégorie
 Alternative text: Texte alternatif
 Url: Url
+Video URL: URL de la vidéo
 Medias: Médias
-This image will be used to illustrate trick on homepage and on trick detail page: Cette image sera utilisée pour illustrer le trick sur la page d'accueil et sur la page de détail du trick
+Media type: Type de média
+Picture: Image
+Video: Vidéo
+Youtube link: Lien Youtube
+Vimeo link: Lien Vimeo
+Youtube URL: URL de la vidéo Youtube
+Vimeo URL: URL de la vidéo Vimeo
+"Required: this image will be used to illustrate trick on homepage and on trick detail page": "Obligatoire: cette image sera utilisée pour illustrer le trick sur la page d'accueil et sur la page de détail du trick"
+Paste Youtube or Vimeo video URL, or embed tag: Coller le lien de la vidéo Youtube ou Vimeo, ou la balise embed

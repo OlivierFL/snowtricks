@@ -13,9 +13,10 @@ class Media
 {
     use TimestampableEntity;
 
-    private const IMAGE = 'image';
-    private const YOUTUBE_VIDEO = 'youtube';
-    private const VIMEO_VIDEO = 'vimeo';
+    public const IMAGE = 'image';
+    public const VIDEO = 'video';
+    public const YOUTUBE_VIDEO = 'youtube';
+    public const VIMEO_VIDEO = 'vimeo';
 
     /**
      * @ORM\Id
