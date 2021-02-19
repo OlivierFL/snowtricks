@@ -58,40 +58,24 @@
   </div>
   <div class="lg:w-1/2 flex flex-col">
     <h2 class="font-jura font-bold mb-4 text-xl text-center lg:text-left lg:text-2xl">Médias</h2>
-    <div class="lg:flex lg:justify-between mb-10">
-      <div class="w-full">
-        {{ form_label(form.coverImage, null, {
-          'label_attr': {'class': 'font-jura font-light text-2xl block mb-2'
-          }}) }}
-        <div class="mx-auto w-full">
-          {{ form_widget(form.coverImage, {
-          'attr': {
-          'class': 'block border-b border-gray-500 text-gray-500 bg-gray-100 pl-2 py-2 focus:border-yellow-500 focus:shadow-md focus:ring-2 focus:ring-yellow-500 w-full'
-          }}) }}
-        </div>
-        <div class="flex items-center text-gray-500 text-sm font-light text-left mt-2">
-          {{ form_help(form.coverImage) }}
-        </div>
-        {% if form_errors(form.coverImage) %}
-          <div class="flex items-center text-red-500 font-bold text-left mt-2">
-            <i class="fas fa-exclamation-circle text-red-500 w-5 h-5 pl-2 mr-4"></i> {{ form_errors(form.coverImage) }}
-          </div>
-        {% endif %}
-      </div>
+    <div class="lg:flex lg:flex-col lg:justify-between">
+      <ul class="medias w-full"
+          data-prototype="{{ form_widget(form.tricksMedia.vars.prototype)|e('html_attr') }}"
+      >
+      </ul>
     </div>
     <h2 class="font-jura font-light text-2xl mr-4 mb-4">Ajouter des médias supplémentaires</h2>
-    <button type="button"
-            class="js-add-item-link inline-block w-1/2 bg-gray-600 hover:bg-gray-500 border-2 border-gray-600 hover:border-gray-500 transition duration-500 delay-100 ease-out text-white px-6 py-2 rounded-md mb-6"
-            data-collection-holder-class="medias"
-    >
-      <i class="fas fa-plus mr-2 text-sm"></i>
-      Ajouter une image
-    </button>
     <div class="lg:flex lg:justify-between lg:mb-10">
       <!--      Render Media upload fields-->
-      <ul class="medias w-full" data-prototype="{{ form_widget(form.medias.vars.prototype)|e('html_attr') }}"></ul>
+      <button type="button"
+              class="js-add-item-link inline-block w-full lg:w-2/3 bg-gray-600 hover:bg-gray-500 border-2 border-gray-600 hover:border-gray-500 transition duration-500 delay-100 ease-out text-white px-6 py-2 rounded-md mb-6"
+              data-collection-holder-class="medias"
+      >
+        <i class="fas fa-plus mr-2 text-sm"></i>
+        Ajouter un nouveau média
+      </button>
       <!--      Avoid rendering label for medias with form_rest()-->
-      {{ form_widget(form.medias) }}
+<!--      {{ form_widget(form.tricksMedia) }}-->
     </div>
   </div>
 </div>

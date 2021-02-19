@@ -36,5 +36,45 @@ function addFormToCollection($collectionHolderClass) {
     // Display the form in the page in an li, before the "Add a media" link li
     let $newFormLi = $('<li class="mb-6 js-media-select"></li>').append(newForm);
     // Add the new form at the end of the list
-    $collectionHolder.append($newFormLi)
+    $collectionHolder.append($newFormLi);
+
+    const imageRadio = $('#trick_tricksMedia_' + index + '_media_type_0');
+    const videoRadio = $('#trick_tricksMedia_' + index + '_media_type_1');
+
+    imageRadio.bind('contentChanged', function (radioType) {
+        displayField(radioType);
+    });
+    imageRadio.change(function (event) {
+        event.preventDefault();
+        imageRadio.trigger('contentChanged', 'image');
+    });
+
+    videoRadio.bind('contentChanged', function (radioType) {
+        displayField(radioType);
+    });
+    videoRadio.change(function (event) {
+        event.preventDefault();
+        videoRadio.trigger('contentChanged', 'video');
+    });
+
+    function displayField(radioType) {
+        $('label[for="trick_tricksMedia_' + index + '_media_altText"]').removeClass('hidden');
+        $('#trick_tricksMedia_' + index + '_media_altText').removeClass('hidden');
+
+        if ('image' === radioType.currentTarget.value) {
+            $('label[for="trick_tricksMedia_' + index + '_media_video_url"]').addClass('hidden');
+            $('#trick_tricksMedia_' + index + '_media_video_url').addClass('hidden');
+            $('#trick_tricksMedia_' + index + '_media_video_url_help').addClass('hidden');
+            $('label[for="trick_tricksMedia_' + index + '_media_image"]').removeClass('hidden');
+            $('#trick_tricksMedia_' + index + '_media_image').removeClass('hidden');
+            $('#trick_tricksMedia_' + index + '_media_image_help').removeClass('hidden');
+        } else if ('video' === radioType.currentTarget.value) {
+            $('label[for="trick_tricksMedia_' + index + '_media_image"]').addClass('hidden');
+            $('#trick_tricksMedia_' + index + '_media_image').addClass('hidden');
+            $('#trick_tricksMedia_' + index + '_media_image_help').addClass('hidden');
+            $('label[for="trick_tricksMedia_' + index + '_media_video_url"]').removeClass('hidden');
+            $('#trick_tricksMedia_' + index + '_media_video_url').removeClass('hidden');
+            $('#trick_tricksMedia_' + index + '_media_video_url_help').removeClass('hidden');
+        }
+    }
 }

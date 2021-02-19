@@ -26,7 +26,7 @@
 
 {% block body %}
   <section class="fixed w-full h-screen opacity-50 z-0 -mt-10 md:-mt-24">
-    {% if trick.medias is empty %}
+    {% if trick.tricksMedia is empty %}
       <img src="{{ asset('build/images/hero_02.jpg') }}"
            alt="SnowTricks hero image"
            class="w-full h-full object-cover"
@@ -34,12 +34,16 @@
            height="1280"
       >
     {% else %}
-      <img src="{{ asset('build/images/' ~ trick.medias.0.url) }}"
-           alt="SnowTricks hero image"
-           class="w-full h-full object-cover"
-           width="1920"
-           height="1280"
-      >
+      {% for trickMedium in trick.tricksMedia %}
+        {% if true == trickMedium.isCoverImage %}
+          <img src="{{ asset('/uploads/tricks/' ~ trickMedium.media.url) }}"
+               alt="SnowTricks hero image"
+               class="w-full h-full object-cover"
+               width="1920"
+               height="1280"
+          >
+        {% endif %}
+      {% endfor %}
     {% endif %}
   </section>
   <div class="container w-5/6 mx-auto mt-10 md:mt-24 rounded-md shadow-2xl">
@@ -52,7 +56,7 @@
         </div>
       </div>
       <div class="z-0 absolute inset-0">
-        {% if trick.medias is empty %}
+        {% if trick.tricksMedia is empty %}
           <img src="{{ asset('build/images/hero_02.jpg') }}"
                alt="SnowTricks hero image"
                class="w-full h-full object-cover"
@@ -60,12 +64,16 @@
                height="1280"
           >
         {% else %}
-          <img src="{{ asset('build/images/' ~ trick.medias.0.url) }}"
-               alt="SnowTricks hero image"
-               class="w-full h-auto object-cover"
-               width="1920"
-               height="1280"
-          >
+          {% for trickMedium in trick.tricksMedia %}
+            {% if true == trickMedium.isCoverImage %}
+              <img src="{{ asset('/uploads/tricks/' ~ trickMedium.media.url) }}"
+                   alt="SnowTricks hero image"
+                   class="w-full h-auto object-cover"
+                   width="1920"
+                   height="1280"
+              >
+            {% endif %}
+          {% endfor %}
         {% endif %}
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
           <div class="flex flex-row absolute top-2 right-2 bg-white px-4 py-2 rounded-sm shadow-md justify-between">
@@ -83,23 +91,23 @@
       <h3 class="font-jura font-bold text-center lg:text-left text-xl lg:text-2xl mb-10 mb-6 lg:border-l-4 border-yellow-500 lg:pl-4">
         Le trick en images</h3>
       <div class="hidden xl:grid xl:grid-cols-3 2xl:grid-cols-4 gap-3 flex-wrap mb-10 justify-start" id="media-gallery">
-        {% if trick.medias is not empty %}
-          {% for media in trick.medias %}
-            {% if 'image' == media.type %}
+        {% if trick.tricksMedia is not empty %}
+          {% for trickMedium in trick.tricksMedia %}
+            {% if 'image' == trickMedium.media.type %}
               <div class="overflow-hidden border-l-4 border-yellow-500 modal-open cursor-pointer mb-6 xl:mb-0"
-                   data-media-id="{{ asset('build/images/' ~ media.url) }}"
-                   data-type="{{ media.type }}"
+                   data-media-id="{{ asset('/uploads/tricks/' ~ trickMedium.media.url) }}"
+                   data-type="{{ trickMedium.media.type }}"
               >
-                <img src="{{ asset('build/images/' ~ media.url) }}"
-                     alt="{{ media.altText }}"
+                <img src="{{ asset('/uploads/tricks/' ~ trickMedium.media.url) }}"
+                     alt="{{ trickMedium.media.altText }}"
                      class="w-full md:h-48 max-h-36 md:max-h-48 object-cover transform duration-500 ease hover:scale-105"
                      width="300"
                      height="200"
                 >
               </div>
-            {% elseif 'youtube' == media.type %}
+            {% elseif 'youtube' == trickMedium.media.type %}
               <div class="overflow-hidden relative border-l-4 border-yellow-500 cursor-pointer mb-6 xl:mb-0">
-                <iframe src="https://www.youtube.com/embed/{{ media.url }}"
+                <iframe src="https://www.youtube.com/embed/{{ trickMedium.media.url }}"
                         class="max-w-full lg:max-w-5xl max-h-screen"
                         frameborder="0"
                         width="283"
@@ -109,13 +117,13 @@
                 >
                 </iframe>
                 <div class="modal-open open-video-modal"
-                     data-media-id="{{ media.url }}"
-                     data-type="{{ media.type }}"
+                     data-media-id="{{ trickMedium.media.url }}"
+                     data-type="{{ trickMedium.media.type }}"
                 ></div>
               </div>
-            {% elseif 'vimeo' == media.type %}
+            {% elseif 'vimeo' == trickMedium.media.type %}
               <div class="overflow-hidden relative border-l-4 border-yellow-500 cursor-pointer mb-6 xl:mb-0">
-                <iframe src="https://player.vimeo.com/video/{{ media.url }}"
+                <iframe src="https://player.vimeo.com/video/{{ trickMedium.media.url }}"
                         class="max-w-full lg:max-w-5xl max-h-screen"
                         frameborder="0"
                         width="283"
@@ -125,8 +133,8 @@
                 >
                 </iframe>
                 <div class="modal-open open-video-modal"
-                     data-media-id="{{ media.url }}"
-                     data-type="{{ media.type }}"
+                     data-media-id="{{ trickMedium.media.url }}"
+                     data-type="{{ trickMedium.media.type }}"
                 ></div>
               </div>
             {% endif %}

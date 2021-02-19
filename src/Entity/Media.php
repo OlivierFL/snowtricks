@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\MediaRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
@@ -36,20 +38,20 @@ class Media
     private ?string $altText;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Trick::class, inversedBy="medias")
+     * @ORM\OneToMany(targetEntity=TricksMedia::class, mappedBy="media", orphanRemoval=true, cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
-    private ?Trick $trick;
+    private Collection $tricksMedia;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
     private ?string $type;
 
-    /**
-     * @ORM\OneToOne(targetEntity=Trick::class, mappedBy="coverImage", cascade={"persist", "remove"})
-     */
-    private ?Trick $mainTrick;
+    public function __construct()
+    {
+        $this->tricksMedia = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -80,14 +82,30 @@ class Media
         return $this;
     }
 
-    public function getTrick(): ?Trick
+    /**
+     * @return Collection|TricksMedia[]
+     */
+    public function getTricksMedia(): Collection
     {
-        return $this->trick;
+        return $this->tricksMedia;
     }
 
-    public function setTrick(?Trick $trick): self
+    public function addTricksMedium(TricksMedia $tricksMedium): self
     {
-        $this->trick = $trick;
+        if (!$this->tricksMedia->contains($tricksMedium)) {
+            $this->tricksMedia[] = $tricksMedium;
+            $tricksMedium->setMedia($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTricksMedium(TricksMedia $tricksMedium): self
+    {
+        // set the owning side to null (unless already changed)
+        if ($this->tricksMedia->removeElement($tricksMedium) && $tricksMedium->getMedia() === $this) {
+            $tricksMedium->setMedia(null);
+        }
 
         return $this;
     }
@@ -100,23 +118,6 @@ class Media
     public function setType(string $type): self
     {
         $this->type = $type;
-
-        return $this;
-    }
-
-    public function getMainTrick(): ?Trick
-    {
-        return $this->mainTrick;
-    }
-
-    public function setMainTrick(Trick $mainTrick): self
-    {
-        // set the owning side of the relation if necessary
-        if ($mainTrick->getCoverImage() !== $this) {
-            $mainTrick->setCoverImage($this);
-        }
-
-        $this->mainTrick = $mainTrick;
 
         return $this;
     }

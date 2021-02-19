@@ -19,9 +19,9 @@ use Symfony\Component\Validator\Constraints\Regex;
 
 class MediaType extends AbstractType
 {
-    public const HIDDEN_LABEL_STYLES = 'font-jura font-light text-2xl mb-2';
-    public const LABEL_STYLES = 'block font-jura font-light text-xl';
-    public const HIDDEN_INPUT_STYLES = 'border-b border-gray-500 text-gray-500 bg-gray-100 pl-2 py-3 focus:border-yellow-500 focus:shadow-md focus:ring-2 focus:ring-yellow-500 w-full';
+    public const HIDDEN_LABEL_STYLES = 'hidden font-jura font-light text-2xl mb-2';
+    public const LABEL_STYLES = 'font-jura font-light text-2xl mb-2';
+    public const HIDDEN_INPUT_STYLES = 'hidden border-b border-gray-500 text-gray-500 bg-gray-100 pl-2 py-3 focus:border-yellow-500 focus:shadow-md focus:ring-2 focus:ring-yellow-500 w-full';
     public const RADIO_STYLES = 'flex items-center text-gray-500 py-3 w-full';
 
     /**
@@ -47,7 +47,7 @@ class MediaType extends AbstractType
                 'class' => self::HIDDEN_LABEL_STYLES,
             ],
             'attr' => [
-                'class' => self::HIDDEN_INPUT_STYLES,
+                'class' => self::HIDDEN_INPUT_STYLES.' mb-6',
             ],
             'required' => false,
             'constraints' => [
@@ -61,7 +61,7 @@ class MediaType extends AbstractType
                 $form = $event->getForm();
                 $media = $event->getData();
                 if ($form->getConfig()->getOption('new')) {
-                    $form->add('media_type', ChoiceType::class, [
+                    $form->add('type', ChoiceType::class, [
                         'label' => 'Media type',
                         'label_attr' => [
                             'class' => self::LABEL_STYLES,
@@ -76,7 +76,6 @@ class MediaType extends AbstractType
                         'expanded' => true,
                         'multiple' => false,
                         'required' => true,
-                        'mapped' => false,
                         'constraints' => [
                             new NotBlank(['message' => 'Choose a media type']),
                         ],
@@ -95,6 +94,10 @@ class MediaType extends AbstractType
                         ],
                         'attr' => [
                             'class' => self::HIDDEN_INPUT_STYLES,
+                        ],
+                        'help' => 'Please select an image file',
+                        'help_attr' => [
+                            'class' => 'hidden flex items-center text-gray-500 text-sm font-light text-left mt-2',
                         ],
                         'constraints' => [
                             new NotBlank([
@@ -129,7 +132,7 @@ class MediaType extends AbstractType
                         ],
                         'help' => 'Paste Youtube or Vimeo video URL, or embed tag',
                         'help_attr' => [
-                            'class' => 'flex items-center text-gray-500 text-sm font-light text-left mt-2',
+                            'class' => 'hidden flex items-center text-gray-500 text-sm font-light text-left mt-2',
                         ],
                         'trim' => true,
                         'required' => false,
@@ -137,7 +140,7 @@ class MediaType extends AbstractType
                         'constraints' => [
                             new Regex(
                                 [
-                                    'pattern' => VideoHelper::BASE_PATTERN,
+                                    'pattern' => VideoHelper::PATTERN,
                                     'message' => 'Invalid URL',
                                     'groups' => ['video'],
                                 ],
@@ -152,7 +155,7 @@ class MediaType extends AbstractType
             })
             ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
                 $media = $event->getData();
-                if (Media::VIDEO === $media['media_type']) {
+                if (Media::VIDEO === $media['type']) {
                     $videoData = $this->videoHelper->getVideoData($media['video_url']);
                     $media['altText'] = $videoData['title'] ?? 'Video';
                     $event->setData($media);
@@ -184,14 +187,14 @@ class MediaType extends AbstractType
     private function addConstraints(FormInterface $form): ?array
     {
         if (
-            Media::IMAGE === $form->get('media_type')->getData()
+            Media::IMAGE === $form->get('type')->getData()
             && (null === $form->get('image')->getData() || null === $form->get('altText')->getData())
         ) {
             return ['Default', 'image'];
         }
 
         if (
-            Media::VIDEO === $form->get('media_type')->getData()
+            Media::VIDEO === $form->get('type')->getData()
             && (null === $form->get('video_url')->getData()
                 || !$this->videoHelper->checkUrl($form->get('video_url')->getData()))
         ) {

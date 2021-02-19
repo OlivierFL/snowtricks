@@ -79,16 +79,20 @@
       {% for trick in tricks %}
         <div class="bg-gray-100 rounded-md shadow-lg overflow-hidden tricks">
           <a href="{{ path('trick_detail', { slug: trick.slug }) }}">
-            {% if trick.medias is not empty %}
-              <div class="container">
-                <img src="{{ asset('build/images/' ~ trick.medias.0.url) }}"
-                     alt="{{ trick.medias.0.altText }}"
-                     class="w-full h-auto max-h-48 object-cover transform duration-500 ease hover:scale-105 rounded-t-md bg-gray-500"
-                     loading="lazy"
-                     width="600"
-                     height="400"
-                >
-              </div>
+            {% if trick.tricksMedia is not empty %}
+              {% for trickMedium in trick.tricksMedia %}
+                {% if true == trickMedium.isCoverImage %}
+                  <div class="container">
+                    <img src="{{ asset('uploads/tricks/' ~ trickMedium.media.url) }}"
+                         alt="{{ trickMedium.media.altText }}"
+                         class="w-full h-auto max-h-48 object-cover transform duration-500 ease hover:scale-105 rounded-t-md bg-gray-500"
+                         loading="lazy"
+                         width="600"
+                         height="400"
+                    >
+                  </div>
+                {% endif %}
+              {% endfor %}
             {% else %}
               <div class="container">
                 <img src="{{ asset('build/images/hero.jpg') }}"

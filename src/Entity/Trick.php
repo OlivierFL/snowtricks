@@ -61,15 +61,9 @@ class Trick
     private Collection $comments;
 
     /**
-     * @ORM\OneToOne(targetEntity=Media::class, inversedBy="mainTrick", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\OneToMany(targetEntity=TricksMedia::class, mappedBy="trick", orphanRemoval=true, cascade={"persist"})
      */
-    private ?Media $coverImage;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Media::class, mappedBy="trick", orphanRemoval=true, cascade={"persist"})
-     */
-    private Collection $medias;
+    private Collection $tricksMedia;
 
     /**
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="tricks")
@@ -96,7 +90,7 @@ class Trick
     public function __construct()
     {
         $this->comments = new ArrayCollection();
-        $this->medias = new ArrayCollection();
+        $this->tricksMedia = new ArrayCollection();
         $this->users = new ArrayCollection();
     }
 
@@ -169,41 +163,29 @@ class Trick
         return $this;
     }
 
-    public function getCoverImage(): ?Media
-    {
-        return $this->coverImage;
-    }
-
-    public function setCoverImage(Media $coverImage): self
-    {
-        $this->coverImage = $coverImage;
-
-        return $this;
-    }
-
     /**
-     * @return Collection|Media[]
+     * @return Collection|TricksMedia[]
      */
-    public function getMedias(): Collection
+    public function getTricksMedia(): Collection
     {
-        return $this->medias;
+        return $this->tricksMedia;
     }
 
-    public function addMedia(Media $media): self
+    public function addTricksMedium(TricksMedia $tricksMedium): self
     {
-        if (!$this->medias->contains($media)) {
-            $this->medias[] = $media;
-            $media->setTrick($this);
+        if (!$this->tricksMedia->contains($tricksMedium)) {
+            $this->tricksMedia[] = $tricksMedium;
+            $tricksMedium->setTrick($this);
         }
 
         return $this;
     }
 
-    public function removeMedia(Media $media): self
+    public function removeTricksMedium(TricksMedia $tricksMedium): self
     {
         // set the owning side to null (unless already changed)
-        if ($this->medias->removeElement($media) && $media->getTrick() === $this) {
-            $media->setTrick(null);
+        if ($this->tricksMedia->removeElement($tricksMedium) && $tricksMedium->getTrick() === $this) {
+            $tricksMedium->setTrick(null);
         }
 
         return $this;

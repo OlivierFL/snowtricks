@@ -50,11 +50,7 @@ class TrickHandler
     {
         $trick->setAuthor($this->security->getUser());
 
-        if ($form->get('coverImage')) {
-            $trick = $this->handleCoverImageUpload($trick, $form);
-        }
-
-        if ($form->get('medias')) {
+        if ($form->get('tricksMedia')) {
             $trick = $this->handleMediaCollection($trick, $form);
         }
 
@@ -72,15 +68,23 @@ class TrickHandler
      */
     private function handleMediaCollection(Trick $trick, FormInterface $form): Trick
     {
-        foreach ($form->get('medias') as $media) {
-            if (Media::IMAGE === $media->get('media_type')->getData()) {
-                $trick = $this->handleImageUpload($trick, $media);
+        foreach ($form->get('tricksMedia') as $key => $media) {
+            // The first field of the form is an image,
+            // and is used to set the cover image of the Trick.
+            // TODO rework setting cover image, current method is not valid if the first media is a video
+            if ('0' === $media->getName()) {
+                $trick->getTricksMedia()[0]->setIsCoverImage(true);
+            }
+
+            $type = $media->get('media')->getData()->getType();
+
+            if (Media::IMAGE === $type) {
+                $fileName = $this->handleImageUpload($media);
+                $trick->getTricksMedia()[$key]->getMedia()->setUrl($fileName);
             } else {
-                $data = $this->videoHelper->getVideoData($media->get('video_url')->getData());
-                $video = $media->getData();
-                /* @var Media $video */
-                $video->setUrl($data['id'] ?? '');
-                $video->setType($data['type'] ?? 'unknown');
+                $data = $this->videoHelper->getVideoData($media->get('media')->get('video_url')->getData());
+                $trick->getTricksMedia()[$key]->getMedia()->setUrl($data['id']);
+                $trick->getTricksMedia()[$key]->getMedia()->setType($data['type']);
             }
         }
 
@@ -88,40 +92,12 @@ class TrickHandler
     }
 
     /**
-     * @param Trick         $trick
      * @param FormInterface $form
      *
-     * @return Trick
+     * @return string
      */
-    private function handleCoverImageUpload(Trick $trick, FormInterface $form): Trick
+    private function handleImageUpload(FormInterface $form): string
     {
-        dd($form->get('coverImage'));
-        $filename = $this->fileUploader->upload($form->get('coverImage')->getData());
-        $coverImage = new Media();
-        $coverImage->setUrl($filename);
-        $coverImage->setType(Media::IMAGE);
-        $coverImage->setAltText('Image de couverture');
-        $coverImage->setTrick($trick);
-        $trick->setCoverImage($coverImage);
-
-        return $trick;
-    }
-
-    /**
-     * @param Trick         $trick
-     * @param FormInterface $form
-     *
-     * @return Trick
-     */
-    private function handleImageUpload(Trick $trick, FormInterface $form): Trick
-    {
-        $filename = $this->fileUploader->upload($form->get('image')->getData());
-        $media = $form->getData();
-        /* @var Media $media */
-        $media->setUrl($filename);
-        $media->setType(Media::IMAGE);
-        $trick->addMedia($media);
-
-        return $trick;
+        return $this->fileUploader->upload($form->get('media')->get('image')->getData());
     }
 }
