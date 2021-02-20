@@ -41,22 +41,7 @@ class MediaType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add('altText', TextType::class, [
-            'label' => 'Alternative text',
-            'label_attr' => [
-                'class' => self::HIDDEN_LABEL_STYLES,
-            ],
-            'attr' => [
-                'class' => self::HIDDEN_INPUT_STYLES.' mb-6',
-            ],
-            'required' => false,
-            'constraints' => [
-                new NotBlank([
-                    'message' => 'This field can not be blank',
-                    'groups' => ['image'],
-                ]),
-            ],
-        ])
+        $builder
             ->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) {
                 $form = $event->getForm();
                 $media = $event->getData();
@@ -97,7 +82,7 @@ class MediaType extends AbstractType
                         ],
                         'help' => 'Please select an image file',
                         'help_attr' => [
-                            'class' => 'hidden flex items-center text-gray-500 text-sm font-light text-left mt-2',
+                            'class' => 'hidden flex items-center text-gray-500 text-sm font-light text-left mt-2 mb-6',
                         ],
                         'constraints' => [
                             new NotBlank([
@@ -132,7 +117,7 @@ class MediaType extends AbstractType
                         ],
                         'help' => 'Paste Youtube or Vimeo video URL, or embed tag',
                         'help_attr' => [
-                            'class' => 'hidden flex items-center text-gray-500 text-sm font-light text-left mt-2',
+                            'class' => 'hidden flex items-center text-gray-500 text-sm font-light text-left mt-2 mb-6',
                         ],
                         'trim' => true,
                         'required' => false,
@@ -152,6 +137,23 @@ class MediaType extends AbstractType
                         ],
                     ]);
                 }
+
+                $form->add('altText', TextType::class, [
+                    'label' => 'Alternative text',
+                    'label_attr' => [
+                        'class' => self::HIDDEN_LABEL_STYLES,
+                    ],
+                    'attr' => [
+                        'class' => self::HIDDEN_INPUT_STYLES.' mb-6',
+                    ],
+                    'required' => false,
+                    'constraints' => [
+                        new NotBlank([
+                            'message' => 'This field can not be blank',
+                            'groups' => ['image'],
+                        ]),
+                    ],
+                ]);
             })
             ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
                 $media = $event->getData();

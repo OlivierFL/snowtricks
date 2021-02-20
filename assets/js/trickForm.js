@@ -58,9 +58,6 @@ function addFormToCollection($collectionHolderClass) {
     });
 
     function displayField(radioType) {
-        $('label[for="trick_tricksMedia_' + index + '_media_altText"]').removeClass('hidden');
-        $('#trick_tricksMedia_' + index + '_media_altText').removeClass('hidden');
-
         if ('image' === radioType.currentTarget.value) {
             $('label[for="trick_tricksMedia_' + index + '_media_video_url"]').addClass('hidden');
             $('#trick_tricksMedia_' + index + '_media_video_url').addClass('hidden');
@@ -68,6 +65,8 @@ function addFormToCollection($collectionHolderClass) {
             $('label[for="trick_tricksMedia_' + index + '_media_image"]').removeClass('hidden');
             $('#trick_tricksMedia_' + index + '_media_image').removeClass('hidden');
             $('#trick_tricksMedia_' + index + '_media_image_help').removeClass('hidden');
+            $('label[for="trick_tricksMedia_' + index + '_media_altText"]').removeClass('hidden');
+            $('#trick_tricksMedia_' + index + '_media_altText').removeClass('hidden');
         } else if ('video' === radioType.currentTarget.value) {
             $('label[for="trick_tricksMedia_' + index + '_media_image"]').addClass('hidden');
             $('#trick_tricksMedia_' + index + '_media_image').addClass('hidden');
@@ -75,6 +74,8 @@ function addFormToCollection($collectionHolderClass) {
             $('label[for="trick_tricksMedia_' + index + '_media_video_url"]').removeClass('hidden');
             $('#trick_tricksMedia_' + index + '_media_video_url').removeClass('hidden');
             $('#trick_tricksMedia_' + index + '_media_video_url_help').removeClass('hidden');
+            $('label[for="trick_tricksMedia_' + index + '_media_altText"]').addClass('hidden');
+            $('#trick_tricksMedia_' + index + '_media_altText').addClass('hidden');
         }
     }
 }
