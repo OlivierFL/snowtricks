@@ -30,7 +30,7 @@ class TricksMedia
     private ?Media $media;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", options={"default": false})
      */
     private ?bool $isCoverImage = false;
 
