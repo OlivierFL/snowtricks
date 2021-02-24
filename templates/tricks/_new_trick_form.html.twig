@@ -5,12 +5,12 @@
     <div class="lg:flex lg:justify-between lg:items-start gap-6 lg:mb-10">
       <div class="w-full lg:w-1/2">
         {{ form_label(form.name, null, {
-          'label_attr': {'class': 'font-jura font-light text-2xl block mb-2'
+          'label_attr': {'class': 'text-2xl'
           }}) }}
         <div class="mx-auto w-full">
           {{ form_widget(form.name, {
           'attr': {
-          'class': 'block border-b border-gray-500 text-gray-500 bg-gray-100 pl-2 py-3 focus:border-yellow-500 focus:shadow-md focus:ring-2 focus:ring-yellow-500 w-full'
+          'class': 'w-full pl-2 py-3'
           }}) }}
         </div>
         {% if form_errors(form.name) %}
@@ -21,12 +21,12 @@
       </div>
       <div class="w-full lg:w-1/2">
         {{ form_label(form.category, null, {
-          'label_attr': {'class': 'font-jura font-light text-2xl block mb-2'
+          'label_attr': {'class': 'text-2xl'
           }}) }}
         <div class="relative mx-auto w-full">
           {{ form_widget(form.category, {
             'attr': {
-              'class': 'block appearance-none border-b border-gray-500 text-gray-500 bg-gray-100 pl-2 py-3 focus:border-yellow-500 focus:shadow-md focus:ring-2 focus:ring-yellow-500 w-full'
+              'class': 'appearance-none w-full pl-2 py-3'
             }}) }}
           <div class="absolute right-0 inset-y-0 flex items-center pointer-events-none z-10">
             <i class="fas fa-chevron-down text-gray-500 w-5 h-5 pr-6 text-sm"></i>
@@ -41,12 +41,12 @@
     </div>
     <div class="w-full">
       {{ form_label(form.description, null, {
-        'label_attr': {'class': 'font-jura font-light text-2xl block mb-2'
+        'label_attr': {'class': 'text-2xl'
         }}) }}
       <div class="mx-auto w-full">
         {{ form_widget(form.description, {
         'attr': {
-        'class': 'block border-b border-gray-500 text-gray-500 bg-gray-100 pl-2 py-2 focus:border-yellow-500 focus:shadow-md focus:ring-2 focus:ring-yellow-500 w-full'
+        'class': 'w-full pl-2 py-2'
         }}) }}
       </div>
       {% if form_errors(form.description) %}
@@ -75,7 +75,7 @@
         Ajouter un nouveau média
       </button>
       <!--      Avoid rendering label for medias with form_rest()-->
-<!--      {{ form_widget(form.tricksMedia) }}-->
+      <!--      {{ form_widget(form.tricksMedia) }}-->
     </div>
   </div>
 </div>

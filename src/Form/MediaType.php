@@ -19,9 +19,9 @@ use Symfony\Component\Validator\Constraints\Regex;
 
 class MediaType extends AbstractType
 {
-    public const HIDDEN_LABEL_STYLES = 'hidden font-jura font-light text-2xl mb-2';
-    public const LABEL_STYLES = 'font-jura font-light text-2xl mb-2';
-    public const HIDDEN_INPUT_STYLES = 'hidden border-b border-gray-500 text-gray-500 bg-gray-100 pl-2 py-3 focus:border-yellow-500 focus:shadow-md focus:ring-2 focus:ring-yellow-500 w-full';
+    public const HIDDEN_LABEL_STYLES = 'hidden text-2xl';
+    public const LABEL_STYLES = 'text-2xl';
+    public const HIDDEN_INPUT_STYLES = 'hidden pl-2 py-3 w-full';
     public const RADIO_STYLES = 'flex items-center text-gray-500 py-3 w-full';
 
     /**
