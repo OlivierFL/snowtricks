@@ -48,9 +48,6 @@ class MediaType extends AbstractType
                 if ($form->getConfig()->getOption('new')) {
                     $form->add('type', ChoiceType::class, [
                         'label' => 'Media type',
-                        'label_attr' => [
-                            'class' => self::LABEL_STYLES,
-                        ],
                         'attr' => [
                             'class' => self::RADIO_STYLES,
                         ],

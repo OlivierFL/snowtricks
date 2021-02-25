@@ -41,41 +41,25 @@ function addFormToCollection($collectionHolderClass) {
     const imageRadio = $('#trick_tricksMedia_' + index + '_media_type_0');
     const videoRadio = $('#trick_tricksMedia_' + index + '_media_type_1');
 
-    imageRadio.bind('contentChanged', function (radioType) {
-        displayField(radioType);
-    });
-    imageRadio.change(function (event) {
-        event.preventDefault();
-        imageRadio.trigger('contentChanged', 'image');
+    imageRadio.change(function () {
+        displayField('image', index);
     });
 
-    videoRadio.bind('contentChanged', function (radioType) {
-        displayField(radioType);
+    videoRadio.change(function () {
+        displayField('video', index);
     });
-    videoRadio.change(function (event) {
-        event.preventDefault();
-        videoRadio.trigger('contentChanged', 'video');
-    });
+}
 
-    function displayField(radioType) {
-        if ('image' === radioType.currentTarget.value) {
-            $('label[for="trick_tricksMedia_' + index + '_media_video_url"]').addClass('hidden');
-            $('#trick_tricksMedia_' + index + '_media_video_url').addClass('hidden');
-            $('#trick_tricksMedia_' + index + '_media_video_url_help').addClass('hidden');
-            $('label[for="trick_tricksMedia_' + index + '_media_image"]').removeClass('hidden');
-            $('#trick_tricksMedia_' + index + '_media_image').removeClass('hidden');
-            $('#trick_tricksMedia_' + index + '_media_image_help').removeClass('hidden');
-            $('label[for="trick_tricksMedia_' + index + '_media_altText"]').removeClass('hidden');
-            $('#trick_tricksMedia_' + index + '_media_altText').removeClass('hidden');
-        } else if ('video' === radioType.currentTarget.value) {
-            $('label[for="trick_tricksMedia_' + index + '_media_image"]').addClass('hidden');
-            $('#trick_tricksMedia_' + index + '_media_image').addClass('hidden');
-            $('#trick_tricksMedia_' + index + '_media_image_help').addClass('hidden');
-            $('label[for="trick_tricksMedia_' + index + '_media_video_url"]').removeClass('hidden');
-            $('#trick_tricksMedia_' + index + '_media_video_url').removeClass('hidden');
-            $('#trick_tricksMedia_' + index + '_media_video_url_help').removeClass('hidden');
-            $('label[for="trick_tricksMedia_' + index + '_media_altText"]').addClass('hidden');
-            $('#trick_tricksMedia_' + index + '_media_altText').addClass('hidden');
-        }
+function displayField(radioType, index) {
+    if ('image' === radioType) {
+        let imageFormRow = $('#trick_tricksMedia_' + index + '_media_image').parent();
+        let videoFormRow = $('#trick_tricksMedia_' + index + '_media_video_url').parent();
+        videoFormRow.addClass('hidden');
+        imageFormRow.removeClass('hidden');
+    } else if ('video' === radioType) {
+        let videoFormRow = $('#trick_tricksMedia_' + index + '_media_video_url').parent();
+        let imageFormRow = $('#trick_tricksMedia_' + index + '_media_image').parent();
+        imageFormRow.addClass('hidden');
+        videoFormRow.removeClass('hidden');
     }
 }
