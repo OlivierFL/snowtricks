@@ -101,6 +101,41 @@ class TricksController extends AbstractController
     }
 
     /**
+     * @Route("/tricks/{slug}/edit",
+     *     name="trick_edit",
+     *     priority=1
+     * )
+     *
+     * @param Request      $request
+     * @param Trick        $trick
+     * @param TrickHandler $trickHandler
+     *
+     * @throws JsonException
+     *
+     * @return Response
+     */
+    public function edit(Request $request, Trick $trick, TrickHandler $trickHandler): Response
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $form = $this->createForm(TrickType::class, $trick);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $trickHandler->handleNewTrick($trick, $form);
+
+            $this->addFlash('success', 'Trick mis à jour');
+
+            return $this->redirectToRoute('trick_detail', ['slug' => $trick->getSlug()]);
+        }
+
+        return $this->render('tricks/edit.html.twig', [
+            'trick' => $trick,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
      * @param CommentRepository  $commentRepository
      * @param Trick              $trick
      * @param PaginatorInterface $paginator
