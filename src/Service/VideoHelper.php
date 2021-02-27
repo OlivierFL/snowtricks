@@ -9,7 +9,7 @@ class VideoHelper
 {
     public const PATTERN = '/(?:http:|https:|)\/\/(?:player.|www.)?(vimeo\.com|youtu(?:be\.com|\.be|be\.googleapis\.com))\/(?:video\/|embed\/|channels\/(?:\w+\/)|watch\?v=|v\/)?([A-Za-z0-9._%-]*)(\&\S+)?/ui';
     private const YOUTUBE_API_URL = 'https://www.youtube.com/get_video_info?video_id=';
-    private const VIMEO_API_URL = 'http://vimeo.com/api/v2/video/';
+    private const VIMEO_API_URL = 'https://vimeo.com/api/v2/video/';
 
     /**
      * @param string $url
