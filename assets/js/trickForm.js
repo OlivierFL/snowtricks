@@ -51,14 +51,12 @@ function addFormToCollection($collectionHolderClass) {
 }
 
 function displayField(radioType, index) {
+    let imageFormRow = $('#trick_tricksMedia_' + index + '_media_image').parent();
+    let videoFormRow = $('#trick_tricksMedia_' + index + '_media_video_url').parent();
     if ('image' === radioType) {
-        let imageFormRow = $('#trick_tricksMedia_' + index + '_media_image').parent();
-        let videoFormRow = $('#trick_tricksMedia_' + index + '_media_video_url').parent();
         videoFormRow.addClass('hidden');
         imageFormRow.removeClass('hidden');
     } else if ('video' === radioType) {
-        let videoFormRow = $('#trick_tricksMedia_' + index + '_media_video_url').parent();
-        let imageFormRow = $('#trick_tricksMedia_' + index + '_media_image').parent();
         imageFormRow.addClass('hidden');
         videoFormRow.removeClass('hidden');
     }
