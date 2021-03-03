@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\TricksMediaRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=TricksMediaRepository::class)
@@ -26,6 +27,7 @@ class TricksMedia
     /**
      * @ORM\ManyToOne(targetEntity=Media::class, inversedBy="tricksMedia", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\Valid
      */
     private ?Media $media;
 

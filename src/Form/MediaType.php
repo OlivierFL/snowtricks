@@ -13,7 +13,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 
@@ -69,14 +69,8 @@ class MediaType extends AbstractType
                                 'message' => 'An empty file is not allowed',
                                 'groups' => ['image'],
                             ]),
-                            new File([
+                            new Image([
                                 'maxSize' => '2M',
-                                'mimeTypes' => [
-                                    'image/jpeg',
-                                    'image/webp',
-                                    'image/png',
-                                    'image/gif',
-                                ],
                                 'mimeTypesMessage' => 'Please upload a valid image file',
                                 'groups' => ['image'],
                             ]),
@@ -138,7 +132,7 @@ class MediaType extends AbstractType
             'new' => false,
             'validation_groups' => function (FormInterface $form) {
                 if ($form->getConfig()->getOption('new')) {
-                    $this->addConstraints($form);
+                    return $this->addConstraints($form);
                 }
 
                 return ['Default'];

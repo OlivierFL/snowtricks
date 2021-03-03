@@ -16,8 +16,7 @@ class TricksMediaType extends AbstractType
             'data_class' => Media::class,
             'label' => false,
             'new' => ['new' => $options['new']],
-        ])
-        ;
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -25,6 +24,7 @@ class TricksMediaType extends AbstractType
         $resolver->setDefaults([
             'data_class' => TricksMedia::class,
             'new' => false,
+            'label' => false,
         ]);
     }
 }

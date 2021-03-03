@@ -34,7 +34,10 @@ class TrickType extends AbstractType
                 'entry_type' => TricksMediaType::class,
                 'allow_add' => true,
                 'by_reference' => false,
-                'entry_options' => ['new' => $options['new']],
+                'entry_options' => [
+                    'new' => $options['new'],
+                    'label' => false,
+                ],
             ])
         ;
     }

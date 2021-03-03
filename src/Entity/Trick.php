@@ -62,6 +62,7 @@ class Trick
 
     /**
      * @ORM\OneToMany(targetEntity=TricksMedia::class, mappedBy="trick", orphanRemoval=true, cascade={"persist"})
+     * @Assert\Valid
      */
     private Collection $tricksMedia;
 
