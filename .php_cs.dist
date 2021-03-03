@@ -20,6 +20,7 @@ $config = (new PhpCsFixer\Config())
         '@DoctrineAnnotation' => true,
         'list_syntax' => ['syntax' => 'long'],
         'no_superfluous_phpdoc_tags' => false,
+        'single_line_comment_style' => false,
     ])
     ->setFinder($finder)
 ;

@@ -9,37 +9,47 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class FileUploader
 {
+    public const AVATARS_DIRECTORY = 'avatars';
+    public const TRICKS_DIRECTORY = 'tricks';
     private SluggerInterface $slugger;
-    private string $targetDirectory;
+    private string $baseDirectory;
     private Filesystem $fileSystem;
 
     /**
      * FileUploader constructor.
      *
      * @param SluggerInterface $slugger
-     * @param string           $targetDirectory
+     * @param string           $baseDirectory
      */
-    public function __construct(SluggerInterface $slugger, string $targetDirectory)
+    public function __construct(SluggerInterface $slugger, string $baseDirectory)
     {
         $this->slugger = $slugger;
-        $this->targetDirectory = $targetDirectory;
+        $this->baseDirectory = $baseDirectory;
         $this->fileSystem = new Filesystem();
     }
 
-    public function upload(UploadedFile $file): string
+    /**
+     * @param UploadedFile $file
+     * @param string       $directory
+     *
+     * @return string
+     */
+    public function upload(UploadedFile $file, string $directory = self::TRICKS_DIRECTORY): string
     {
         $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
         // this is needed to safely include the file name as part of the URL
         $safeFilename = $this->slugger->slug($originalFilename);
         $newFilename = $safeFilename.'-'.uniqid('', false).'.'.$file->guessExtension();
 
-        if (!$this->fileSystem->exists($this->targetDirectory)) {
-            $this->fileSystem->mkdir($this->targetDirectory);
+        $targetDirectory = $this->baseDirectory.\DIRECTORY_SEPARATOR.$directory;
+
+        if (!$this->fileSystem->exists($targetDirectory)) {
+            $this->fileSystem->mkdir($targetDirectory);
         }
 
         try {
             $file->move(
-                $this->targetDirectory,
+                $targetDirectory,
                 $newFilename
             );
         } catch (FileException $e) {
@@ -51,9 +61,10 @@ class FileUploader
 
     /**
      * @param string $fileName
+     * @param string $directory
      */
-    public function remove(string $fileName): void
+    public function remove(string $fileName, string $directory = self::TRICKS_DIRECTORY): void
     {
-        $this->fileSystem->remove($this->targetDirectory.'/'.$fileName);
+        $this->fileSystem->remove($this->baseDirectory.\DIRECTORY_SEPARATOR.$directory.\DIRECTORY_SEPARATOR.$fileName);
     }
 }

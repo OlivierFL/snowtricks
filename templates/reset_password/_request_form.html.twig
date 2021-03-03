@@ -7,7 +7,7 @@
   <div class="lg:col-start-1 lg:col-end-3">
     {{ form_start(requestForm) }}
     {{ form_label(requestForm.email, null, {
-      'label_attr': {'class': 'font-jura font-light text-2xl mb-2'
+      'label_attr': {'class': 'text-2xl'
       }}) }}
     <div class="mb-4">
       <div class="relative mx-auto w-full">
@@ -21,12 +21,10 @@
         {{ form_widget(requestForm.email, {
           'attr': {
             'autocomplete': 'email',
-            'class': 'block border-b border-gray-500 text-gray-500 bg-gray-100 pl-10 py-2 focus:border-yellow-500 focus:shadow-md focus:ring-2 focus:ring-yellow-500 w-full'
+            'class': 'w-full pl-10'
           }}) }}
       </div>
-      <div class="text-red-500 font-bold p-2 text-center lg:text-left">
-        {{ form_errors(requestForm.email) }}
-      </div>
+      {{ form_errors(requestForm.email) }}
     </div>
   </div>
 </div>

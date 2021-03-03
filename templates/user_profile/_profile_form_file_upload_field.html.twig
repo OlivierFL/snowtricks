@@ -12,10 +12,8 @@
     </div>
     {{ form_widget(editProfileForm.avatar, {
       'attr': {
-        'class': 'opacity-0 cursor-pointer block border-b border-gray-500 text-gray-500 bg-gray-100 pl-10 py-2 focus:border-yellow-500 focus:shadow-md focus:ring-2 focus:ring-yellow-500 w-full'
+        'class': 'opacity-0 cursor-pointer pl-10 w-full'
       }}) }}
   </div>
-  <div class="text-red-500 font-bold text-center">
-    {{ form_errors(editProfileForm.avatar) }}
-  </div>
+  {{ form_errors(editProfileForm.avatar) }}
 </div>

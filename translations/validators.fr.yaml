@@ -7,3 +7,14 @@ The password fields must match: Les deux mots de passe doivent être identiques
 Please enter your email: Veuillez renseigner votre email
 Please upload a valid image file: Format d'image invalide
 Your comment must be at least {{ limit }} characters long: Le commentaire doit contenir au moins {{ limit }} caractères
+There is already a trick with this name: Le trick existe déjà
+The trick name must be at least {{ limit }} characters long: Le nom du trick doit contenir au moins {{ limit }} caractères
+The trick name cannot be longer than {{ limit }} characters: Le nom du trick doit avoir au maximumm {{ limit }} caractères
+The trick description must be at least {{ limit }} characters long: La description du trick doit contenir au moins {{ limit }} caractères
+There is already a category with this name: La catégorie existe déjà
+The category name must be at least {{ limit }} characters long: Le nom de la catégorie doit contenir au moins {{ limit }} caractères
+The category name cannot be longer than {{ limit }} characters: Le nom de la catégorie doit avoir au maximumm {{ limit }} caractères
+Invalid URL: URL invalide
+Choose a media type: Veuillez sélectionner un type de média
+An empty file is not allowed: Veuillez sélectionner un fichier
+This field can not be blank: Ce champ ne doit pas être vide

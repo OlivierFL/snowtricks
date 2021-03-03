@@ -85,4 +85,12 @@ html {
     z-index: 50;
 }
 
+input[type=radio] {
+    margin-right: .5rem;
+}
+
+input[type=radio] + label:not(:last-child) {
+    margin-right: 1.2rem;
+}
+
 @tailwind utilities;

@@ -9,7 +9,7 @@
            width="144"
            height="144"
       >
-      {{ include('user_profile/_profile_form_file_upload_field.html.twig') }}
+      {% include('user_profile/_profile_form_file_upload_field.html.twig') %}
     {% else %}
       <img src="#"
            id="avatar"
@@ -23,13 +23,13 @@
       >
         <p class="text-2xl lg:text-4xl">{{ app.user.firstName|slice(0, 1)|capitalize }} {{ app.user.lastName|slice(0, 1)|capitalize }}</p>
       </div>
-      {{ include('user_profile/_profile_form_file_upload_field.html.twig') }}
+      {% include('user_profile/_profile_form_file_upload_field.html.twig') %}
     {% endif %}
   </div>
   <div class="lg:w-2/3">
     <div class="flex flex-col lg:flex-row mb-4">
       {{ form_label(editProfileForm.firstName, null, {
-        'label_attr': {'class': 'w-2/3 font-jura font-light text-2xl mr-4'
+        'label_attr': {'class': 'w-2/3 text-2xl mr-4'
         }}) }}
       <div class="relative mx-auto w-full">
         <div class="absolute inset-y-0 flex items-center pointer-events-none">
@@ -42,16 +42,14 @@
         {{ form_widget(editProfileForm.firstName, {
           'attr': {
             'autocomplete': 'given-name',
-            'class': 'block border-b border-gray-500 text-gray-500 bg-gray-100 pl-10 py-2 focus:border-yellow-500 focus:shadow-md focus:ring-2 focus:ring-yellow-500 w-full'
+            'class': 'w-full pl-10'
           }}) }}
       </div>
     </div>
-    <div class="text-red-500 font-bold text-center lg:text-right mb-6">
-      {{ form_errors(editProfileForm.firstName) }}
-    </div>
+    {{ form_errors(editProfileForm.firstName) }}
     <div class="flex flex-col lg:flex-row mb-4">
       {{ form_label(editProfileForm.lastName, null, {
-        'label_attr': {'class': 'w-2/3 font-jura font-light text-2xl mr-4'
+        'label_attr': {'class': 'w-2/3 text-2xl mr-4'
         }}) }}
       <div class="relative mx-auto w-full">
         <div class="absolute inset-y-0 flex items-center pointer-events-none">
@@ -64,16 +62,14 @@
         {{ form_widget(editProfileForm.lastName, {
           'attr': {
             'autocomplete': 'family-name',
-            'class': 'block border-b border-gray-500 text-gray-500 bg-gray-100 pl-10 py-2 focus:border-yellow-500 focus:shadow-md focus:ring-2 focus:ring-yellow-500 w-full'
+            'class': 'w-full pl-10'
           }}) }}
       </div>
     </div>
-    <div class="text-red-500 font-bold text-center lg:text-right mb-6">
-      {{ form_errors(editProfileForm.lastName) }}
-    </div>
+    {{ form_errors(editProfileForm.lastName) }}
     <div class="flex flex-col lg:flex-row mb-4">
       {{ form_label(editProfileForm.username, null, {
-        'label_attr': {'class': 'w-2/3 font-jura font-light text-2xl mr-4'
+        'label_attr': {'class': 'w-2/3 text-2xl mr-4'
         }}) }}
       <div class="relative mx-auto w-full">
         <div class="absolute inset-y-0 flex items-center pointer-events-none">
@@ -86,16 +82,14 @@
         {{ form_widget(editProfileForm.username, {
           'attr': {
             'autocomplete': 'username',
-            'class': 'block border-b border-gray-500 text-gray-500 bg-gray-100 pl-10 py-2 focus:border-yellow-500 focus:shadow-md focus:ring-2 focus:ring-yellow-500 w-full'
+            'class': 'w-full pl-10'
           }}) }}
       </div>
     </div>
-    <div class="text-red-500 font-bold text-center lg:text-right mb-6">
-      {{ form_errors(editProfileForm.username) }}
-    </div>
+    {{ form_errors(editProfileForm.username) }}
     <div class="flex flex-col lg:flex-row mb-8">
       {{ form_label(editProfileForm.email, null, {
-        'label_attr': {'class': 'w-2/3 font-jura font-light text-2xl mr-4'
+        'label_attr': {'class': 'w-2/3 text-2xl mr-4'
         }}) }}
       <div class="relative mx-auto w-full">
         <div class="absolute inset-y-0 flex items-center pointer-events-none">
@@ -108,13 +102,11 @@
         {{ form_widget(editProfileForm.email, {
           'attr': {
             'autocomplete': 'email',
-            'class': 'block border-b border-gray-500 text-gray-500 bg-gray-100 pl-10 py-2 focus:border-yellow-500 focus:shadow-md focus:ring-2 focus:ring-yellow-500 w-full'
+            'class': 'w-full pl-10'
           }}) }}
       </div>
     </div>
-    <div class="text-red-500 font-bold text-center lg:text-right mb-6">
-      {{ form_errors(editProfileForm.email) }}
-    </div>
+    {{ form_errors(editProfileForm.email) }}
     <div class="text-center lg:text-right">
       <button class="inline-block bg-yellow-500 hover:bg-yellow-600 transition duration-500 delay-100 ease-out text-white px-6 py-2 rounded-md"
               type="submit">

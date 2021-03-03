@@ -10,8 +10,8 @@ export function displayTricks(results) {
             `<div class="bg-gray-100 rounded-md shadow-lg overflow-hidden trick">
               <a href="${Routing.generate('trick_detail', {slug: result.slug})}">
                   <div class="container">
-                      <img src="/build/images/${result.medias[0].url}"
-                         alt="${result.medias[0].altText}"
+                      <img src="/uploads/tricks/${result.tricksMedia[0].media.url}"
+                         alt="${result.tricksMedia[0].media.altText}"
                          class="w-full h-auto max-h-48 object-cover transform duration-500 ease hover:scale-105 rounded-t-md bg-gray-500"
                          loading="lazy"
                          width="600"

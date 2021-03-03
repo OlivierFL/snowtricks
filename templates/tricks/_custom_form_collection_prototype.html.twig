@@ -1,0 +1,40 @@
+{{ form_label(form.media.type, null, {
+  'label_attr': {'class': 'text-2xl'
+  }}) }}
+  {{ form_widget(form.media.type, {
+    'attr': {
+      'class': 'w-full pl-2 py-3 flex align-items-center'
+    }}) }}
+<div class="mx-auto w-full hidden">
+  {{ form_label(form.media.image, null, {
+  'label_attr': {'class': 'text-2xl'
+  }}) }}
+  {{ form_widget(form.media.image, {
+  'attr': {
+  'class': 'w-full pl-2 py-3'
+  }}) }}
+  {{ form_help(form.media.image, {
+  'help_attr': {
+  'class': 'text-gray-500 text-sm font-light text-left mt-2 mb-6'
+  }}) }}
+  {{ form_label(form.media.altText, null, {
+  'label_attr': {'class': 'text-2xl'
+  }}) }}
+  {{ form_widget(form.media.altText, {
+  'attr': {
+  'class': 'w-full pl-2 py-3'
+  }}) }}
+</div>
+<div class="mx-auto w-full hidden">
+  {{ form_label(form.media.video_url, null, {
+  'label_attr': {'class': 'text-2xl'
+  }}) }}
+  {{ form_widget(form.media.video_url, {
+  'attr': {
+  'class': 'w-full pl-2 py-3'
+  }}) }}
+  {{ form_help(form.media.video_url, {
+  'help_attr': {
+  'class': 'text-gray-500 text-sm font-light text-left mt-2 mb-6'
+  }}) }}
+</div>
