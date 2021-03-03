@@ -73,7 +73,7 @@
     </div>
     <h2 class="font-jura font-light text-2xl mr-4 mb-4">Ajouter des médias supplémentaires</h2>
     <div class="lg:flex lg:justify-between lg:mb-10">
-      <!--      Render Media upload fields-->
+      <!--      Render new Media Collection upload fields-->
       <button type="button"
               class="js-add-item-link inline-block w-full lg:w-2/3 bg-gray-600 hover:bg-gray-500 border-2 border-gray-600 hover:border-gray-500 transition duration-500 delay-100 ease-out text-white px-6 py-2 rounded-md mb-6"
               data-collection-holder-class="medias"
@@ -81,9 +81,8 @@
         <i class="fas fa-plus mr-2 text-sm"></i>
         Ajouter un nouveau média
       </button>
-      <!--      Avoid rendering label for medias with form_rest()-->
-      <!--      {{ form_widget(form.tricksMedia) }}-->
     </div>
+    {{ include('tricks/_form_collection_errors.html.twig') }}
   </div>
 </div>
 <div class="flex justify-between lg:justify-end text-center lg:text-right mt-auto">

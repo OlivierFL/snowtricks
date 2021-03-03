@@ -13,16 +13,12 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 
 class MediaType extends AbstractType
 {
-    public const HIDDEN_LABEL_STYLES = 'hidden text-2xl';
-    public const HIDDEN_INPUT_STYLES = 'hidden pl-2 py-3 w-full';
-    public const RADIO_STYLES = 'flex items-center text-gray-500 py-3 w-full';
-
     /**
      * @var VideoHelper
      */
@@ -47,9 +43,6 @@ class MediaType extends AbstractType
                 if ($form->getConfig()->getOption('new')) {
                     $form->add('type', ChoiceType::class, [
                         'label' => 'Media type',
-                        'attr' => [
-                            'class' => self::RADIO_STYLES,
-                        ],
                         'choices' => [
                             'Picture' => Media::IMAGE,
                             'Video' => Media::VIDEO,
@@ -70,29 +63,14 @@ class MediaType extends AbstractType
                         'mapped' => false,
                         'required' => false,
                         'label' => 'Add an image',
-                        'label_attr' => [
-                            'class' => self::HIDDEN_LABEL_STYLES,
-                        ],
-                        'attr' => [
-                            'class' => self::HIDDEN_INPUT_STYLES,
-                        ],
                         'help' => 'Please select an image file',
-                        'help_attr' => [
-                            'class' => 'hidden flex items-center text-gray-500 text-sm font-light text-left mt-2 mb-6',
-                        ],
                         'constraints' => [
                             new NotBlank([
                                 'message' => 'An empty file is not allowed',
                                 'groups' => ['image'],
                             ]),
-                            new File([
+                            new Image([
                                 'maxSize' => '2M',
-                                'mimeTypes' => [
-                                    'image/jpeg',
-                                    'image/webp',
-                                    'image/png',
-                                    'image/gif',
-                                ],
                                 'mimeTypesMessage' => 'Please upload a valid image file',
                                 'groups' => ['image'],
                             ]),
@@ -105,16 +83,7 @@ class MediaType extends AbstractType
                 ) {
                     $form->add('video_url', TextType::class, [
                         'label' => 'Video URL',
-                        'label_attr' => [
-                            'class' => self::HIDDEN_LABEL_STYLES,
-                        ],
-                        'attr' => [
-                            'class' => self::HIDDEN_INPUT_STYLES,
-                        ],
                         'help' => 'Paste Youtube or Vimeo video URL, or embed tag',
-                        'help_attr' => [
-                            'class' => 'hidden flex items-center text-gray-500 text-sm font-light text-left mt-2 mb-6',
-                        ],
                         'trim' => true,
                         'required' => false,
                         'mapped' => false,
@@ -136,12 +105,6 @@ class MediaType extends AbstractType
 
                 $form->add('altText', TextType::class, [
                     'label' => 'Alternative text',
-                    'label_attr' => [
-                        'class' => self::HIDDEN_LABEL_STYLES,
-                    ],
-                    'attr' => [
-                        'class' => self::HIDDEN_INPUT_STYLES.' mb-6',
-                    ],
                     'required' => false,
                     'constraints' => [
                         new NotBlank([
@@ -169,7 +132,7 @@ class MediaType extends AbstractType
             'new' => false,
             'validation_groups' => function (FormInterface $form) {
                 if ($form->getConfig()->getOption('new')) {
-                    $this->addConstraints($form);
+                    return $this->addConstraints($form);
                 }
 
                 return ['Default'];
