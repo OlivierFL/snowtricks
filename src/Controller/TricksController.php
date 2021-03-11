@@ -88,7 +88,7 @@ class TricksController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $trickHandler->handleNewTrick($trick, $form);
+            $trickHandler->handleTrick($trick, $form);
 
             $this->addFlash('success', 'Nouveau trick créé');
 
@@ -118,15 +118,29 @@ class TricksController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
+        $medias = $trick->getTricksMedia()->getValues();
+
+        foreach ($trick->getTricksMedia() as $media) {
+            $trick->removeTricksMedium($media);
+        }
+
         $form = $this->createForm(TrickType::class, $trick);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $trickHandler->handleNewTrick($trick, $form);
+            foreach ($medias as $medium) {
+                $trick->addTricksMedium($medium);
+            }
+            $trickHandler->handleTrick($trick, $form);
 
             $this->addFlash('success', 'Trick mis à jour');
 
             return $this->redirectToRoute('trick_detail', ['slug' => $trick->getSlug()]);
+        }
+
+        foreach ($medias as $medium) {
+            $trick->addTricksMedium($medium);
         }
 
         return $this->render('tricks/edit.html.twig', [

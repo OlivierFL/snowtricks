@@ -81,12 +81,11 @@ class MediaType extends AbstractType
                     $form->getConfig()->getOption('new')
                     || (null !== $media && (Media::VIMEO_VIDEO === $media->getType() || Media::YOUTUBE_VIDEO === $media->getType()))
                 ) {
-                    $form->add('video_url', TextType::class, [
+                    $form->add('url', TextType::class, [
                         'label' => 'Video URL',
                         'help' => 'Paste Youtube or Vimeo video URL, or embed tag',
                         'trim' => true,
                         'required' => false,
-                        'mapped' => false,
                         'constraints' => [
                             new Regex(
                                 [
@@ -117,7 +116,7 @@ class MediaType extends AbstractType
             ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
                 $media = $event->getData();
                 if (Media::VIDEO === $media['type']) {
-                    $videoData = $this->videoHelper->getVideoData($media['video_url']);
+                    $videoData = $this->videoHelper->getVideoData($media['url']);
                     $media['altText'] = $videoData['title'] ?? 'Video';
                     $event->setData($media);
                 }
@@ -156,8 +155,8 @@ class MediaType extends AbstractType
 
         if (
             Media::VIDEO === $form->get('type')->getData()
-            && (null === $form->get('video_url')->getData()
-                || !$this->videoHelper->checkUrl($form->get('video_url')->getData()))
+            && (null === $form->get('url')->getData()
+                || !$this->videoHelper->checkUrl($form->get('url')->getData()))
         ) {
             return ['Default', 'video'];
         }

@@ -52,7 +52,7 @@ function addFormToCollection($collectionHolderClass) {
 
 function displayField(radioType, index) {
     let imageFormRow = $('#trick_tricksMedia_' + index + '_media_image').parent();
-    let videoFormRow = $('#trick_tricksMedia_' + index + '_media_video_url').parent();
+    let videoFormRow = $('#trick_tricksMedia_' + index + '_media_url').parent();
     if ('image' === radioType) {
         videoFormRow.addClass('hidden');
         imageFormRow.removeClass('hidden');
@@ -60,4 +60,8 @@ function displayField(radioType, index) {
         imageFormRow.addClass('hidden');
         videoFormRow.removeClass('hidden');
     }
+}
+
+if (true === hasErrors) {
+    $('#trick_edit_section').get(0).scrollIntoView({block: 'center'});
 }

@@ -29,15 +29,15 @@
     'class': 'text-gray-500 text-sm font-light text-left mt-2 mb-6'
     }}) }}
     {{ form_errors(trickMedium.media.altText) }}
-    {% elseif form_errors(trickMedium.media.video_url) %}
-    {{ form_label(trickMedium.media.video_url, null, {
+    {% elseif form_errors(trickMedium.media.url) %}
+    {{ form_label(trickMedium.media.url, null, {
     'label_attr': {'class': 'text-2xl'
     }}) }}
     {{ form_widget(trickMedium.media.type, {
     'attr': {
     'class': 'hidden'
     }}) }}
-    {{ form_widget(trickMedium.media.video_url, {
+    {{ form_widget(trickMedium.media.url, {
     'label_attr': {'class': 'text-2xl'
     },
     'attr': {
@@ -46,7 +46,7 @@
     'help_attr': {
     'class': 'text-gray-500 text-sm font-light text-left mt-2 mb-6'
     }}) }}
-    {{ form_errors(trickMedium.media.video_url) }}
+    {{ form_errors(trickMedium.media.url) }}
     {% endif %}
   </div>
 {% endfor %}

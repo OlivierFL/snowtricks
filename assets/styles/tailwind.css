@@ -97,4 +97,8 @@ input[type=radio] + label:not(:last-child) {
     scroll-margin-top: 10rem;
 }
 
+#trick_edit_section {
+    scroll-margin-top: 6rem;
+}
+
 @tailwind utilities;

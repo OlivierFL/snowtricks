@@ -1,5 +1,12 @@
 {% extends('base.html.twig') %}
 
+{% import _self as formMacros %}
+
+{# Use custom Form Collection Prototype #}
+{% macro printMediaRow(form) %}
+  {{ include('tricks/_custom_form_collection_prototype.html.twig') }}
+{% endmacro %}
+
 {%- block meta_title -%}
   {{ trick.name|capitalize }} - SnowTricks - Le site communautaire pour apprendre tous les tricks de snowboard
 {%- endblock -%}
@@ -25,7 +32,6 @@
 {%- endblock -%}
 
 {% block body %}
-  {{ form_start(form) }}
   <section class="fixed w-full h-screen opacity-50 z-0 -mt-10 md:-mt-24">
     {% if trick.tricksMedia is empty %}
       <img src="{{ asset('build/images/hero_02.jpg') }}"
@@ -95,62 +101,6 @@
         Modifier les médias
       </h3>
       <div class="hidden xl:grid xl:grid-cols-3 2xl:grid-cols-4 gap-3 flex-wrap mb-10 justify-start" id="media-gallery">
-        {% if trick.tricksMedia is not empty %}
-          {% for key, trickMedium in trick.tricksMedia %}
-            {% if 'image' == trickMedium.media.type %}
-              <div>
-                <div class="overflow-hidden border-l-4 border-yellow-500 modal-open cursor-pointer mb-6"
-                     data-media-id="{{ asset('/uploads/tricks/' ~ trickMedium.media.url) }}"
-                     data-type="{{ trickMedium.media.type }}"
-                >
-                  <img src="{{ asset('/uploads/tricks/' ~ trickMedium.media.url) }}"
-                       alt="{{ trickMedium.media.altText }}"
-                       class="w-full md:h-48 max-h-36 md:max-h-48 object-cover transform duration-500 ease hover:scale-105"
-                       width="300"
-                       height="200"
-                  >
-                </div>
-                {{ form_row(form.tricksMedia[key].media.altText) }}
-              </div>
-            {% elseif 'youtube' == trickMedium.media.type %}
-              <div>
-                <div class="overflow-hidden relative border-l-4 border-yellow-500 cursor-pointer mb-6">
-                  <iframe src="https://www.youtube.com/embed/{{ trickMedium.media.url }}"
-                          class="max-w-full lg:max-w-5xl max-h-screen"
-                          width="283"
-                          height="192"
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                          allowfullscreen
-                  >
-                  </iframe>
-                  <div class="modal-open open-video-modal"
-                       data-media-id="{{ trickMedium.media.url }}"
-                       data-type="{{ trickMedium.media.type }}"
-                  ></div>
-                </div>
-                {{ form_row(form.tricksMedia[key].media.video_url) }}
-              </div>
-            {% elseif 'vimeo' == trickMedium.media.type %}
-              <div>
-                <div class="overflow-hidden relative border-l-4 border-yellow-500 cursor-pointer mb-6">
-                  <iframe src="https://player.vimeo.com/video/{{ trickMedium.media.url }}"
-                          class="max-w-full lg:max-w-5xl max-h-screen"
-                          width="283"
-                          height="192"
-                          allow="autoplay; fullscreen; picture-in-picture"
-                          allowfullscreen
-                  >
-                  </iframe>
-                  <div class="modal-open open-video-modal"
-                       data-media-id="{{ trickMedium.media.url }}"
-                       data-type="{{ trickMedium.media.type }}"
-                  ></div>
-                </div>
-                {{ form_row(form.tricksMedia[key].media.video_url) }}
-              </div>
-            {% endif %}
-          {% endfor %}
-        {% endif %}
       </div>
       <div class="text-center xl:hidden">
         <button class="px-6 py-2 transition duration-500 delay-100 ease-out bg-yellow-500 hover:bg-yellow-600 rounded-md text-white mb-10 md:mb-20"
@@ -161,7 +111,9 @@
       <hr class="border w-1/2 mx-auto my-10">
       <div class="container mx-auto">
         <h3 class="font-jura font-bold text-center lg:text-left text-xl lg:text-2xl mb-6 lg:border-l-4 border-yellow-500 lg:pl-4">
-          Modifier le trick</h3>
+          Modifier le trick
+        </h3>
+        {{ form_start(form) }}
         <div class="mb-16 flex flex-col lg:flex-row">
           <div class="container w-full lg:w-2/3 mb-10 lg:mb-0 lg:border-r border-gray-500 lg:pr-20">
             <div class="mb-8 w-full">
@@ -182,7 +134,7 @@
               'class': 'w-full pl-2 py-3'
               }}) }}
             </div>
-            <div class="mb-2 w-full">
+            <div class="mb-16 w-full">
               {{ form_label(form.category, null, {
                 'label_attr': {'class': 'text-2xl text-left text-gray-800'
                 }}) }}
@@ -196,6 +148,28 @@
                 </div>
               </div>
             </div>
+            <div>
+              <h3 class="font-jura font-bold text-center lg:text-left text-xl lg:text-2xl mb-6 lg:border-l-4 border-yellow-500 lg:pl-4">
+                Nouveaux médias
+              </h3>
+              <div>
+                <ul class="medias w-full"
+                    data-prototype="{{ formMacros.printMediaRow(form.tricksMedia.vars.prototype)|e('html_attr') }}"
+                >
+                </ul>
+                <div class="lg:flex lg:justify-between lg:mb-10">
+                  <!--      Render new Media Collection upload fields-->
+                  <button type="button"
+                          class="js-add-item-link inline-block w-full lg:w-1/2 bg-gray-600 hover:bg-gray-500 border-2 border-gray-600 hover:border-gray-500 transition duration-500 delay-100 ease-out text-white px-6 py-2 rounded-md mb-6"
+                          data-collection-holder-class="medias"
+                  >
+                    <i class="fas fa-plus mr-2 text-sm"></i>
+                    Ajouter un nouveau média
+                  </button>
+                </div>
+                {{ include('tricks/_form_collection_errors.html.twig') }}
+              </div>
+            </div>
           </div>
           <div class="container w-full lg:w-1/3 lg:pl-16">
             <div class="flex flex-col justify-between items-start text-gray-500 mb-6">
@@ -205,10 +179,10 @@
                 </p>
               </div>
               <div class="pb-2 lg:pb-0 lg:mb-10">
-                <p class="text-sm lg:text-base font-light">Contributeur(s)
-                  : {%- if trick.users is not empty -%}
+                <p class="text-sm lg:text-base font-light">Contributeur(s)&nbsp;:
+                  {%- if trick.users is not empty -%}
                     {% for contributor in trick.users %}
-                      <span class="font-bold">{{ contributor.username }}</span>
+                      <span class="font-bold">{{ contributor.username }}</span>{% if not loop.last %}&nbsp;-{% endif %}
                     {% endfor %}
                   {% else %}
                     <span class="font-bold">-</span>
@@ -223,13 +197,13 @@
           </div>
         </div>
         <div class="flex flex-col lg:flex-row justify-between lg:justify-end text-center lg:text-right mt-auto">
-          <a href="{{ path('home') }}"
+          <a href="{{ path('trick_detail', {slug: trick.slug}) }}"
              class="inline-block order-3 lg:order-1 bg-none border-2 border-gray-500 hover:border-gray-600 transition duration-500 delay-100 ease-out text-gray-500 hover:text-gray-600 px-2 lg:px-6 py-2 rounded-md lg:mr-6"
           >
             Annuler
           </a>
           <button class="inline-block order-2 border-2 border-red-500 hover:border-red-600 bg-red-500 hover:bg-red-600 transition duration-500 delay-100 ease-out text-white px-2 lg:px-6 py-2 rounded-md mb-6 lg:mb-0 lg:mr-6"
-                  type="submit">
+                  type="button">
             <i class="fas fa-times hidden lg:visible pr-2"></i>
             Supprimer
           </button>
@@ -244,4 +218,14 @@
   </section>
   {{ form_end(form) }}
   {% include('_parts/_modal.html.twig') %}
+{% endblock %}
+
+{% block javascripts %}
+  <script>let hasErrors = false;</script>
+  {% if not form.vars.valid %}
+    <script>
+        hasErrors = true;
+    </script>
+  {% endif %}
+  {{ parent() }}
 {% endblock %}
