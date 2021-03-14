@@ -5,8 +5,10 @@ namespace App\Controller;
 use App\Entity\Comment;
 use App\Entity\Trick;
 use App\Form\CommentFormType;
+use App\Form\MediaType;
 use App\Form\TrickType;
 use App\Repository\CommentRepository;
+use App\Repository\TrickRepository;
 use App\Service\TrickHandler;
 use JsonException;
 use Knp\Component\Pager\Pagination\PaginationInterface;
@@ -106,27 +108,32 @@ class TricksController extends AbstractController
      *     priority=1
      * )
      *
-     * @param Request      $request
-     * @param Trick        $trick
-     * @param TrickHandler $trickHandler
+     * @param Request         $request
+     * @param Trick           $trick
+     * @param TrickRepository $trickRepository
+     * @param                 $slug
+     * @param TrickHandler    $trickHandler
      *
      * @throws JsonException
-     *
      * @return Response
      */
-    public function edit(Request $request, Trick $trick, TrickHandler $trickHandler): Response
+    public function edit(Request $request, Trick $trick, TrickRepository $trickRepository, $slug, TrickHandler $trickHandler): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         $medias = $trick->getTricksMedia()->getValues();
+        $mediaForms = [];
 
-        foreach ($trick->getTricksMedia() as $media) {
-            $trick->removeTricksMedium($media);
+        foreach ($trick->getTricksMedia() as $key => $trickMedia) {
+            $mediaForm = $this->createForm(MediaType::class, $medias[$key]->getMedia());
+            $mediaForm->remove('image');
+            $mediaForms[] = $mediaForm->createView();
+            $trick->removeTricksMedium($trickMedia);
         }
 
         $form = $this->createForm(TrickType::class, $trick);
-
         $form->handleRequest($request);
+
 
         foreach ($medias as $medium) {
             $trick->addTricksMedium($medium);
@@ -142,7 +149,9 @@ class TricksController extends AbstractController
 
         return $this->render('tricks/edit.html.twig', [
             'trick' => $trick,
+            'oldTrick' => $oldTrick,
             'form' => $form->createView(),
+            'mediaForms' => $mediaForms,
         ]);
     }
 

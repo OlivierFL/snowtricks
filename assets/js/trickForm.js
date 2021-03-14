@@ -63,5 +63,5 @@ function displayField(radioType, index) {
 }
 
 if (true === hasErrors) {
-    $('#trick_edit_section').get(0).scrollIntoView({block: 'center'});
+    $('#trick-main-infos').get(0).scrollIntoView({block: 'center'});
 }
