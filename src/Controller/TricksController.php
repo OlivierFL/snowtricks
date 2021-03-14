@@ -128,19 +128,16 @@ class TricksController extends AbstractController
 
         $form->handleRequest($request);
 
+        foreach ($medias as $medium) {
+            $trick->addTricksMedium($medium);
+        }
+
         if ($form->isSubmitted() && $form->isValid()) {
-            foreach ($medias as $medium) {
-                $trick->addTricksMedium($medium);
-            }
             $trickHandler->handleTrick($trick, $form);
 
             $this->addFlash('success', 'Trick mis à jour');
 
             return $this->redirectToRoute('trick_detail', ['slug' => $trick->getSlug()]);
-        }
-
-        foreach ($medias as $medium) {
-            $trick->addTricksMedium($medium);
         }
 
         return $this->render('tricks/edit.html.twig', [
