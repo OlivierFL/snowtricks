@@ -8,7 +8,6 @@ use App\Form\CommentFormType;
 use App\Form\MediaType;
 use App\Form\TrickType;
 use App\Repository\CommentRepository;
-use App\Repository\TrickRepository;
 use App\Service\TrickHandler;
 use JsonException;
 use Knp\Component\Pager\Pagination\PaginationInterface;
@@ -108,18 +107,19 @@ class TricksController extends AbstractController
      *     priority=1
      * )
      *
-     * @param Request         $request
-     * @param Trick           $trick
-     * @param TrickRepository $trickRepository
-     * @param                 $slug
-     * @param TrickHandler    $trickHandler
+     * @param Request      $request
+     * @param Trick        $trick
+     * @param TrickHandler $trickHandler
      *
      * @throws JsonException
+     *
      * @return Response
      */
-    public function edit(Request $request, Trick $trick, TrickRepository $trickRepository, $slug, TrickHandler $trickHandler): Response
+    public function edit(Request $request, Trick $trick, TrickHandler $trickHandler): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $oldTrick = clone $trick;
 
         $medias = $trick->getTricksMedia()->getValues();
         $mediaForms = [];
@@ -133,7 +133,6 @@ class TricksController extends AbstractController
 
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
-
 
         foreach ($medias as $medium) {
             $trick->addTricksMedium($medium);
