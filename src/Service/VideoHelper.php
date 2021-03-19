@@ -30,12 +30,12 @@ class VideoHelper
      *
      * @throws JsonException
      *
-     * @return null|array
+     * @return array
      */
-    public function getVideoData(string $url): ?array
+    public function getVideoData(string $url): array
     {
         $id = $this->getId($url);
-        $type = 'unknown';
+        $type = Media::UNKNOWN;
 
         if (preg_match(self::PATTERN, $url, $matches)) {
             $type = $this->guessVideoType($matches[1]);
@@ -67,7 +67,7 @@ class VideoHelper
             return $matches[2];
         }
 
-        return 'unknown';
+        return Media::UNKNOWN;
     }
 
     /**
@@ -84,7 +84,7 @@ class VideoHelper
             return Media::VIMEO_VIDEO;
         }
 
-        return 'unknown';
+        return Media::UNKNOWN;
     }
 
     /**

@@ -8,6 +8,7 @@ use App\Form\CommentFormType;
 use App\Form\MediaType;
 use App\Form\TrickType;
 use App\Repository\CommentRepository;
+use App\Service\MediaHandler;
 use App\Service\TrickHandler;
 use JsonException;
 use Knp\Component\Pager\Pagination\PaginationInterface;
@@ -110,12 +111,13 @@ class TricksController extends AbstractController
      * @param Request      $request
      * @param Trick        $trick
      * @param TrickHandler $trickHandler
+     * @param MediaHandler $mediaHandler
      *
      * @throws JsonException
      *
      * @return Response
      */
-    public function edit(Request $request, Trick $trick, TrickHandler $trickHandler): Response
+    public function edit(Request $request, Trick $trick, TrickHandler $trickHandler, MediaHandler $mediaHandler): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
@@ -125,17 +127,42 @@ class TricksController extends AbstractController
         $mediaForms = [];
 
         foreach ($trick->getTricksMedia() as $key => $trickMedia) {
-            $mediaForm = $this->createForm(MediaType::class, $medias[$key]->getMedia());
-            $mediaForm->remove('image');
-            $mediaForms[] = $mediaForm->createView();
+            $mediaFormName = 'media_'.$key;
+            $mediaForm = $this->get('form.factory')->createNamed($mediaFormName, MediaType::class, $trickMedia->getMedia());
+            $mediaForms[$mediaFormName] = $mediaForm;
             $trick->removeTricksMedium($trickMedia);
         }
 
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
 
-        foreach ($medias as $medium) {
-            $trick->addTricksMedium($medium);
+        $trick = $this->addTricksMedia($trick, $medias);
+
+        foreach ($mediaForms as $key => $mediaForm) {
+            if (false === $mediaHandler->validateAltText($request, $key)) {
+                $this->addFlash('error', 'Le champ texte alternatif ne doit pas être vide !');
+
+                return $this->redirectToRoute('trick_edit', [
+                    'slug' => $trick->getSlug(),
+                ]);
+            }
+
+            $mediaForm->handleRequest($request);
+
+            if ($mediaForm->isSubmitted() && $mediaForm->isValid()) {
+                $result = $mediaHandler->handleMediaUpdate($mediaForm, $trick);
+                if (MediaHandler::MEDIA_UPDATED !== $result) {
+                    $this->addFlash('error', $result);
+                } else {
+                    $this->addFlash('success', 'Média mis à jour');
+                }
+
+                return $this->redirectToRoute('trick_edit', [
+                    'slug' => $trick->getSlug(),
+                ]);
+            }
+
+            $mediaForms[$key] = $mediaForm->createView();
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -180,5 +207,20 @@ class TricksController extends AbstractController
             $page,
             2
         );
+    }
+
+    /**
+     * @param array $medias
+     * @param Trick $trick
+     *
+     * @return Trick
+     */
+    private function addTricksMedia(Trick $trick, array $medias): Trick
+    {
+        foreach ($medias as $medium) {
+            $trick->addTricksMedium($medium);
+        }
+
+        return $trick;
     }
 }

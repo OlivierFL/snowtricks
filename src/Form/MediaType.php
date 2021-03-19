@@ -37,7 +37,7 @@ class MediaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) {
+            ->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) use ($options) {
                 $form = $event->getForm();
                 $media = $event->getData();
                 if ($form->getConfig()->getOption('new')) {
@@ -55,10 +55,7 @@ class MediaType extends AbstractType
                         ],
                     ]);
                 }
-                if (
-                    (null !== $media && Media::IMAGE === $media->getType())
-                    || $form->getConfig()->getOption('new')
-                ) {
+                if ($form->getConfig()->getOption('new')) {
                     $form->add('image', FileType::class, [
                         'mapped' => false,
                         'required' => false,
@@ -81,11 +78,12 @@ class MediaType extends AbstractType
                     $form->getConfig()->getOption('new')
                     || (null !== $media && (Media::VIMEO_VIDEO === $media->getType() || Media::YOUTUBE_VIDEO === $media->getType()))
                 ) {
-                    $form->add('url', TextType::class, [
+                    $form->add('video_url', TextType::class, [
                         'label' => 'Video URL',
                         'help' => 'Paste Youtube or Vimeo video URL, or embed tag',
                         'trim' => true,
-                        'required' => false,
+                        'required' => !$options['new'],
+                        'mapped' => false,
                         'constraints' => [
                             new Regex(
                                 [
@@ -100,23 +98,36 @@ class MediaType extends AbstractType
                             ]),
                         ],
                     ]);
+
+                    if (null !== $media && Media::YOUTUBE_VIDEO === $media->getType()) {
+                        $form->get('video_url')->setData('https://www.youtube.com/embed/'.$media->getUrl());
+                    }
+
+                    if (null !== $media && Media::VIMEO_VIDEO === $media->getType()) {
+                        $form->get('video_url')->setData('https://player.vimeo.com/video/'.$media->getUrl());
+                    }
                 }
 
-                $form->add('altText', TextType::class, [
-                    'label' => 'Alternative text',
-                    'required' => false,
-                    'constraints' => [
-                        new NotBlank([
-                            'message' => 'This field can not be blank',
-                            'groups' => ['image'],
-                        ]),
-                    ],
-                ]);
+                if (
+                    (null !== $media && Media::IMAGE === $media->getType())
+                    || $form->getConfig()->getOption('new')
+                ) {
+                    $form->add('altText', TextType::class, [
+                        'label' => 'Alternative text',
+                        'required' => !$options['new'],
+                        'constraints' => [
+                            new NotBlank([
+                                'message' => 'This field can not be blank',
+                                'groups' => ['image'],
+                            ]),
+                        ],
+                    ]);
+                }
             })
             ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
                 $media = $event->getData();
-                if (Media::VIDEO === $media['type']) {
-                    $videoData = $this->videoHelper->getVideoData($media['url']);
+                if (isset($media['type']) && Media::VIDEO === $media['type']) {
+                    $videoData = $this->videoHelper->getVideoData($media['video_url']);
                     $media['altText'] = $videoData['title'] ?? 'Video';
                     $event->setData($media);
                 }
@@ -155,8 +166,8 @@ class MediaType extends AbstractType
 
         if (
             Media::VIDEO === $form->get('type')->getData()
-            && (null === $form->get('url')->getData()
-                || !$this->videoHelper->checkUrl($form->get('url')->getData()))
+            && (null === $form->get('video_url')->getData()
+                || !$this->videoHelper->checkUrl($form->get('video_url')->getData()))
         ) {
             return ['Default', 'video'];
         }

@@ -105,22 +105,16 @@
           {% for key, trickMedium in trick.tricksMedia %}
             {% if 'image' == trickMedium.media.type %}
               <div>
-                <div class="overflow-hidden relative border-l-4 border-yellow-500 mb-6"
-                     data-media-id="{{ asset('/uploads/tricks/' ~ trickMedium.media.url) }}"
-                     data-type="{{ trickMedium.media.type }}"
-                >
+                <div class="overflow-hidden relative border-l-4 border-yellow-500 mb-6">
                   <img src="{{ asset('/uploads/tricks/' ~ trickMedium.media.url) }}"
                        alt="{{ trickMedium.media.altText }}"
                        class="w-full md:h-48 max-h-36 md:max-h-48 object-cover transform duration-500 ease hover:scale-105"
                        width="300"
                        height="200"
                   >
-                  <div class="flex flex-row absolute top-2 right-2 bg-white px-4 py-1 rounded-sm shadow-md justify-between">
-                    <div class="modal-open"
-                         data-type="{{ trickMedium.media.type }}"
-                         data-media-form-id="{{ asset('/uploads/tricks/' ~ trickMedium.media.url) }}"
-                         data-media="{{ trickMedium.media|json_encode }}"
-                         data-form="{{ key }}"
+                  <div class="flex flex-row absolute top-2 right-2 bg-white px-4 py-1 rounded-sm shadow-md justify-between items-center">
+                    <div class="update-modal-open"
+                         data-target="#update-modal-{{ key }}"
                     >
                       <i class="cursor-pointer fas fa-pen mr-4 text-blue-700 hover:text-blue-800"></i>
                     </div>
@@ -139,10 +133,14 @@
                           allowfullscreen
                   >
                   </iframe>
-                  <div class="modal-open open-video-modal"
-                       data-media-id="{{ trickMedium.media.url }}"
-                       data-type="{{ trickMedium.media.type }}"
-                  ></div>
+                  <div class="flex flex-row absolute top-2 right-2 bg-white px-4 py-1 rounded-sm shadow-md justify-between items-center">
+                    <div class="update-modal-open"
+                         data-target="#update-modal-{{ key }}"
+                    >
+                      <i class="cursor-pointer fas fa-pen mr-4 text-blue-700 hover:text-blue-800"></i>
+                    </div>
+                    <i class="cursor-pointer fas fa-trash-alt text-red-600 hover:text-red-700"></i>
+                  </div>
                 </div>
               </div>
             {% elseif 'vimeo' == trickMedium.media.type %}
@@ -156,13 +154,18 @@
                           allowfullscreen
                   >
                   </iframe>
-                  <div class="modal-open open-video-modal"
-                       data-media-id="{{ trickMedium.media.url }}"
-                       data-type="{{ trickMedium.media.type }}"
-                  ></div>
+                  <div class="flex flex-row absolute top-2 right-2 bg-white px-4 py-1 rounded-sm shadow-md justify-between items-center">
+                    <div class="update-modal-open"
+                         data-target="#update-modal-{{ key }}"
+                    >
+                      <i class="cursor-pointer fas fa-pen mr-4 text-blue-700 hover:text-blue-800"></i>
+                    </div>
+                    <i class="cursor-pointer fas fa-trash-alt text-red-600 hover:text-red-700"></i>
+                  </div>
                 </div>
               </div>
             {% endif %}
+            {% include '_parts/_update_modal.html.twig' %}
           {% endfor %}
         {% endif %}
       </div>
@@ -281,7 +284,6 @@
     </section>
   </section>
   {{ form_end(form) }}
-  {% include('_parts/_modal.html.twig') %}
 {% endblock %}
 
 {% block javascripts %}

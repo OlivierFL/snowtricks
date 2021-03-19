@@ -8,7 +8,6 @@ Routing.setRoutingData(routes);
 let imageElement = $('.modal-body #image');
 let videoElement = $('.modal-body #video');
 let commentElement = $('.modal-body #comment');
-let mediaFormElement = $('.modal-body #media-form');
 let openModal = document.querySelectorAll('.modal-open');
 
 if (null !== openModal) {
@@ -19,11 +18,6 @@ if (null !== openModal) {
                 displayMedia({
                     'type': $(this).data('type'),
                     'id': $(this).data('media-id')
-                });
-            } else if ($(this).data('media-form-id')) {
-                displayMediaForm({
-                    'media': $(this).data('media'),
-                    'id': $(this).data('id'),
                 });
             } else if ('comment' === $(this).data('type')) {
                 handleComment({
@@ -113,10 +107,6 @@ function displayMedia(data) {
             videoElement.removeClass('hidden').attr('src', 'https://player.vimeo.com/video/' + mediaId);
             break;
     }
-}
-
-function displayMediaForm(data) {
-    mediaFormElement.removeClass('hidden');
 }
 
 // Handle comment moderation display in modal

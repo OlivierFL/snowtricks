@@ -51,33 +51,6 @@
             >
           </form>
         </div>
-        <!--        Media Form display-->
-        <div class="hidden bg-white px-20 py-16 rounded-md" id="media-form">
-          <h3 class="font-jura font-bold text-center lg:text-left text-xl lg:text-2xl mb-8 lg:border-l-4 border-yellow-500 lg:pl-4">
-            Modifier l'image
-          </h3>
-          {% if mediaForms is defined %}
-            {{ form_start(mediaForms.0) }}
-            {{ form_row(mediaForms.0.altText, {
-              'attr': {
-                'class': 'mb-8 w-full'
-              }
-            }) }}
-            <div class="flex justify-end">
-              <button type="button"
-                      class="modal-close bg-none border-2 border-gray-500 hover:border-gray-600 transition duration-500 delay-100 ease-out text-gray-500 hover:text-gray-600 cursor-pointer px-2 lg:px-6 py-2 rounded-md mb-6 lg:mb-0 mr-6"
-              >
-                Annuler
-              </button>
-              <button class="inline-block order-1 lg:order-3 border-2 border-green-500 hover:border-green-600 bg-green-500 hover:bg-green-600 transition duration-500 delay-100 ease-out text-white px-2 lg:px-6 py-2 rounded-md mb-6 lg:mb-0"
-                      type="submit">
-                <i class="fas fa-save hidden lg:visible pr-2"></i>
-                Valider
-              </button>
-            </div>
-            {{ form_end(mediaForms.0) }}
-          {% endif %}
-        </div>
       </div>
     </div>
   </div>

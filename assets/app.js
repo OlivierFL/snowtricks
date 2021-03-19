@@ -14,6 +14,9 @@ import './js/nav';
 // Modal
 import './js/modal';
 
+// Update Modal
+import './js/updateModal';
+
 // Load more tricks and comments
 import './js/load_more';
 

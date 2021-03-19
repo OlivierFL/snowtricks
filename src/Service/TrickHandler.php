@@ -80,7 +80,7 @@ class TrickHandler
                     $hasCoverImage = true;
                 }
             } else {
-                $data = $this->videoHelper->getVideoData($trickMedia->get('media')->get('url')->getData());
+                $data = $this->videoHelper->getVideoData($trickMedia->get('media')->get('video_url')->getData());
                 $trickMedia->getData()->getMedia()->setUrl($data['id']);
                 $trickMedia->getData()->getMedia()->setType($data['type']);
             }
