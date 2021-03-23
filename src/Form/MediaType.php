@@ -37,7 +37,7 @@ class MediaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) use ($options) {
+            ->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) {
                 $form = $event->getForm();
                 $media = $event->getData();
                 if ($form->getConfig()->getOption('new')) {
@@ -82,7 +82,7 @@ class MediaType extends AbstractType
                         'label' => 'Video URL',
                         'help' => 'Paste Youtube or Vimeo video URL, or embed tag',
                         'trim' => true,
-                        'required' => !$options['new'],
+                        'required' => false,
                         'mapped' => false,
                         'constraints' => [
                             new Regex(
@@ -114,7 +114,7 @@ class MediaType extends AbstractType
                 ) {
                     $form->add('altText', TextType::class, [
                         'label' => 'Alternative text',
-                        'required' => !$options['new'],
+                        'required' => false,
                         'constraints' => [
                             new NotBlank([
                                 'message' => 'This field can not be blank',
@@ -142,10 +142,10 @@ class MediaType extends AbstractType
             'new' => false,
             'validation_groups' => function (FormInterface $form) {
                 if ($form->getConfig()->getOption('new')) {
-                    return $this->addConstraints($form);
+                    return $this->addNewMediaFormConstraints($form);
                 }
 
-                return ['Default'];
+                return $this->addMediaFormConstraints($form);
             },
         ]);
     }
@@ -153,9 +153,9 @@ class MediaType extends AbstractType
     /**
      * @param FormInterface $form
      *
-     * @return null|string[]
+     * @return string[]
      */
-    private function addConstraints(FormInterface $form): ?array
+    private function addNewMediaFormConstraints(FormInterface $form): array
     {
         if (
             Media::IMAGE === $form->get('type')->getData()
@@ -169,6 +169,26 @@ class MediaType extends AbstractType
             && (null === $form->get('video_url')->getData()
                 || !$this->videoHelper->checkUrl($form->get('video_url')->getData()))
         ) {
+            return ['Default', 'video'];
+        }
+
+        return ['Default'];
+    }
+
+    /**
+     * @param FormInterface $form
+     *
+     * @return string[]
+     */
+    private function addMediaFormConstraints(FormInterface $form): array
+    {
+        $type = $form->getData()->getType();
+
+        if (Media::IMAGE === $type) {
+            return ['Default', 'image'];
+        }
+
+        if (Media::YOUTUBE_VIDEO === $type || Media::VIMEO_VIDEO === $type) {
             return ['Default', 'video'];
         }
 

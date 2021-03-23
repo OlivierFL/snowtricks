@@ -126,10 +126,21 @@ class TricksController extends AbstractController
         $medias = $trick->getTricksMedia()->getValues();
         $mediaForms = [];
 
-        foreach ($trick->getTricksMedia() as $key => $trickMedia) {
-            $mediaFormName = 'media_'.$key;
-            $mediaForm = $this->get('form.factory')->createNamed($mediaFormName, MediaType::class, $trickMedia->getMedia());
-            $mediaForms[$mediaFormName] = $mediaForm;
+        foreach ($trick->getTricksMedia() as $trickMedia) {
+            $mediaFormName = 'media_'.$trickMedia->getMedia()->getId();
+            $mediaForm = $this->get('form.factory')->createNamedBuilder($mediaFormName, MediaType::class, $trickMedia->getMedia())->getForm();
+            $mediaForm->handleRequest($request);
+
+            if ($mediaForm->isSubmitted() && $mediaForm->isValid()) {
+                return $this->redirectToRoute('media_edit', [
+                    'id' => $trickMedia->getMedia()->getId(),
+                    'slug' => $trick->getSlug(),
+                    'request' => $request,
+                ], Response::HTTP_TEMPORARY_REDIRECT);
+            }
+
+            $mediaForms[$mediaFormName] = $mediaForm->createView();
+
             $trick->removeTricksMedium($trickMedia);
         }
 
@@ -137,33 +148,6 @@ class TricksController extends AbstractController
         $form->handleRequest($request);
 
         $trick = $this->addTricksMedia($trick, $medias);
-
-        foreach ($mediaForms as $key => $mediaForm) {
-            if (false === $mediaHandler->validateAltText($request, $key)) {
-                $this->addFlash('error', 'Le champ texte alternatif ne doit pas être vide !');
-
-                return $this->redirectToRoute('trick_edit', [
-                    'slug' => $trick->getSlug(),
-                ]);
-            }
-
-            $mediaForm->handleRequest($request);
-
-            if ($mediaForm->isSubmitted() && $mediaForm->isValid()) {
-                $result = $mediaHandler->handleMediaUpdate($mediaForm, $trick);
-                if (MediaHandler::MEDIA_UPDATED !== $result) {
-                    $this->addFlash('error', $result);
-                } else {
-                    $this->addFlash('success', 'Média mis à jour');
-                }
-
-                return $this->redirectToRoute('trick_edit', [
-                    'slug' => $trick->getSlug(),
-                ]);
-            }
-
-            $mediaForms[$key] = $mediaForm->createView();
-        }
 
         if ($form->isSubmitted() && $form->isValid()) {
             $trickHandler->handleTrick($trick, $form);

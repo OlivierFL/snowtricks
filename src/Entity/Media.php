@@ -7,7 +7,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=MediaRepository::class)
@@ -36,7 +35,6 @@ class Media
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(message="This field can not be blank")
      */
     private ?string $altText;
 
@@ -78,7 +76,7 @@ class Media
         return $this->altText;
     }
 
-    public function setAltText(string $altText): self
+    public function setAltText(?string $altText): self
     {
         $this->altText = $altText;
 
