@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Media;
 use App\Service\MediaHandler;
-use Doctrine\ORM\EntityManagerInterface;
 use JsonException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,16 +17,15 @@ class MediaController extends AbstractController
      *     name="media_edit",
      * )
      *
-     * @param Request                $request
-     * @param Media                  $media
-     * @param MediaHandler           $mediaHandler
-     * @param EntityManagerInterface $em
+     * @param Request      $request
+     * @param Media        $media
+     * @param MediaHandler $mediaHandler
      *
      * @throws JsonException
      *
      * @return Response
      */
-    public function edit(Request $request, Media $media, MediaHandler $mediaHandler, EntityManagerInterface $em): Response
+    public function edit(Request $request, Media $media, MediaHandler $mediaHandler): Response
     {
         $data = $request->request->get('media_'.$media->getId());
 

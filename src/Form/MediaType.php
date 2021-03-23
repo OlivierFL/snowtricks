@@ -3,19 +3,15 @@
 namespace App\Form;
 
 use App\Entity\Media;
+use App\Form\EventListener\AddAltTextFieldListener;
+use App\Form\EventListener\AddImageFieldListener;
+use App\Form\EventListener\AddTypeFieldListener;
+use App\Form\EventListener\AddVideoUrlFieldListener;
 use App\Service\VideoHelper;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Image;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Regex;
 
 class MediaType extends AbstractType
 {
@@ -37,101 +33,10 @@ class MediaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) {
-                $form = $event->getForm();
-                $media = $event->getData();
-                if ($form->getConfig()->getOption('new')) {
-                    $form->add('type', ChoiceType::class, [
-                        'label' => 'Media type',
-                        'choices' => [
-                            'Picture' => Media::IMAGE,
-                            'Video' => Media::VIDEO,
-                        ],
-                        'expanded' => true,
-                        'multiple' => false,
-                        'required' => true,
-                        'constraints' => [
-                            new NotBlank(['message' => 'Choose a media type']),
-                        ],
-                    ]);
-                }
-                if ($form->getConfig()->getOption('new')) {
-                    $form->add('image', FileType::class, [
-                        'mapped' => false,
-                        'required' => false,
-                        'label' => 'Add an image',
-                        'help' => 'Please select an image file',
-                        'constraints' => [
-                            new NotBlank([
-                                'message' => 'An empty file is not allowed',
-                                'groups' => ['image'],
-                            ]),
-                            new Image([
-                                'maxSize' => '2M',
-                                'mimeTypesMessage' => 'Please upload a valid image file',
-                                'groups' => ['image'],
-                            ]),
-                        ],
-                    ]);
-                }
-                if (
-                    $form->getConfig()->getOption('new')
-                    || (null !== $media && (Media::VIMEO_VIDEO === $media->getType() || Media::YOUTUBE_VIDEO === $media->getType()))
-                ) {
-                    $form->add('video_url', TextType::class, [
-                        'label' => 'Video URL',
-                        'help' => 'Paste Youtube or Vimeo video URL, or embed tag',
-                        'trim' => true,
-                        'required' => false,
-                        'mapped' => false,
-                        'constraints' => [
-                            new Regex(
-                                [
-                                    'pattern' => VideoHelper::PATTERN,
-                                    'message' => 'Invalid URL',
-                                    'groups' => ['video'],
-                                ],
-                            ),
-                            new NotBlank([
-                                'message' => 'This field can not be blank',
-                                'groups' => ['video'],
-                            ]),
-                        ],
-                    ]);
-
-                    if (null !== $media && Media::YOUTUBE_VIDEO === $media->getType()) {
-                        $form->get('video_url')->setData('https://www.youtube.com/embed/'.$media->getUrl());
-                    }
-
-                    if (null !== $media && Media::VIMEO_VIDEO === $media->getType()) {
-                        $form->get('video_url')->setData('https://player.vimeo.com/video/'.$media->getUrl());
-                    }
-                }
-
-                if (
-                    (null !== $media && Media::IMAGE === $media->getType())
-                    || $form->getConfig()->getOption('new')
-                ) {
-                    $form->add('altText', TextType::class, [
-                        'label' => 'Alternative text',
-                        'required' => false,
-                        'constraints' => [
-                            new NotBlank([
-                                'message' => 'This field can not be blank',
-                                'groups' => ['image'],
-                            ]),
-                        ],
-                    ]);
-                }
-            })
-            ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
-                $media = $event->getData();
-                if (isset($media['type']) && Media::VIDEO === $media['type']) {
-                    $videoData = $this->videoHelper->getVideoData($media['video_url']);
-                    $media['altText'] = $videoData['title'] ?? 'Video';
-                    $event->setData($media);
-                }
-            })
+            ->addEventSubscriber(new AddTypeFieldListener())
+            ->addEventSubscriber(new AddImageFieldListener())
+            ->addEventSubscriber(new AddVideoUrlFieldListener())
+            ->addEventSubscriber(new AddAltTextFieldListener())
         ;
     }
 
