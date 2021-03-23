@@ -62,15 +62,16 @@ class MediaType extends AbstractType
      */
     private function addNewMediaFormConstraints(FormInterface $form): array
     {
+        $type = $form->get('type')->getData();
+
         if (
-            Media::IMAGE === $form->get('type')->getData()
-            && (null === $form->get('image')->getData() || null === $form->get('altText')->getData())
+            Media::IMAGE === $type
         ) {
             return ['Default', 'image'];
         }
 
         if (
-            Media::VIDEO === $form->get('type')->getData()
+            Media::VIDEO === $type
             && (null === $form->get('video_url')->getData()
                 || !$this->videoHelper->checkUrl($form->get('video_url')->getData()))
         ) {

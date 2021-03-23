@@ -9,6 +9,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 
@@ -67,13 +68,7 @@ class AddVideoUrlFieldListener implements EventSubscriberInterface
                 ],
             ]);
 
-            if (null !== $media && Media::YOUTUBE_VIDEO === $media->getType()) {
-                $form->get('video_url')->setData('https://www.youtube.com/embed/'.$media->getUrl());
-            }
-
-            if (null !== $media && Media::VIMEO_VIDEO === $media->getType()) {
-                $form->get('video_url')->setData('https://player.vimeo.com/video/'.$media->getUrl());
-            }
+            $this->setVideoUrl($media, $form);
         }
     }
 
@@ -89,6 +84,21 @@ class AddVideoUrlFieldListener implements EventSubscriberInterface
             $videoData = $this->videoHelper->getVideoData($media['video_url']);
             $media['altText'] = $videoData['title'] ?? 'Video';
             $event->setData($media);
+        }
+    }
+
+    /**
+     * @param null|Media    $media
+     * @param FormInterface $form
+     */
+    private function setVideoUrl(?Media $media, FormInterface $form): void
+    {
+        if (null !== $media && Media::YOUTUBE_VIDEO === $media->getType()) {
+            $form->get('video_url')->setData('https://www.youtube.com/embed/'.$media->getUrl());
+        }
+
+        if (null !== $media && Media::VIMEO_VIDEO === $media->getType()) {
+            $form->get('video_url')->setData('https://player.vimeo.com/video/'.$media->getUrl());
         }
     }
 }

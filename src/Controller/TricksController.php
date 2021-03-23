@@ -8,7 +8,6 @@ use App\Form\CommentFormType;
 use App\Form\MediaType;
 use App\Form\TrickType;
 use App\Repository\CommentRepository;
-use App\Service\MediaHandler;
 use App\Service\TrickHandler;
 use JsonException;
 use Knp\Component\Pager\Pagination\PaginationInterface;
@@ -111,13 +110,12 @@ class TricksController extends AbstractController
      * @param Request      $request
      * @param Trick        $trick
      * @param TrickHandler $trickHandler
-     * @param MediaHandler $mediaHandler
      *
      * @throws JsonException
      *
      * @return Response
      */
-    public function edit(Request $request, Trick $trick, TrickHandler $trickHandler, MediaHandler $mediaHandler): Response
+    public function edit(Request $request, Trick $trick, TrickHandler $trickHandler): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 

@@ -59,6 +59,10 @@
 
     {% block javascripts %}
       <script src="https://kit.fontawesome.com/f2a6cd36ae.js" crossorigin="anonymous"></script>
+      <script>
+          let hasErrors = false;
+          let mediaHasErrors = false;
+      </script>
       {{ encore_entry_script_tags('app') }}
     {% endblock %}
   </body>

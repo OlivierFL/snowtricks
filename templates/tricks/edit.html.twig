@@ -287,10 +287,6 @@
 {% endblock %}
 
 {% block javascripts %}
-  <script>
-      let hasErrors = false;
-      let mediaHasErrors = false;
-  </script>
   {% if not form.vars.valid %}
     <script>
         hasErrors = true;

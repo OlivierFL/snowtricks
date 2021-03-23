@@ -84,6 +84,8 @@ class TrickHandler
                 $trickMedia->getData()->getMedia()->setUrl($data['id']);
                 $trickMedia->getData()->getMedia()->setType($data['type']);
             }
+
+            $trick->addTricksMedium($trickMedia->getData());
         }
 
         return $trick;
