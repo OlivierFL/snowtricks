@@ -24,9 +24,7 @@ if (null !== openModal) {
 const overlay = document.querySelectorAll('.update-modal-overlay');
 if (null != overlay) {
     for (const element of overlay) {
-        element.addEventListener('click', function () {
-            toggleModal();
-        });
+        handleModalToggling(element);
     }
 }
 
@@ -34,9 +32,7 @@ if (null != overlay) {
 let closeModal = document.querySelectorAll('.update-modal-close');
 if (null !== closeModal) {
     for (const element of closeModal) {
-        element.addEventListener('click', function () {
-            toggleModal();
-        });
+        handleModalToggling(element);
     }
 }
 
@@ -60,6 +56,12 @@ function toggleModal() {
     modal.classList.toggle('pointer-events-none');
     body.classList.toggle('update-modal-active');
     mediaFormElement.removeClass('hidden');
+}
+
+function handleModalToggling(element) {
+    element.addEventListener('click', function () {
+        toggleModal();
+    });
 }
 
 if (true === mediaHasErrors) {
