@@ -10,8 +10,8 @@ let openModal = document.querySelectorAll('.update-modal-open');
 let key = localStorage.getItem('key') ?? null;
 
 if (null !== openModal) {
-    for (let i = 0; i < openModal.length; i++) {
-        openModal[i].addEventListener('click', function (event) {
+    for (const element of openModal) {
+        element.addEventListener('click', function (event) {
             event.preventDefault();
             key = $(this).data('target');
             localStorage.setItem('key', key);
@@ -23,8 +23,8 @@ if (null !== openModal) {
 // Handle close modal when clicking out of the modal
 const overlay = document.querySelectorAll('.update-modal-overlay');
 if (null != overlay) {
-    for (let i = 0; i < overlay.length; i++) {
-        overlay[i].addEventListener('click', function () {
+    for (const element of overlay) {
+        element.addEventListener('click', function () {
             toggleModal();
         });
     }
@@ -33,8 +33,8 @@ if (null != overlay) {
 // Handle close modal when clicking close button on the modal
 let closeModal = document.querySelectorAll('.update-modal-close');
 if (null !== closeModal) {
-    for (let i = 0; i < closeModal.length; i++) {
-        closeModal[i].addEventListener('click', function () {
+    for (const element of closeModal) {
+        element.addEventListener('click', function () {
             toggleModal();
         });
     }

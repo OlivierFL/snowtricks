@@ -11,8 +11,8 @@ let commentElement = $('.modal-body #comment');
 let openModal = document.querySelectorAll('.modal-open');
 
 if (null !== openModal) {
-    for (let i = 0; i < openModal.length; i++) {
-        openModal[i].addEventListener('click', function (event) {
+    for (const element of openModal) {
+        element.addEventListener('click', function (event) {
             event.preventDefault();
             if ($(this).data('media-id')) {
                 displayMedia({
@@ -42,8 +42,8 @@ if (null != overlay) {
 // Handle close modal when clicking close button on the modal
 let closeModal = document.querySelectorAll('.modal-close');
 if (null !== closeModal) {
-    for (let i = 0; i < closeModal.length; i++) {
-        closeModal[i].addEventListener('click', function () {
+    for (const element of closeModal) {
+        element.addEventListener('click', function () {
             clearModalData();
             toggleModal();
         });
@@ -53,6 +53,7 @@ if (null !== closeModal) {
 // Handle close modal when hitting "Escape" key on keyboard
 document.onkeydown = function (evt) {
     let isEscape;
+    console.log('toto');
     if ("key" in evt) {
         isEscape = (evt.key === "Escape" || evt.key === "Esc");
     }
