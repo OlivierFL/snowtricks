@@ -47,26 +47,7 @@ class AddVideoUrlFieldListener implements EventSubscriberInterface
             $form->getConfig()->getOption('new')
             || (null !== $media && (Media::VIMEO_VIDEO === $media->getType() || Media::YOUTUBE_VIDEO === $media->getType()))
         ) {
-            $form->add('video_url', TextType::class, [
-                'label' => 'Video URL',
-                'help' => 'Paste Youtube or Vimeo video URL, or embed tag',
-                'trim' => true,
-                'required' => false,
-                'mapped' => false,
-                'constraints' => [
-                    new Regex(
-                        [
-                            'pattern' => VideoHelper::PATTERN,
-                            'message' => 'Invalid URL',
-                            'groups' => ['video'],
-                        ],
-                    ),
-                    new NotBlank([
-                        'message' => 'This field can not be blank',
-                        'groups' => ['video'],
-                    ]),
-                ],
-            ]);
+            $this->addVideoUrlField($form);
 
             $this->setVideoUrl($media, $form);
         }
@@ -100,5 +81,32 @@ class AddVideoUrlFieldListener implements EventSubscriberInterface
         if (null !== $media && Media::VIMEO_VIDEO === $media->getType()) {
             $form->get('video_url')->setData('https://player.vimeo.com/video/'.$media->getUrl());
         }
+    }
+
+    /**
+     * @param FormInterface $form
+     */
+    private function addVideoUrlField(FormInterface $form): void
+    {
+        $form->add('video_url', TextType::class, [
+            'label' => 'Video URL',
+            'help' => 'Paste Youtube or Vimeo video URL, or embed tag',
+            'trim' => true,
+            'required' => false,
+            'mapped' => false,
+            'constraints' => [
+                new Regex(
+                    [
+                        'pattern' => VideoHelper::PATTERN,
+                        'message' => 'Invalid URL',
+                        'groups' => ['video'],
+                    ],
+                ),
+                new NotBlank([
+                    'message' => 'This field can not be blank',
+                    'groups' => ['video'],
+                ]),
+            ],
+        ]);
     }
 }
