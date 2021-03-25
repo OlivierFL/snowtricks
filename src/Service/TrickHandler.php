@@ -48,7 +48,7 @@ class TrickHandler
      */
     public function handleTrick(Trick $trick, FormInterface $form): void
     {
-        $trick->setAuthor($this->security->getUser());
+        $trick = $this->setContributor($trick);
 
         if ($form->get('tricksMedia')) {
             $trick = $this->handleMediaCollection($trick, $form);
@@ -99,5 +99,25 @@ class TrickHandler
     private function handleImageUpload(FormInterface $form): string
     {
         return $this->fileUploader->upload($form->get('media')->get('image')->getData());
+    }
+
+    /**
+     * @param Trick $trick
+     *
+     * @return Trick
+     */
+    private function setContributor(Trick $trick): Trick
+    {
+        $currentUser = $this->security->getUser();
+
+        if (null === $trick->getAuthor()) {
+            $trick->setAuthor($currentUser);
+        }
+
+        if ($currentUser !== $trick->getAuthor()) {
+            $trick->addUser($currentUser);
+        }
+
+        return $trick;
     }
 }

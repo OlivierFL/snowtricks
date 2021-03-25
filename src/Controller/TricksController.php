@@ -142,7 +142,7 @@ class TricksController extends AbstractController
             $trick->removeTricksMedium($trickMedia);
         }
 
-        $form = $this->createForm(TrickType::class, $trick);
+        $form = $this->createForm(TrickType::class, $trick, ['new' => true]);
         $form->handleRequest($request);
 
         $trick = $this->addTricksMedia($trick, $medias);

@@ -99,7 +99,7 @@ class VideoHelper
         $apiUrl = self::YOUTUBE_API_URL.$id;
         parse_str(file_get_contents($apiUrl), $data);
         if (!isset($data['player_response'])) {
-            return null;
+            return Media::UNKNOWN;
         }
 
         $result = json_decode($data['player_response'], true, 512, JSON_THROW_ON_ERROR);
@@ -120,7 +120,7 @@ class VideoHelper
         $result = file_get_contents($apiUrl);
         $data = json_decode($result, true, 512, JSON_THROW_ON_ERROR);
         if (!isset($data)) {
-            return null;
+            return Media::UNKNOWN;
         }
 
         return $data[0]['title'];
