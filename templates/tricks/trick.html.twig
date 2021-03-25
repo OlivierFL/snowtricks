@@ -78,10 +78,10 @@
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
           <div class="flex flex-row absolute top-2 right-2 bg-white px-4 py-2 rounded-sm shadow-md justify-between items-center">
             <a href="{{ path('trick_edit', {slug: trick.slug}) }}">
-              <i class="cursor-pointer fas fa-pen mr-4 text-blue-700 hover:text-blue-800"></i>
+              <i class="cursor-pointer fas fa-pen text-blue-700 hover:text-blue-800"></i>
             </a>
             {% if app.user.username == trick.author.username %}
-              <i class="cursor-pointer fas fa-trash-alt text-red-600 hover:text-red-700"></i>
+              <i class="cursor-pointer fas fa-trash-alt ml-4 text-red-600 hover:text-red-700"></i>
             {% endif %}
           </div>
         {% endif %}
