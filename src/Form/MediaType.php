@@ -44,7 +44,7 @@ class MediaType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Media::class,
-            'new' => false,
+            'new' => true,
             'validation_groups' => function (FormInterface $form) {
                 if ($form->getConfig()->getOption('new')) {
                     return $this->addNewMediaFormConstraints($form);

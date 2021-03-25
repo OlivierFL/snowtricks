@@ -86,7 +86,7 @@ class Trick
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="authorTricks")
      * @ORM\JoinColumn(nullable=false)
      */
-    private ?User $author;
+    private ?User $author = null;
 
     public function __construct()
     {

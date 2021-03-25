@@ -34,9 +34,8 @@ class TrickType extends AbstractType
                 'entry_type' => TricksMediaType::class,
                 'allow_add' => true,
                 'by_reference' => false,
-                'mapped' => !$options['new'],
+                'mapped' => false,
                 'entry_options' => [
-                    'new' => $options['new'],
                     'label' => false,
                 ],
             ])
@@ -47,7 +46,6 @@ class TrickType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Trick::class,
-            'new' => false,
         ]);
     }
 }

@@ -85,7 +85,7 @@ class TricksController extends AbstractController
 
         $trick = new Trick();
 
-        $form = $this->createForm(TrickType::class, $trick, ['new' => true]);
+        $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -126,7 +126,10 @@ class TricksController extends AbstractController
 
         foreach ($trick->getTricksMedia() as $trickMedia) {
             $mediaFormName = 'media_'.$trickMedia->getMedia()->getId();
-            $mediaForm = $this->get('form.factory')->createNamedBuilder($mediaFormName, MediaType::class, $trickMedia->getMedia())->getForm();
+            $mediaForm = $this->get('form.factory')->createNamedBuilder($mediaFormName, MediaType::class, $trickMedia->getMedia(), [
+                'new' => false,
+            ])->getForm()
+            ;
             $mediaForm->handleRequest($request);
 
             if ($mediaForm->isSubmitted() && $mediaForm->isValid()) {
@@ -142,7 +145,7 @@ class TricksController extends AbstractController
             $trick->removeTricksMedium($trickMedia);
         }
 
-        $form = $this->createForm(TrickType::class, $trick, ['new' => true]);
+        $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
 
         $trick = $this->addTricksMedia($trick, $medias);
