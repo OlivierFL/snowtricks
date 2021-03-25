@@ -15,28 +15,25 @@ __Events Listeners__ related to __MediaType__ are available in `/src/Form/EventL
 
 The form handles __Trick__ creation and update.
 
-It takes a `new` _option_, passed as a _bool_ value when creating the form :
-
-```php
-$this->createForm(TrickType::class, $trick, ['new' => true]);
-```
-
-This _option_ is used to dynamically add the __TricksMedia__ (_CollectionType_) field for Trick __creation__. If no value is specified, the default value is __false__, and the form will be created to handle Trick __update__, i.e., the __TricksMedia__ field will not be added.
-
-The `new` _option_ is then passed to the related __TricksMediaType__.
+In addition to the base mapped fields, the form has a __TricksMedia__ field, which is an _embed_ __CollectionType__ form.
 
 ### TricksMediaType
 
 The form handles the __TricksMedia__ _Collection_.
 
-If the _option_ passed to __TrickType__ is `new`, this form will be added to the __TrickType__ as a form field. Inside the __Trick__
-creation template, the prototype of this form will be used to add (via _Javascript_) one or many __Media__ entities. The `new` _option_ is then passed to the related __MediaType__.
+It has one field : __MediaType__.
 
 ### MediaType
 
 The form handles __Media__ creation or update.
 
-The `new` _option_ is used to dynamically add fields and constraints to the form.
+It takes a `new` _option_, passed as a _bool_ value when creating the form :
+
+```php
+$this->createForm(MediaType::class, $media, ['new' => false]);
+```
+
+The `new` _option_ is used to dynamically add fields and constraints to the form. By default, this _option_ is set to `true`.
 
 To improve code readability and maintainability, 4 _events listeners_ are used. Their role is to add the required fields to the __MediaType__, based on the data set on the underlying _object_ (__Media__ entity) in case it exists, and __FormEvents__.
 
