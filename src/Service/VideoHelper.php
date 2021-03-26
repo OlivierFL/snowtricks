@@ -36,6 +36,7 @@ class VideoHelper
     {
         $id = $this->getId($url);
         $type = Media::UNKNOWN;
+        $videoTitle = Media::UNKNOWN_VIDEO_TITLE;
 
         if (preg_match(self::PATTERN, $url, $matches)) {
             $type = $this->guessVideoType($matches[1]);
@@ -51,7 +52,7 @@ class VideoHelper
 
         return [
             'id' => $id,
-            'title' => $videoTitle ?? 'Unknown video title',
+            'title' => $videoTitle,
             'type' => $type,
         ];
     }
@@ -97,9 +98,9 @@ class VideoHelper
     private function getYoutubeVideoTitle(string $id)
     {
         $apiUrl = self::YOUTUBE_API_URL.$id;
-        parse_str(file_get_contents($apiUrl), $data);
+        parse_str(file_get_contents($apiUrl) ?: Media::UNKNOWN_VIDEO_TITLE, $data);
         if (!isset($data['player_response'])) {
-            return Media::UNKNOWN;
+            return Media::UNKNOWN_VIDEO_TITLE;
         }
 
         $result = json_decode($data['player_response'], true, 512, JSON_THROW_ON_ERROR);
@@ -117,10 +118,12 @@ class VideoHelper
     private function getVimeoVideoTitle(string $id)
     {
         $apiUrl = self::VIMEO_API_URL.$id.'.json';
-        $result = file_get_contents($apiUrl);
-        $data = json_decode($result, true, 512, JSON_THROW_ON_ERROR);
+        $result = file_get_contents($apiUrl) ?: Media::UNKNOWN_VIDEO_TITLE;
+        if (Media::UNKNOWN_VIDEO_TITLE !== $result) {
+            $data = json_decode($result, true, 512, JSON_THROW_ON_ERROR);
+        }
         if (!isset($data)) {
-            return Media::UNKNOWN;
+            return Media::UNKNOWN_VIDEO_TITLE;
         }
 
         return $data[0]['title'];

@@ -20,6 +20,7 @@ class Media
     public const YOUTUBE_VIDEO = 'youtube';
     public const VIMEO_VIDEO = 'vimeo';
     public const UNKNOWN = 'unknown';
+    public const UNKNOWN_VIDEO_TITLE = 'Unknown video title';
 
     /**
      * @ORM\Id
