@@ -28,13 +28,13 @@ class AddAltTextFieldListener implements EventSubscriberInterface
     {
         $form = $event->getForm();
         $media = $event->getData();
-        if (
-            (null !== $media && Media::IMAGE === $media->getType())
-            || $form->getConfig()->getOption('new')
+        $isNewForm = $form->getConfig()->getOption('new');
+        if ($isNewForm
+            || (null !== $media && Media::IMAGE === $media->getType())
         ) {
             $form->add('altText', TextType::class, [
                 'label' => 'Alternative text',
-                'required' => true,
+                'required' => !$isNewForm,
                 'constraints' => [
                     new NotBlank([
                         'message' => 'This field can not be blank',

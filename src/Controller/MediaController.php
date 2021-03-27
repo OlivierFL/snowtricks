@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Media;
 use App\Form\MediaType;
 use App\Service\MediaHandler;
+use JsonException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,7 +25,7 @@ class MediaController extends AbstractController
      * @param MediaHandler $mediaHandler
      * @param string       $slug
      *
-     * @throws \JsonException
+     * @throws JsonException
      *
      * @return Response
      */
@@ -42,7 +43,7 @@ class MediaController extends AbstractController
 
         if ($form->isSubmitted()) {
             if (!$form->isValid()) {
-                $this->addFlash('error', 'Erreur lors de la mise à jour du média');
+                $this->handleErrors($form);
 
                 return $this->redirectToRoute('trick_edit', [
                     'slug' => $slug,
@@ -58,6 +59,7 @@ class MediaController extends AbstractController
 
         return $this->render('tricks/_update_media_form.html.twig', [
             'mediaForm' => $form->createView(),
+            'mediaType' => $media->getType(),
         ]);
     }
 
@@ -66,7 +68,7 @@ class MediaController extends AbstractController
      * @param Media         $media
      * @param FormInterface $form
      *
-     * @throws \JsonException
+     * @throws JsonException
      */
     private function updateMedia(MediaHandler $mediaHandler, Media $media, FormInterface $form): void
     {
@@ -75,6 +77,16 @@ class MediaController extends AbstractController
             $this->addFlash('error', $result);
         } else {
             $this->addFlash('success', 'Média mis à jour');
+        }
+    }
+
+    /**
+     * @param FormInterface $form
+     */
+    private function handleErrors(FormInterface $form): void
+    {
+        foreach ($form->getErrors() as $error) {
+            $this->addFlash('error', $error->getMessage());
         }
     }
 }

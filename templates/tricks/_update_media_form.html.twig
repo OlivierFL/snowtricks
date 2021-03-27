@@ -1,4 +1,4 @@
-{% if mediaForm.altText is defined %}
+{% if mediaType == 'image' %}
   {{ form_start(mediaForm) }}
   {{ form_row(mediaForm.altText, {
     'attr': {

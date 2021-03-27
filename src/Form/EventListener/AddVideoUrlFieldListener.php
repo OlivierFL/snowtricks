@@ -7,6 +7,7 @@ use App\Service\VideoHelper;
 use JsonException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
@@ -61,10 +62,22 @@ class AddVideoUrlFieldListener implements EventSubscriberInterface
     public function onPreSubmit(FormEvent $event): void
     {
         $media = $event->getData();
+        $form = $event->getForm();
         if (isset($media['type']) && Media::VIDEO === $media['type']) {
             $videoData = $this->videoHelper->getVideoData($media['video_url']);
+            if (Media::UNKNOWN_VIDEO_TITLE === $videoData['title']) {
+                $this->addFormError($form);
+            }
+
             $media['altText'] = $videoData['title'];
             $event->setData($media);
+        }
+
+        if (isset($media['video_url']) && !$form->getConfig()->getOption('new')) {
+            $videoData = $this->videoHelper->getVideoData($media['video_url']);
+            if (Media::UNKNOWN_VIDEO_TITLE === $videoData['title']) {
+                $this->addFormError($form);
+            }
         }
     }
 
@@ -92,7 +105,7 @@ class AddVideoUrlFieldListener implements EventSubscriberInterface
             'label' => 'Video URL',
             'help' => 'Paste Youtube or Vimeo video URL, or embed tag',
             'trim' => true,
-            'required' => true,
+            'required' => !$form->getConfig()->getOption('new'),
             'mapped' => false,
             'constraints' => [
                 new Regex(
@@ -108,5 +121,13 @@ class AddVideoUrlFieldListener implements EventSubscriberInterface
                 ]),
             ],
         ]);
+    }
+
+    /**
+     * @param FormInterface $form
+     */
+    private function addFormError(FormInterface $form): void
+    {
+        $form->addError(new FormError('La vidéo n\'existe pas ou n\'est pas accessible'));
     }
 }
