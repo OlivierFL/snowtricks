@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Entity\Media;
 use Doctrine\ORM\EntityManagerInterface;
 use JsonException;
+use Symfony\Component\Form\FormInterface;
 
 class MediaHandler
 {
@@ -25,24 +26,24 @@ class MediaHandler
     }
 
     /**
-     * @param array $data
-     * @param Media $media
+     * @param Media         $media
+     * @param FormInterface $form
      *
      * @throws JsonException
      *
      * @return string
      */
-    public function updateMedia(array $data, Media $media): string
+    public function updateMedia(Media $media, FormInterface $form): string
     {
         $type = $media->getType();
 
         if (Media::IMAGE === $type) {
-            $media->setAltText($data['altText']);
+            $media->setAltText($form->get('altText')->getData());
             $this->em->persist($media);
         }
 
         if (Media::YOUTUBE_VIDEO === $type || Media::VIMEO_VIDEO === $type) {
-            $videoData = $this->videoHelper->getVideoData($data['video_url']);
+            $videoData = $this->videoHelper->getVideoData($form->get('video_url')->getData());
             $media->setUrl($videoData['id']);
             $media->setAltText($videoData['title']);
             $media->setType($videoData['type']);

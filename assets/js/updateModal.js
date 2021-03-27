@@ -7,15 +7,19 @@ Routing.setRoutingData(routes);
 // Handle modal opening when clicking on image/video thumbnails
 let mediaFormElement = $('.update-modal-content .media-form');
 let openModal = document.querySelectorAll('.update-modal-open');
-let key = localStorage.getItem('key') ?? null;
+let currentModal = localStorage.getItem('currentModal') ?? null;
 
 if (null !== openModal) {
     for (const element of openModal) {
         element.addEventListener('click', function (event) {
             event.preventDefault();
-            key = $(this).data('target');
-            localStorage.setItem('key', key);
-            toggleModal();
+            let key = $(this).data('target');
+            currentModal = $('#update-modal-' + key);
+            let currentModalContent = $('#media-form-content-' + key);
+            localStorage.setItem('currentModal', currentModal);
+            let id = $(this).data('id');
+            let slug = $(this).data('slug');
+            toggleModal(id, slug, currentModalContent);
         })
     }
 }
@@ -49,9 +53,17 @@ document.onkeydown = function (evt) {
 };
 
 // Show/hide modal
-function toggleModal() {
+function toggleModal(id = null, slug = null, currentModalContent = null) {
     const body = document.querySelector('body');
-    const modal = document.querySelector(key);
+    const modal = currentModal.get(0);
+    if (id && slug) {
+        $.get(Routing.generate('media_edit', {
+            id: id,
+            slug: slug
+        }), function (result) {
+            currentModalContent.html(result);
+        });
+    }
     modal.classList.toggle('opacity-0');
     modal.classList.toggle('pointer-events-none');
     body.classList.toggle('update-modal-active');
@@ -62,9 +74,4 @@ function handleModalToggling(element) {
     element.addEventListener('click', function () {
         toggleModal();
     });
-}
-
-if (true === mediaHasErrors) {
-    $('#trick_edit_section').get(0).scrollIntoView();
-    toggleModal();
 }

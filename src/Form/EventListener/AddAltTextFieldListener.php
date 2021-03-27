@@ -34,7 +34,7 @@ class AddAltTextFieldListener implements EventSubscriberInterface
         ) {
             $form->add('altText', TextType::class, [
                 'label' => 'Alternative text',
-                'required' => false,
+                'required' => true,
                 'constraints' => [
                     new NotBlank([
                         'message' => 'This field can not be blank',

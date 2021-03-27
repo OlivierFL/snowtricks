@@ -108,13 +108,15 @@
                 <div class="overflow-hidden relative border-l-4 border-yellow-500 mb-6">
                   <img src="{{ asset('/uploads/tricks/' ~ trickMedium.media.url) }}"
                        alt="{{ trickMedium.media.altText }}"
-                       class="w-full md:h-48 max-h-36 md:max-h-48 object-cover transform duration-500 ease hover:scale-105"
+                       class="w-full md:h-48 max-h-36 md:max-h-48 object-cover"
                        width="300"
                        height="200"
                   >
                   <div class="flex flex-row absolute top-2 right-2 bg-white px-4 py-1 rounded-sm shadow-md justify-between items-center">
                     <div class="update-modal-open"
-                         data-target="#update-modal-{{ key }}"
+                         data-target="{{ key }}"
+                         data-id="{{ trickMedium.media.id }}"
+                         data-slug="{{ trick.slug }}"
                     >
                       <i class="cursor-pointer fas fa-pen mr-4 text-blue-700 hover:text-blue-800"></i>
                     </div>
@@ -135,7 +137,9 @@
                   </iframe>
                   <div class="flex flex-row absolute top-2 right-2 bg-white px-4 py-1 rounded-sm shadow-md justify-between items-center">
                     <div class="update-modal-open"
-                         data-target="#update-modal-{{ key }}"
+                         data-target="{{ key }}"
+                         data-id="{{ trickMedium.media.id }}"
+                         data-slug="{{ trick.slug }}"
                     >
                       <i class="cursor-pointer fas fa-pen mr-4 text-blue-700 hover:text-blue-800"></i>
                     </div>
@@ -156,7 +160,9 @@
                   </iframe>
                   <div class="flex flex-row absolute top-2 right-2 bg-white px-4 py-1 rounded-sm shadow-md justify-between items-center">
                     <div class="update-modal-open"
-                         data-target="#update-modal-{{ key }}"
+                         data-target="{{ key }}"
+                         data-id="{{ trickMedium.media.id }}"
+                         data-slug="{{ trick.slug }}"
                     >
                       <i class="cursor-pointer fas fa-pen mr-4 text-blue-700 hover:text-blue-800"></i>
                     </div>
@@ -296,15 +302,5 @@
         hasErrors = true;
     </script>
   {% endif %}
-
-  {% for trickMedium in trick.tricksMedia %}
-    {% for mediaForm in mediaForms %}
-      {% if not mediaForms['media_' ~ trickMedium.media.id].vars.valid %}
-        <script>
-            mediaHasErrors = true;
-        </script>
-      {% endif %}
-    {% endfor %}
-  {% endfor %}
   {{ parent() }}
 {% endblock %}

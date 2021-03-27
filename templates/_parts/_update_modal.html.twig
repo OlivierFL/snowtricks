@@ -15,39 +15,7 @@
         <h3 class="font-jura font-bold text-center lg:text-left text-xl lg:text-2xl mb-8 lg:border-l-4 border-yellow-500 lg:pl-4">
           Modifier l'image
         </h3>
-        {% if mediaForms['media_' ~ trickMedium.media.id].altText is defined %}
-          {{ form_start(mediaForms['media_' ~ trickMedium.media.id]) }}
-          {{ form_row(mediaForms['media_' ~ trickMedium.media.id].altText, {
-            'attr': {
-              'class': 'w-full'
-            }
-          }) }}
-        {% else %}
-          {{ form_start(mediaForms['media_' ~ trickMedium.media.id]) }}
-          {{ form_row(mediaForms['media_' ~ trickMedium.media.id].video_url, {
-            'attr': {
-              'class': 'w-full'
-            },
-            'help_attr': {
-              'class': 'text-gray-500 text-sm font-light text-left mt-2'
-            }
-          }) }}
-        {% endif %}
-        <div class="flex justify-end mt-8">
-          <button type="button"
-                  class="update-modal-close bg-none border-2 border-gray-500 hover:border-gray-600 transition duration-500 delay-100 ease-out text-gray-500 hover:text-gray-600 cursor-pointer px-2 lg:px-6 py-2 rounded-md mb-6 lg:mb-0 mr-6"
-          >
-            Annuler
-          </button>
-          <button class="update-media-btn inline-block order-1 lg:order-3 border-2 border-green-500 hover:border-green-600 bg-green-500 hover:bg-green-600 transition duration-500 delay-100 ease-out text-white px-2 lg:px-6 py-2 rounded-md mb-6 lg:mb-0"
-                  type="submit"
-                  id="update-media-btn-{{ key }}"
-          >
-            <i class="fas fa-save hidden lg:visible pr-2"></i>
-            Valider
-          </button>
-        </div>
-        {{ form_end(mediaForms['media_' ~ trickMedium.media.id]) }}
+        <div id="media-form-content-{{ key }}"></div>
       </div>
     </div>
   </div>

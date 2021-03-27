@@ -63,7 +63,7 @@ class AddVideoUrlFieldListener implements EventSubscriberInterface
         $media = $event->getData();
         if (isset($media['type']) && Media::VIDEO === $media['type']) {
             $videoData = $this->videoHelper->getVideoData($media['video_url']);
-            $media['altText'] = $videoData['title'] ?? 'Video';
+            $media['altText'] = $videoData['title'];
             $event->setData($media);
         }
     }
@@ -92,7 +92,7 @@ class AddVideoUrlFieldListener implements EventSubscriberInterface
             'label' => 'Video URL',
             'help' => 'Paste Youtube or Vimeo video URL, or embed tag',
             'trim' => true,
-            'required' => false,
+            'required' => true,
             'mapped' => false,
             'constraints' => [
                 new Regex(

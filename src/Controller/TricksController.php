@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Comment;
 use App\Entity\Trick;
 use App\Form\CommentFormType;
-use App\Form\MediaType;
 use App\Form\TrickType;
 use App\Repository\CommentRepository;
 use App\Service\TrickHandler;
@@ -122,26 +121,8 @@ class TricksController extends AbstractController
         $oldTrick = clone $trick;
 
         $medias = $trick->getTricksMedia()->getValues();
-        $mediaForms = [];
 
         foreach ($trick->getTricksMedia() as $trickMedia) {
-            $mediaFormName = 'media_'.$trickMedia->getMedia()->getId();
-            $mediaForm = $this->get('form.factory')->createNamedBuilder($mediaFormName, MediaType::class, $trickMedia->getMedia(), [
-                'new' => false,
-            ])->getForm()
-            ;
-            $mediaForm->handleRequest($request);
-
-            if ($mediaForm->isSubmitted() && $mediaForm->isValid()) {
-                return $this->redirectToRoute('media_edit', [
-                    'id' => $trickMedia->getMedia()->getId(),
-                    'slug' => $trick->getSlug(),
-                    'request' => $request,
-                ], Response::HTTP_TEMPORARY_REDIRECT);
-            }
-
-            $mediaForms[$mediaFormName] = $mediaForm->createView();
-
             $trick->removeTricksMedium($trickMedia);
         }
 
@@ -162,7 +143,6 @@ class TricksController extends AbstractController
             'trick' => $trick,
             'oldTrick' => $oldTrick,
             'form' => $form->createView(),
-            'mediaForms' => $mediaForms,
         ]);
     }
 
