@@ -90,7 +90,7 @@ class TricksController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $trickHandler->handleTrick($trick, $form);
 
-            $this->addFlash('success', 'Nouveau trick créé');
+            $this->addFlash('success', 'New trick created');
 
             return $this->redirectToRoute('trick_detail', ['slug' => $trick->getSlug()]);
         }
@@ -134,7 +134,7 @@ class TricksController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $trickHandler->handleTrick($trick, $form);
 
-            $this->addFlash('success', 'Trick mis à jour');
+            $this->addFlash('success', TrickHandler::TRICK_UPDATED);
 
             return $this->redirectToRoute('trick_detail', ['slug' => $trick->getSlug()]);
         }

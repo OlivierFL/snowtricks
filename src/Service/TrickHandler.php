@@ -11,6 +11,7 @@ use Symfony\Component\Security\Core\Security;
 
 class TrickHandler
 {
+    public const TRICK_UPDATED = 'Trick updated';
     /**
      * @var FileUploader
      */
@@ -98,7 +99,7 @@ class TrickHandler
      */
     private function handleImageUpload(FormInterface $form): string
     {
-        return $this->fileUploader->upload($form->get('media')->get('image')->getData());
+        return $this->fileUploader->upload($form->get('media')->get('image')->get('image')->getData());
     }
 
     /**
