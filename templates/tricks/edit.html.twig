@@ -82,6 +82,13 @@
             {% endif %}
           {% endfor %}
         {% endif %}
+        <div class="flex flex-row absolute top-2 right-2 bg-white px-4 py-2 rounded-sm shadow-md justify-between items-center">
+          <div class="update-cover-modal-open"
+               data-cover-id="{{ trick.id }}"
+          >
+            <i class="cursor-pointer fas fa-pen text-blue-700 hover:text-blue-800"></i>
+          </div>
+        </div>
         <div class="pt-8 md:pt-0">
           <div class="absolute text-center bottom-8 sm:bottom-12 inset-x-0">
             <a href="#trick_edit_section"
@@ -94,6 +101,7 @@
         </div>
       </div>
     </div>
+    {% include 'trick/_update_cover_modal.html.twig' %}
     <section
             class="relative z-10 pb-20 container w-full mx-auto pt-10 md:pt-10 px-10 md:px-44 bg-white rounded-b-md"
             id="trick_edit_section">

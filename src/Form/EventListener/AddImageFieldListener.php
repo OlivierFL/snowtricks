@@ -2,12 +2,10 @@
 
 namespace App\Form\EventListener;
 
+use App\Form\ImageType;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Validator\Constraints\Image;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 class AddImageFieldListener implements EventSubscriberInterface
 {
@@ -28,22 +26,9 @@ class AddImageFieldListener implements EventSubscriberInterface
     {
         $form = $event->getForm();
         if ($form->getConfig()->getOption('new')) {
-            $form->add('image', FileType::class, [
+            $form->add('image', ImageType::class, [
                 'mapped' => false,
                 'required' => false,
-                'label' => 'Add an image',
-                'help' => 'Please select an image file',
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'An empty file is not allowed',
-                        'groups' => ['image'],
-                    ]),
-                    new Image([
-                        'maxSize' => '2M',
-                        'mimeTypesMessage' => 'Please upload a valid image file',
-                        'groups' => ['image'],
-                    ]),
-                ],
             ]);
         }
     }

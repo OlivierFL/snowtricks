@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Media;
+use App\Entity\Trick;
+use App\Form\CoverImageType;
 use App\Form\MediaType;
 use App\Service\MediaHandler;
 use JsonException;
@@ -15,21 +17,30 @@ use Symfony\Component\Routing\Annotation\Route;
 class MediaController extends AbstractController
 {
     /**
+     * @var MediaHandler
+     */
+    private MediaHandler $mediaHandler;
+
+    public function __construct(MediaHandler $mediaHandler)
+    {
+        $this->mediaHandler = $mediaHandler;
+    }
+
+    /**
      * @Route("trick/{slug}/media/{id}/edit",
      *     options={"expose": true},
      *     name="media_edit",
      * )
      *
-     * @param Request      $request
-     * @param Media        $media
-     * @param MediaHandler $mediaHandler
-     * @param string       $slug
+     * @param Request $request
+     * @param Media   $media
+     * @param string  $slug
      *
      * @throws JsonException
      *
      * @return Response
      */
-    public function edit(Request $request, Media $media, MediaHandler $mediaHandler, string $slug): Response
+    public function edit(Request $request, Media $media, string $slug): Response
     {
         $form = $this->createForm(MediaType::class, $media, [
             'new' => false,
@@ -50,7 +61,9 @@ class MediaController extends AbstractController
                 ]);
             }
 
-            $this->updateMedia($mediaHandler, $media, $form);
+            $result = $this->mediaHandler->updateMedia($media, $form);
+
+            $this->handleResult($result);
 
             return $this->redirectToRoute('trick_edit', [
                 'slug' => $slug,
@@ -64,20 +77,49 @@ class MediaController extends AbstractController
     }
 
     /**
-     * @param MediaHandler  $mediaHandler
-     * @param Media         $media
-     * @param FormInterface $form
+     * @Route("trick/{id}/cover-image/edit",
+     *     options={"expose": true},
+     *     name="cover_edit",
+     * )
+     *
+     * @param Request $request
+     * @param Trick   $trick
      *
      * @throws JsonException
+     *
+     * @return Response
      */
-    private function updateMedia(MediaHandler $mediaHandler, Media $media, FormInterface $form): void
+    public function editCoverImage(Request $request, Trick $trick): Response
     {
-        $result = $mediaHandler->updateMedia($media, $form);
-        if (MediaHandler::MEDIA_UPDATED !== $result) {
-            $this->addFlash('error', $result);
-        } else {
-            $this->addFlash('success', 'Média mis à jour');
+        $form = $this->createForm(CoverImageType::class, $trick, [
+            'action' => $this->generateUrl('cover_edit', [
+                'id' => $trick->getId(),
+            ]),
+        ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            if (!$form->isValid()) {
+                $this->handleCoverImageErrors($form);
+
+                return $this->redirectToRoute('trick_edit', [
+                    'slug' => $trick->getSlug(),
+                ]);
+            }
+
+            $result = $this->mediaHandler->updateCoverImage($form, $trick);
+
+            $this->handleResult($result);
+
+            return $this->redirectToRoute('trick_edit', [
+                'slug' => $trick->getSlug(),
+            ]);
         }
+
+        return $this->render('tricks/_update_cover_form.html.twig', [
+            'coverForm' => $form->createView(),
+        ]);
     }
 
     /**
@@ -88,5 +130,39 @@ class MediaController extends AbstractController
         foreach ($form->getErrors() as $error) {
             $this->addFlash('error', $error->getMessage());
         }
+    }
+
+    /**
+     * @param FormInterface $form
+     */
+    private function handleCoverImageErrors(FormInterface $form): void
+    {
+        foreach ($form->get('new_cover_image')->get('image')->getErrors() as $error) {
+            $this->addFlash('error', $error->getMessage());
+        }
+
+        foreach ($form->get('altText')->getErrors() as $error) {
+            $this->addFlash('error', $error->getMessage());
+        }
+    }
+
+    /**
+     * @param string $result
+     */
+    private function handleResult(string $result): void
+    {
+        if (MediaHandler::MEDIA_UPDATED === $result) {
+            $this->addFlash('success', $result);
+
+            return;
+        }
+
+        if (MediaHandler::COVER_IMAGE_UPDATED === $result) {
+            $this->addFlash('success', $result);
+
+            return;
+        }
+
+        $this->addFlash('error', $result);
     }
 }

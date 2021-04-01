@@ -11,12 +11,14 @@ First: Mot de passe
 Second: Répéter le mot de passe
 Add a profile picture: Ajouter une photo de profil
 Add a cover image: Ajouter une image de couverture
+Add a new cover image: Ajouter une nouvelle image de couverture
 Add an image: Ajouter une image
 Your comment: Votre commentaire
 Name: Nom
 Trick name: Nom du trick
 Description: Description
 Category: Catégorie
+Cover image: Image de couverture
 Alternative text: Texte alternatif
 Url: Url
 Video URL: URL de la vidéo
@@ -31,3 +33,7 @@ Vimeo URL: URL de la vidéo Vimeo
 "Required: this image will be used to illustrate trick on homepage and on trick detail page": "Obligatoire: cette image sera utilisée pour illustrer le trick sur la page d'accueil et sur la page de détail du trick"
 Paste Youtube or Vimeo video URL, or embed tag: Coller le lien de la vidéo Youtube ou Vimeo, ou une balise embed
 Please select an image file: Veuillez sélectionner une image
+Select an existing image: Sélectionner une image existante
+Media updated: Média mis à jour
+Cover image updated: Image de couverture mise à jour
+The cover image "alt text" field can not be blank: Le champ "alt text" de l'image de couverture ne doit pas être vide
