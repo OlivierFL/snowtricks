@@ -11,7 +11,6 @@ use Symfony\Component\Security\Core\Security;
 
 class TrickHandler
 {
-    public const TRICK_UPDATED = 'Trick updated';
     /**
      * @var FileUploader
      */

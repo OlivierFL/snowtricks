@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Media;
 use App\Entity\Trick;
+use App\Entity\TricksMedia;
 use App\Form\CoverImageType;
 use App\Form\MediaType;
 use App\Service\MediaHandler;
@@ -151,13 +152,13 @@ class MediaController extends AbstractController
      */
     private function handleResult(string $result): void
     {
-        if (MediaHandler::MEDIA_UPDATED === $result) {
+        if (Media::MEDIA_UPDATED === $result) {
             $this->addFlash('success', $result);
 
             return;
         }
 
-        if (MediaHandler::COVER_IMAGE_UPDATED === $result) {
+        if (TricksMedia::COVER_IMAGE_UPDATED === $result) {
             $this->addFlash('success', $result);
 
             return;

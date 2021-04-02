@@ -13,8 +13,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class MediaHandler
 {
-    public const MEDIA_UPDATED = 'Media updated';
-    public const COVER_IMAGE_UPDATED = 'Cover image updated';
     /**
      * @var EntityManagerInterface
      */
@@ -67,7 +65,7 @@ class MediaHandler
 
         $this->em->flush();
 
-        return self::MEDIA_UPDATED;
+        return Media::MEDIA_UPDATED;
     }
 
     /**
@@ -97,7 +95,7 @@ class MediaHandler
         }
         $this->em->flush();
 
-        return self::COVER_IMAGE_UPDATED;
+        return TricksMedia::COVER_IMAGE_UPDATED;
     }
 
     /**
