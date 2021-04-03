@@ -44,17 +44,19 @@ Fields added on `FormEvents::POST_SET_DATA` _event_ :
 - if `new` _option_ is set to `true` :
     - __type__ (_ChoiceType_) of the __Media__ (_video_ or _image_) with the associated constraint.
     - __image__ (_FileType_) to upload a new image file with the associated constraints.
-- if `new` _option_ is set to `true`, or __Media__ object has data (in case of an _update_) :
     - __video_url__ (_TextType_) to handle adding or updating a video, with the associated constraints.
     - __altText__ (_TextType_) to handle adding or updating an alternative text, with the associated constraint.
+- if `new` _option_ is set to `false` :
+    - if __Media__ has type _video_ : __video_url__ (_TextType_) to handle adding or updating a video, with the associated constraints.
+    - if __Media__ has type _image_ : __altText__ (_TextType_) to handle adding or updating an alternative text, with the associated constraint.
 
 | _option_ value | true | false |
 | :-------------: | :----------: | :----------: |
 | __Fields__ added |  |  |
 | _type_ | X   | - |
 | _image_ | X | - |
-| _video_url_ | X | X <br><small>if __Media__ has data (_update_)</small> |
-| _altText_ | X | X <br><small>if __Media__ has data (_update_)</small> |
+| _video_url_ | X | X <br><small>if __Media__ has type _video_</small> |
+| _altText_ | X | X <br><small>if __Media__ has type _image_</small> |
 
 Action called on `FormEvents::PRE_SUBMIT` _event_ :
 
