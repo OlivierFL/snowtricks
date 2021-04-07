@@ -144,7 +144,7 @@ class MediaController extends AbstractController
         $em->remove($media);
         $em->flush();
 
-        $this->addFlash('success', 'Media successfully deleted');
+        $this->addFlash('success', Media::MEDIA_DELETED);
 
         return $this->redirectToRoute('trick_edit', [
             'slug' => $trick->getSlug(),

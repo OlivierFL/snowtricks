@@ -22,6 +22,7 @@ class Media
     public const UNKNOWN = 'unknown';
     public const UNKNOWN_VIDEO_TITLE = 'Unknown video title';
     public const MEDIA_UPDATED = 'Media updated';
+    public const MEDIA_DELETED = 'Media successfully deleted';
 
     /**
      * @ORM\Id

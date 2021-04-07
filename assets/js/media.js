@@ -5,6 +5,7 @@ let videoElement = $('.modal-body #video');
 let deleteMediaElement = $('.modal #delete-media');
 let updateMediaElement = $('.modal #update-media-form');
 let updateCoverImageElement = $('.modal #update-cover-form');
+let deleteTrickElement = $('.modal #delete-trick');
 
 // Display media in modal
 export function displayMedia(data) {
@@ -22,7 +23,7 @@ export function displayMedia(data) {
     }
 }
 
-export function displayMediaForm(data) {
+export function displayModalForm(data) {
     switch (data.action) {
         case 'update':
             displayUpdateMediaForm({
@@ -36,6 +37,12 @@ export function displayMediaForm(data) {
                 'slug': data.slug
             });
             break;
+        case 'trick-delete':
+            displayTrickDeleteForm({
+                'id': data.id,
+                'name': data.name
+            });
+            break;
         case 'cover-update':
             displayCoverForm({
                 'id': data.id
@@ -47,6 +54,7 @@ export function displayMediaForm(data) {
 function displayDeleteMediaForm(data) {
     updateCoverImageElement.addClass('hidden');
     updateMediaElement.addClass('hidden');
+    deleteTrickElement.addClass('hidden');
     let deleteMediaForm = $('#delete-media-form');
     deleteMediaForm.attr('action', Routing.generate('media_delete', {
         id: data.id,
@@ -59,6 +67,7 @@ function displayDeleteMediaForm(data) {
 function displayUpdateMediaForm(data) {
     updateCoverImageElement.addClass('hidden');
     deleteMediaElement.addClass('hidden');
+    deleteTrickElement.addClass('hidden');
     $.get(Routing.generate('media_edit', {
         id: data.id,
         slug: data.slug
@@ -71,6 +80,7 @@ function displayUpdateMediaForm(data) {
 function displayCoverForm(data) {
     deleteMediaElement.addClass('hidden');
     updateMediaElement.addClass('hidden');
+    deleteTrickElement.addClass('hidden');
     $.get(Routing.generate('cover_edit', {
         id: data.id,
     }), function (result) {
@@ -87,4 +97,17 @@ function displayCoverForm(data) {
         }
     });
     updateCoverImageElement.removeClass('hidden');
+}
+
+function displayTrickDeleteForm(data) {
+    updateCoverImageElement.addClass('hidden');
+    updateMediaElement.addClass('hidden');
+    deleteMediaElement.addClass('hidden');
+    let deleteTrickForm = $('#delete-trick-form');
+    deleteTrickForm.attr('action', Routing.generate('trick_delete', {
+        id: data.id,
+    }));
+    $("#trick-id-value").val(data.id);
+    $('#delete-trick-name').html(data.name);
+    deleteTrickElement.removeClass('hidden');
 }

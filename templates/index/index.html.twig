@@ -107,13 +107,19 @@
           </a>
           <div class="flex flex-row justify-between items-center p-4">
             <a href="{{ path('trick_detail', { slug: trick.slug }) }}" class="p-2 font-bold">{{ trick.name }}</a>
-            <div class="ml-auto">
+            <div class="ml-auto flex">
               {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                 <a href="{{ path('trick_edit', {slug: trick.slug}) }}">
                   <i class="cursor-pointer fas fa-pen mr-2 text-blue-700 hover:text-blue-800"></i>
                 </a>
                 {% if app.user.username == trick.author.username %}
-                  <i class="cursor-pointer fas fa-trash-alt text-red-600 hover:text-red-700"></i>
+                  <div class="modal-open"
+                       data-id="{{ trick.id }}"
+                       data-name="{{ trick.name }}"
+                       data-action="trick-delete"
+                  >
+                    <i class="cursor-pointer fas fa-trash-alt text-red-600 hover:text-red-700"></i>
+                  </div>
                 {% endif %}
               {% endif %}
             </div>
@@ -145,4 +151,5 @@
       </a>
     </div>
   </div>
+  {% include '_parts/_modal.html.twig' %}
 {% endblock %}

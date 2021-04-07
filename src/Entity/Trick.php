@@ -22,6 +22,7 @@ class Trick
 
     public const NEW_TRICK_CREATED = 'New trick created';
     public const TRICK_UPDATED = 'Trick updated';
+    public const TRICK_DELETED = 'Trick successfully deleted';
 
     /**
      * @ORM\Id

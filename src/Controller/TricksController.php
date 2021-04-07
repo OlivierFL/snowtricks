@@ -8,6 +8,7 @@ use App\Form\CommentFormType;
 use App\Form\TrickType;
 use App\Repository\CommentRepository;
 use App\Service\TrickHandler;
+use Doctrine\ORM\EntityManagerInterface;
 use JsonException;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -144,6 +145,30 @@ class TricksController extends AbstractController
             'oldTrick' => $oldTrick,
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/tricks/{id}/delete",
+     *     name="trick_delete",
+     *     options={"expose": true},
+     *     priority=1
+     * )
+     *
+     * @param Trick                  $trick
+     * @param EntityManagerInterface $em
+     *
+     * @return Response
+     */
+    public function delete(Trick $trick, EntityManagerInterface $em): Response
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $em->remove($trick);
+        $em->flush();
+
+        $this->addFlash('success', Trick::TRICK_DELETED);
+
+        return $this->redirectToRoute('home');
     }
 
     /**

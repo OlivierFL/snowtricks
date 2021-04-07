@@ -1,4 +1,4 @@
-import {displayMedia, displayMediaForm} from "./media";
+import {displayMedia, displayModalForm} from "./media";
 import {handleComment} from "./comment";
 
 // Handle modal opening when clicking on image/video thumbnails
@@ -19,9 +19,10 @@ if (null !== openModal) {
                     'id': $(this).data('id')
                 });
             } else {
-                displayMediaForm({
+                displayModalForm({
                     'id': $(this).data('id'),
                     'slug': $(this).data('slug'),
+                    'name': $(this).data('name'),
                     'action': $(this).data('action'),
                 });
             }
