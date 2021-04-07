@@ -9,6 +9,7 @@ New password: Nouveau mot de passe
 Repeat Password: Répéter le mot de passe
 First: Mot de passe
 Second: Répéter le mot de passe
+Successful login: Connexion réussie
 Add a profile picture: Ajouter une photo de profil
 Add a cover image: Ajouter une image de couverture
 Add a new cover image: Ajouter une nouvelle image de couverture
@@ -39,3 +40,4 @@ Trick updated: Trick mis à jour
 Media updated: Média mis à jour
 Cover image updated: Image de couverture mise à jour
 The cover image "alt text" field can not be blank: Le champ "alt text" de l'image de couverture ne doit pas être vide
+Media successfully deleted: Le média a été supprimé

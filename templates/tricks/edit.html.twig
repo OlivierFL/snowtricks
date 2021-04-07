@@ -44,7 +44,7 @@
       {% for trickMedium in trick.tricksMedia %}
         {% if true == trickMedium.isCoverImage %}
           <img src="{{ asset('/uploads/tricks/' ~ trickMedium.media.url) }}"
-               alt="SnowTricks hero image"
+               alt="{{ trickMedium.media.altText }}"
                class="w-full h-full object-cover"
                width="1920"
                height="1280"
@@ -74,7 +74,7 @@
           {% for trickMedium in trick.tricksMedia %}
             {% if true == trickMedium.isCoverImage %}
               <img src="{{ asset('/uploads/tricks/' ~ trickMedium.media.url) }}"
-                   alt="SnowTricks hero image"
+                   alt="{{ trickMedium.media.altText }}"
                    class="w-full h-full lg:h-auto object-cover"
                    width="1920"
                    height="1280"
@@ -83,8 +83,9 @@
           {% endfor %}
         {% endif %}
         <div class="flex flex-row absolute top-2 right-2 bg-white px-4 py-2 rounded-sm shadow-md justify-between items-center">
-          <div class="update-cover-modal-open"
-               data-cover-id="{{ trick.id }}"
+          <div class="modal-open"
+               data-id="{{ trick.id }}"
+               data-action="cover-update"
           >
             <i class="cursor-pointer fas fa-pen text-blue-700 hover:text-blue-800"></i>
           </div>
@@ -101,7 +102,6 @@
         </div>
       </div>
     </div>
-    {% include 'trick/_update_cover_modal.html.twig' %}
     <section
             class="relative z-10 pb-20 container w-full mx-auto pt-10 md:pt-10 px-10 md:px-44 bg-white rounded-b-md"
             id="trick_edit_section">
@@ -121,14 +121,20 @@
                        height="200"
                   >
                   <div class="flex flex-row absolute top-2 right-2 bg-white px-4 py-1 rounded-sm shadow-md justify-between items-center">
-                    <div class="update-modal-open"
-                         data-target="{{ key }}"
+                    <div class="modal-open"
                          data-id="{{ trickMedium.media.id }}"
+                         data-action="update"
                          data-slug="{{ trick.slug }}"
                     >
                       <i class="cursor-pointer fas fa-pen mr-4 text-blue-700 hover:text-blue-800"></i>
                     </div>
-                    <i class="cursor-pointer fas fa-trash-alt text-red-600 hover:text-red-700"></i>
+                    <div class="modal-open"
+                         data-id="{{ trickMedium.media.id }}"
+                         data-action="delete"
+                         data-slug="{{ trick.slug }}"
+                    >
+                      <i class="cursor-pointer fas fa-trash-alt ml-4 text-red-600 hover:text-red-700"></i>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -144,14 +150,20 @@
                   >
                   </iframe>
                   <div class="flex flex-row absolute top-2 right-2 bg-white px-4 py-1 rounded-sm shadow-md justify-between items-center">
-                    <div class="update-modal-open"
-                         data-target="{{ key }}"
+                    <div class="modal-open"
                          data-id="{{ trickMedium.media.id }}"
+                         data-action="update"
                          data-slug="{{ trick.slug }}"
                     >
                       <i class="cursor-pointer fas fa-pen mr-4 text-blue-700 hover:text-blue-800"></i>
                     </div>
-                    <i class="cursor-pointer fas fa-trash-alt text-red-600 hover:text-red-700"></i>
+                    <div class="modal-open"
+                         data-id="{{ trickMedium.media.id }}"
+                         data-action="delete"
+                         data-slug="{{ trick.slug }}"
+                    >
+                      <i class="cursor-pointer fas fa-trash-alt ml-4 text-red-600 hover:text-red-700"></i>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -167,19 +179,24 @@
                   >
                   </iframe>
                   <div class="flex flex-row absolute top-2 right-2 bg-white px-4 py-1 rounded-sm shadow-md justify-between items-center">
-                    <div class="update-modal-open"
-                         data-target="{{ key }}"
+                    <div class="modal-open"
                          data-id="{{ trickMedium.media.id }}"
+                         data-action="update"
                          data-slug="{{ trick.slug }}"
                     >
                       <i class="cursor-pointer fas fa-pen mr-4 text-blue-700 hover:text-blue-800"></i>
                     </div>
-                    <i class="cursor-pointer fas fa-trash-alt text-red-600 hover:text-red-700"></i>
+                    <div class="modal-open"
+                         data-id="{{ trickMedium.media.id }}"
+                         data-action="delete"
+                         data-slug="{{ trick.slug }}"
+                    >
+                      <i class="cursor-pointer fas fa-trash-alt ml-4 text-red-600 hover:text-red-700"></i>
+                    </div>
                   </div>
                 </div>
               </div>
             {% endif %}
-            {% include '_parts/_update_modal.html.twig' %}
           {% endfor %}
         {% endif %}
       </div>
@@ -298,6 +315,7 @@
     </section>
   </section>
   {{ form_end(form) }}
+  {% include '_parts/_modal.html.twig' %}
 {% endblock %}
 
 {% block javascripts %}

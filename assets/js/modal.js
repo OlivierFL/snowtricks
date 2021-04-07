@@ -1,13 +1,7 @@
-import Routing from '../../vendor/friendsofsymfony/jsrouting-bundle/Resources/public/js/router.min.js';
-
-const routes = require('../../public/js/fos_js_routes.json');
-
-Routing.setRoutingData(routes);
+import {displayMedia, displayMediaForm} from "./media";
+import {handleComment} from "./comment";
 
 // Handle modal opening when clicking on image/video thumbnails
-let imageElement = $('.modal-body #image');
-let videoElement = $('.modal-body #video');
-let commentElement = $('.modal-body #comment');
 let openModal = document.querySelectorAll('.modal-open');
 
 if (null !== openModal) {
@@ -23,6 +17,12 @@ if (null !== openModal) {
                 handleComment({
                     'action': $(this).data('action'),
                     'id': $(this).data('id')
+                });
+            } else {
+                displayMediaForm({
+                    'id': $(this).data('id'),
+                    'slug': $(this).data('slug'),
+                    'action': $(this).data('action'),
                 });
             }
             toggleModal();
@@ -53,7 +53,6 @@ if (null !== closeModal) {
 // Handle close modal when hitting "Escape" key on keyboard
 document.onkeydown = function (evt) {
     let isEscape;
-    console.log('toto');
     if ("key" in evt) {
         isEscape = (evt.key === "Escape" || evt.key === "Esc");
     }
@@ -85,53 +84,14 @@ if (null !== showMediaButton) {
 
 // Remove "src" data and hide image/iframe tag
 function clearModalData() {
+    let imageElement = $('.modal-body #image');
+    let videoElement = $('.modal-body #video');
+    let commentElement = $('.modal-body #comment');
     if ('' !== imageElement.attr('src')) {
         imageElement.attr('src', '').addClass('hidden');
     } else if ('' !== videoElement.attr('src')) {
         videoElement.attr('src', '').addClass('hidden');
     } else if (!commentElement.hasClass('hidden')) {
         commentElement.addClass('hidden');
-    }
-}
-
-// Display media in modal
-function displayMedia(data) {
-    let mediaId = data.id;
-    switch (data.type) {
-        case 'image':
-            imageElement.removeClass('hidden').attr('src', mediaId);
-            break;
-        case 'youtube':
-            videoElement.removeClass('hidden').attr('src', 'https://youtube.com/embed/' + mediaId);
-            break;
-        case 'vimeo':
-            videoElement.removeClass('hidden').attr('src', 'https://player.vimeo.com/video/' + mediaId);
-            break;
-    }
-}
-
-// Handle comment moderation display in modal
-function handleComment(data) {
-    $("#comment .comment-modal-content").html(getContent(data.action));
-    $("#comment .id-value").val(data.id);
-    commentElement.removeClass('hidden');
-
-    if ('approve' === data.action) {
-        $('#modal-form-comment').attr('action', Routing.generate('admin_moderate_comment', {
-            isValid: 1
-        }));
-    } else if ('delete' === data.action) {
-        $('#modal-form-comment').attr('action', Routing.generate('admin_moderate_comment', {
-            isValid: 0
-        }));
-    }
-}
-
-// Get HTML content for comment moderation in modal
-function getContent(action) {
-    if ('approve' === action) {
-        return 'Confirmer la publication du commentaire ?';
-    } else if ('delete' === action) {
-        return 'Confirmer la modération du commentaire ? Il ne sera plus visible, mais pas définitivement supprimé';
     }
 }

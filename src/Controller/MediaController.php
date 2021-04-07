@@ -7,14 +7,18 @@ use App\Entity\Trick;
 use App\Entity\TricksMedia;
 use App\Form\CoverImageType;
 use App\Form\MediaType;
+use App\Repository\TrickRepository;
 use App\Service\MediaHandler;
+use Doctrine\ORM\EntityManagerInterface;
 use JsonException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/** @IsGranted("IS_AUTHENTICATED_FULLY") */
 class MediaController extends AbstractController
 {
     /**
@@ -86,8 +90,6 @@ class MediaController extends AbstractController
      * @param Request $request
      * @param Trick   $trick
      *
-     * @throws JsonException
-     *
      * @return Response
      */
     public function editCoverImage(Request $request, Trick $trick): Response
@@ -120,6 +122,32 @@ class MediaController extends AbstractController
 
         return $this->render('tricks/_update_cover_form.html.twig', [
             'coverForm' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("trick/{slug}/media/{id}/delete",
+     *     options={"expose": true},
+     *     name="media_delete",
+     * )
+     *
+     * @param string                 $slug
+     * @param Media                  $media
+     * @param TrickRepository        $trickRepository
+     * @param EntityManagerInterface $em
+     *
+     * @return Response
+     */
+    public function delete(string $slug, Media $media, TrickRepository $trickRepository, EntityManagerInterface $em): Response
+    {
+        $trick = $trickRepository->findOneBy(['slug' => $slug]);
+        $em->remove($media);
+        $em->flush();
+
+        $this->addFlash('success', 'Media successfully deleted');
+
+        return $this->redirectToRoute('trick_edit', [
+            'slug' => $trick->getSlug(),
         ]);
     }
 
