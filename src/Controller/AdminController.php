@@ -36,10 +36,18 @@ class AdminController extends AbstractController
 
     /**
      * @Route("/tricks", name="tricks")
+     *
+     * @param TrickRepository $trickRepository
+     *
+     * @return Response
      */
-    public function showTricks(): Response
+    public function showTricks(TrickRepository $trickRepository): Response
     {
-        return $this->render('admin/tricks.html.twig');
+        $tricks = $trickRepository->findBy([], ['createdAt' => 'DESC']);
+
+        return $this->render('admin/tricks.html.twig', [
+            'tricks' => $tricks,
+        ]);
     }
 
     /**
