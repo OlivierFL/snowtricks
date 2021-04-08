@@ -68,7 +68,7 @@ class TrickHandler
      */
     private function handleMediaCollection(Trick $trick, FormInterface $form): Trick
     {
-        $hasCoverImage = empty($trick->getTricksMedia()) ? false : true;
+        $hasCoverImage = empty($trick->getTricksMedia()->getValues()) ? false : true;
         foreach ($form->get('tricksMedia') as $trickMedia) {
             $type = $trickMedia->get('media')->getData()->getType();
 
