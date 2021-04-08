@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\OrderBy;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -95,6 +96,7 @@ class User implements UserInterface
      * The tricks modified by the User.
      * Used to get the contributors list of the tricks.
      *
+     * @MaxDepth(1)
      * @ORM\ManyToMany(targetEntity=Trick::class, inversedBy="users")
      */
     private Collection $tricks;
@@ -103,12 +105,14 @@ class User implements UserInterface
      * The tricks created by the User.
      * Used to get the author of the tricks.
      *
+     * @MaxDepth(1)
      * @ORM\OneToMany(targetEntity=Trick::class, mappedBy="author", orphanRemoval=true)
      * @OrderBy({"updatedAt": "DESC"})
      */
     private Collection $authorTricks;
 
     /**
+     * @MaxDepth(1)
      * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="author", orphanRemoval=true)
      */
     private Collection $comments;

@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -60,17 +61,20 @@ class Trick
     private ?string $slug;
 
     /**
+     * @MaxDepth(1)
      * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="trick", orphanRemoval=true)
      */
     private Collection $comments;
 
     /**
+     * @MaxDepth(1)
      * @ORM\OneToMany(targetEntity=TricksMedia::class, mappedBy="trick", orphanRemoval=true, cascade={"persist"})
      * @Assert\Valid
      */
     private Collection $tricksMedia;
 
     /**
+     * @MaxDepth(1)
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="tricks")
      * @ORM\JoinColumn(nullable=false)
      * @Assert\Valid
@@ -80,6 +84,7 @@ class Trick
     /**
      * The list of contributors of the Trick.
      *
+     * @MaxDepth(1)
      * @ORM\ManyToMany(targetEntity=User::class, mappedBy="tricks")
      */
     private Collection $users;
@@ -87,6 +92,7 @@ class Trick
     /**
      * The author of the Trick.
      *
+     * @MaxDepth(1)
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="authorTricks")
      * @ORM\JoinColumn(nullable=false)
      */
