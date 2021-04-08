@@ -7,6 +7,7 @@ use App\Entity\Trick;
 use App\Form\CommentFormType;
 use App\Form\TrickType;
 use App\Repository\CommentRepository;
+use App\Security\TrickVoter;
 use App\Service\TrickHandler;
 use Doctrine\ORM\EntityManagerInterface;
 use JsonException;
@@ -161,7 +162,7 @@ class TricksController extends AbstractController
      */
     public function delete(Trick $trick, EntityManagerInterface $em): Response
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $this->denyAccessUnlessGranted(TrickVoter::TRICK_DELETE, $trick);
 
         $em->remove($trick);
         $em->flush();
