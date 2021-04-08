@@ -1,60 +1,37 @@
 {% set currentPath = app.request.pathinfo %}
 
-{% if trick is defined %}
-  <div class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center z-50 py-12">
-    <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
-    <div class="modal-container bg-none px-6 lg:px-0 lg:max-h-full lg:max-w-6xl mx-auto z-50 {% if currentPath == path('trick_detail', {slug: trick.slug}) %}overflow-hidden{% else %}overflow-y-auto{% endif %}">
-      <!--Close button-->
-      <div class="modal-close absolute top-0 right-0 cursor-pointer flex flex-col items-center mt-20 lg:mt-4 mr-6 lg:mr-4 text-white text-sm z-50">
-        <svg class="fill-current text-white" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
-             viewBox="0 0 18 18">
-          <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
-        </svg>
-      </div>
-      <div class="modal-content w-full h-full">
-        <!--Body-->
-        <div class="modal-body">
-          <!--        Media display-->
-          {% if currentPath == path('trick_detail', {slug: trick.slug}) %}
-          {% include '_parts/_media_modal.html.twig' %}
-          {% endif %}
+<div class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center z-50 py-12">
+  <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
+  <div class="modal-container bg-none px-6 lg:px-0 lg:max-h-full lg:max-w-6xl mx-auto z-50 {% if trick is defined %}{% if currentPath == path('trick_detail', {slug: trick.slug}) %}overflow-hidden{% else %}overflow-y-auto{% endif %}{% endif %}">
+    <!--Close button-->
+    <div class="modal-close absolute top-0 right-0 cursor-pointer flex flex-col items-center mt-20 lg:mt-4 mr-6 lg:mr-4 text-white text-sm z-50">
+      <svg class="fill-current text-white" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+           viewBox="0 0 18 18">
+        <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
+      </svg>
+    </div>
+    <div class="modal-content w-full h-full">
+      <!--Body-->
+      <div class="modal-body">
+        {% if trick is defined %}
+        <!--        Media display-->
+        {% if currentPath == path('trick_detail', {slug: trick.slug}) %}
+        {% include '_parts/_media_modal.html.twig' %}
+        {% endif %}
+        <!--        Media update, delete, cover image update, and Trick delete-->
+        {% if currentPath == path('trick_edit', {slug: trick.slug}) %}
+        {% include '_parts/_update_media_modal.html.twig' %}
+        {% include '_parts/_update_cover_modal.html.twig' %}
+        {% include '_parts/_delete_media_modal.html.twig' %}
+        {% include '_parts/_delete_trick_modal.html.twig' %}
+        {% endif %}
+        {% endif %}
 
-          <!--        Comment moderation-->
-          {% if currentPath == path('admin_comments') %}
-          {% include '_parts/_comment_moderation_modal.html.twig' %}
-          {% endif %}
-
-          <!--        Media update, delete, cover image update, and Trick delete-->
-          {% if currentPath == path('trick_edit', {slug: trick.slug}) %}
-          {% include '_parts/_update_media_modal.html.twig' %}
-          {% include '_parts/_update_cover_modal.html.twig' %}
-          {% include '_parts/_delete_media_modal.html.twig' %}
-          {% include '_parts/_delete_trick_modal.html.twig' %}
-          {% endif %}
-        </div>
+        <!--        Comment moderation-->
+        {% if currentPath == path('admin_comments') %}
+        {% include '_parts/_comment_moderation_modal.html.twig' %}
+        {% endif %}
       </div>
     </div>
   </div>
-{% else %}
-  <div class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center z-50 py-12">
-    <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
-    <div class="modal-container bg-none px-6 lg:px-0 lg:max-h-full lg:max-w-6xl mx-auto z-50 overflow-hidden">
-      <!--Close button-->
-      <div class="modal-close absolute top-0 right-0 cursor-pointer flex flex-col items-center mt-20 lg:mt-4 mr-6 lg:mr-4 text-white text-sm z-50">
-        <svg class="fill-current text-white" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
-             viewBox="0 0 18 18">
-          <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
-        </svg>
-      </div>
-      <div class="modal-content w-full h-full">
-        <!--Body-->
-        <div class="modal-body">
-          <!--        Trick delete-->
-          {% if currentPath == path('home') %}
-          {% include '_parts/_delete_trick_modal.html.twig' %}
-          {% endif %}
-        </div>
-      </div>
-    </div>
-  </div>
-{% endif %}
+</div>

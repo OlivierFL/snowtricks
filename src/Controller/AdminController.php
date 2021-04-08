@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Repository\CommentRepository;
 use App\Repository\TrickRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -87,9 +88,9 @@ class AdminController extends AbstractController
         $comment->setIsValid($isValid);
 
         if ($isValid) {
-            $this->addFlash('success', 'Le commentaire a été publié');
+            $this->addFlash('success', Comment::COMMENT_PUBLISHED);
         } else {
-            $this->addFlash('success', 'Le commentaire a été modéré');
+            $this->addFlash('success', Comment::COMMENT_MODERATED);
         }
 
         $entityManager = $this->getDoctrine()->getManager();
