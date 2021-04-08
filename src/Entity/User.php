@@ -19,6 +19,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class User implements UserInterface
 {
+    public const PROFILE_UPDATED = 'Profile successfully updated';
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
