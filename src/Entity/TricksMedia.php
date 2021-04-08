@@ -11,6 +11,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class TricksMedia
 {
+    public const COVER_IMAGE_UPDATED = 'Cover image updated';
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

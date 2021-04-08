@@ -7,7 +7,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=MediaRepository::class)
@@ -20,6 +19,10 @@ class Media
     public const VIDEO = 'video';
     public const YOUTUBE_VIDEO = 'youtube';
     public const VIMEO_VIDEO = 'vimeo';
+    public const UNKNOWN = 'unknown';
+    public const UNKNOWN_VIDEO_TITLE = 'Unknown video title';
+    public const MEDIA_UPDATED = 'Media updated';
+    public const MEDIA_DELETED = 'Media successfully deleted';
 
     /**
      * @ORM\Id
@@ -35,7 +38,6 @@ class Media
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(message="This field can not be blank")
      */
     private ?string $altText;
 
@@ -77,7 +79,7 @@ class Media
         return $this->altText;
     }
 
-    public function setAltText(string $altText): self
+    public function setAltText(?string $altText): self
     {
         $this->altText = $altText;
 

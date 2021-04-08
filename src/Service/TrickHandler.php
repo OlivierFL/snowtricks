@@ -46,9 +46,9 @@ class TrickHandler
      *
      * @throws JsonException
      */
-    public function handleNewTrick(Trick $trick, FormInterface $form): void
+    public function handleTrick(Trick $trick, FormInterface $form): void
     {
-        $trick->setAuthor($this->security->getUser());
+        $trick = $this->setContributor($trick);
 
         if ($form->get('tricksMedia')) {
             $trick = $this->handleMediaCollection($trick, $form);
@@ -68,22 +68,24 @@ class TrickHandler
      */
     private function handleMediaCollection(Trick $trick, FormInterface $form): Trick
     {
-        $hasCoverImage = false;
-        foreach ($form->get('tricksMedia') as $key => $media) {
-            $type = $media->get('media')->getData()->getType();
+        $hasCoverImage = empty($trick->getTricksMedia()) ? false : true;
+        foreach ($form->get('tricksMedia') as $trickMedia) {
+            $type = $trickMedia->get('media')->getData()->getType();
 
             if (Media::IMAGE === $type) {
-                $fileName = $this->handleImageUpload($media);
-                $trick->getTricksMedia()[$key]->getMedia()->setUrl($fileName);
+                $fileName = $this->handleImageUpload($trickMedia);
+                $trickMedia->getData()->getMedia()->setUrl($fileName);
                 if (!$hasCoverImage) {
-                    $trick->getTricksMedia()[$key]->setIsCoverImage(true);
+                    $trickMedia->getData()->setIsCoverImage(true);
                     $hasCoverImage = true;
                 }
             } else {
-                $data = $this->videoHelper->getVideoData($media->get('media')->get('video_url')->getData());
-                $trick->getTricksMedia()[$key]->getMedia()->setUrl($data['id']);
-                $trick->getTricksMedia()[$key]->getMedia()->setType($data['type']);
+                $data = $this->videoHelper->getVideoData($trickMedia->get('media')->get('video_url')->getData());
+                $trickMedia->getData()->getMedia()->setUrl($data['id']);
+                $trickMedia->getData()->getMedia()->setType($data['type']);
             }
+
+            $trick->addTricksMedium($trickMedia->getData());
         }
 
         return $trick;
@@ -96,6 +98,26 @@ class TrickHandler
      */
     private function handleImageUpload(FormInterface $form): string
     {
-        return $this->fileUploader->upload($form->get('media')->get('image')->getData());
+        return $this->fileUploader->upload($form->get('media')->get('image')->get('image')->getData());
+    }
+
+    /**
+     * @param Trick $trick
+     *
+     * @return Trick
+     */
+    private function setContributor(Trick $trick): Trick
+    {
+        $currentUser = $this->security->getUser();
+
+        if (null === $trick->getAuthor()) {
+            $trick->setAuthor($currentUser);
+        }
+
+        if ($currentUser !== $trick->getAuthor()) {
+            $trick->addUser($currentUser);
+        }
+
+        return $trick;
     }
 }

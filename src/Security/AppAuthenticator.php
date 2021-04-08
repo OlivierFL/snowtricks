@@ -106,7 +106,7 @@ class AppAuthenticator extends AbstractFormLoginAuthenticator implements Passwor
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $providerKey): RedirectResponse
     {
-        $this->session->getFlashBag()->add('success', 'Connexion réussie');
+        $this->session->getFlashBag()->add('success', 'Successful login');
 
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
             return new RedirectResponse($targetPath);

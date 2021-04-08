@@ -7,7 +7,9 @@ use App\Entity\Trick;
 use App\Form\CommentFormType;
 use App\Form\TrickType;
 use App\Repository\CommentRepository;
+use App\Security\TrickVoter;
 use App\Service\TrickHandler;
+use Doctrine\ORM\EntityManagerInterface;
 use JsonException;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -84,13 +86,13 @@ class TricksController extends AbstractController
 
         $trick = new Trick();
 
-        $form = $this->createForm(TrickType::class, $trick, ['new' => true]);
+        $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $trickHandler->handleNewTrick($trick, $form);
+            $trickHandler->handleTrick($trick, $form);
 
-            $this->addFlash('success', 'Nouveau trick créé');
+            $this->addFlash('success', Trick::NEW_TRICK_CREATED);
 
             return $this->redirectToRoute('trick_detail', ['slug' => $trick->getSlug()]);
         }
@@ -98,6 +100,76 @@ class TricksController extends AbstractController
         return $this->render('tricks/new.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/tricks/{slug}/edit",
+     *     name="trick_edit",
+     *     priority=1
+     * )
+     *
+     * @param Request      $request
+     * @param Trick        $trick
+     * @param TrickHandler $trickHandler
+     *
+     * @throws JsonException
+     *
+     * @return Response
+     */
+    public function edit(Request $request, Trick $trick, TrickHandler $trickHandler): Response
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $oldTrick = clone $trick;
+
+        $medias = $trick->getTricksMedia()->getValues();
+
+        foreach ($trick->getTricksMedia() as $trickMedia) {
+            $trick->removeTricksMedium($trickMedia);
+        }
+
+        $form = $this->createForm(TrickType::class, $trick);
+        $form->handleRequest($request);
+
+        $trick = $this->addTricksMedia($trick, $medias);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $trickHandler->handleTrick($trick, $form);
+
+            $this->addFlash('success', Trick::TRICK_UPDATED);
+
+            return $this->redirectToRoute('trick_detail', ['slug' => $trick->getSlug()]);
+        }
+
+        return $this->render('tricks/edit.html.twig', [
+            'trick' => $trick,
+            'oldTrick' => $oldTrick,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/tricks/{id}/delete",
+     *     name="trick_delete",
+     *     options={"expose": true},
+     *     priority=1
+     * )
+     *
+     * @param Trick                  $trick
+     * @param EntityManagerInterface $em
+     *
+     * @return Response
+     */
+    public function delete(Trick $trick, EntityManagerInterface $em): Response
+    {
+        $this->denyAccessUnlessGranted(TrickVoter::TRICK_DELETE, $trick);
+
+        $em->remove($trick);
+        $em->flush();
+
+        $this->addFlash('success', Trick::TRICK_DELETED);
+
+        return $this->redirectToRoute('home');
     }
 
     /**
@@ -126,5 +198,20 @@ class TricksController extends AbstractController
             $page,
             2
         );
+    }
+
+    /**
+     * @param array $medias
+     * @param Trick $trick
+     *
+     * @return Trick
+     */
+    private function addTricksMedia(Trick $trick, array $medias): Trick
+    {
+        foreach ($medias as $medium) {
+            $trick->addTricksMedium($medium);
+        }
+
+        return $trick;
     }
 }

@@ -51,4 +51,8 @@
   </div>
 {% endfor %}
 <!--      Avoid rendering label for medias with form_rest()-->
-{{ form_widget(form.tricksMedia) }}
+{{ form_widget(form.tricksMedia, {
+  'attr': {
+    'class': 'hidden'
+  }
+}) }}

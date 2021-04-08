@@ -20,6 +20,10 @@ class Trick
 {
     use TimestampableEntity;
 
+    public const NEW_TRICK_CREATED = 'New trick created';
+    public const TRICK_UPDATED = 'Trick updated';
+    public const TRICK_DELETED = 'Trick successfully deleted';
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -86,7 +90,7 @@ class Trick
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="authorTricks")
      * @ORM\JoinColumn(nullable=false)
      */
-    private ?User $author;
+    private ?User $author = null;
 
     public function __construct()
     {

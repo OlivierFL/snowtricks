@@ -61,3 +61,7 @@ function displayField(radioType, index) {
         videoFormRow.removeClass('hidden');
     }
 }
+
+if (true === hasErrors) {
+    $('#trick-main-infos').get(0).scrollIntoView({block: 'center'});
+}

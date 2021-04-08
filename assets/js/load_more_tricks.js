@@ -1,8 +1,4 @@
-import Routing from '../../vendor/friendsofsymfony/jsrouting-bundle/Resources/public/js/router.min.js';
-
-const routes = require('../../public/js/fos_js_routes.json');
-
-Routing.setRoutingData(routes);
+import Routing from './helper/routing';
 
 export function displayTricks(results) {
     $.each(results, function (key, result) {

@@ -1,10 +1,6 @@
-import Routing from '../../vendor/friendsofsymfony/jsrouting-bundle/Resources/public/js/router.min.js';
+import Routing from './helper/routing';
 import {displayComments} from "./load_more_comments";
 import {displayTricks} from "./load_more_tricks";
-
-const routes = require('../../public/js/fos_js_routes.json');
-
-Routing.setRoutingData(routes);
 
 const tricksLimit = $('.tricks').length;
 let tricksOffset = tricksLimit;

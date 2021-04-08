@@ -50,7 +50,7 @@
     <section class="relative bg-gray-300 overflow-hidden z-10 rounded-t-md">
       <div class="container max-w-screen-xl mx-auto z-10 relative my-20 lg:my-60 px-8 md:px-0">
         <div class="text-center border-2 rounded-md border-yellow-500 px-10 py-6 sm:10/12 md:w-2/3 lg:w-1/2 mx-auto bg-gray-100 bg-opacity-40">
-          <h1 class="text-3xl text-yellow-500 font-bold font-jura sm:text-5xl lg:text-7xl">{{ trick.name|capitalize }}</h1>
+          <h1 class="text-3xl break-words text-yellow-500 font-bold font-jura sm:text-5xl lg:text-7xl">{{ trick.name|capitalize }}</h1>
           <hr class="border border-yellow-500 w-1/4 mx-auto my-3">
           <h2 class="text-sm lg:text-xl font-jura">{{ trick.category.name|capitalize }}</h2>
         </div>
@@ -76,10 +76,12 @@
           {% endfor %}
         {% endif %}
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-          <div class="flex flex-row absolute top-2 right-2 bg-white px-4 py-2 rounded-sm shadow-md justify-between">
-            <i class="cursor-pointer fas fa-pen mr-4 text-blue-700 hover:text-blue-800"></i>
+          <div class="flex flex-row absolute top-2 right-2 bg-white px-4 py-2 rounded-sm shadow-md justify-between items-center">
+            <a href="{{ path('trick_edit', {slug: trick.slug}) }}">
+              <i class="cursor-pointer fas fa-pen text-blue-700 hover:text-blue-800"></i>
+            </a>
             {% if app.user.username == trick.author.username %}
-              <i class="cursor-pointer fas fa-trash-alt text-red-600 hover:text-red-700"></i>
+              <i class="cursor-pointer fas fa-trash-alt ml-4 text-red-600 hover:text-red-700"></i>
             {% endif %}
           </div>
         {% endif %}

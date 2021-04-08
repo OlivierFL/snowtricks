@@ -15,7 +15,6 @@ class TricksMediaType extends AbstractType
         $builder->add('media', MediaType::class, [
             'data_class' => Media::class,
             'label' => false,
-            'new' => ['new' => $options['new']],
         ]);
     }
 

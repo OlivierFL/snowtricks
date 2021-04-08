@@ -1,0 +1,336 @@
+{% extends('base.html.twig') %}
+
+{% import _self as formMacros %}
+
+{# Use custom Form Collection Prototype #}
+{% macro printMediaRow(form) %}
+  {{ include('tricks/_custom_form_collection_prototype.html.twig') }}
+{% endmacro %}
+
+{%- block meta_title -%}
+  {{ oldTrick.name|capitalize }} - Édition - SnowTricks - Le site communautaire pour apprendre tous les tricks de snowboard
+{%- endblock -%}
+
+{%- block meta_description -%}
+  {{ oldTrick.name|capitalize }} - {{ trick.description|slice(0, 70) }}
+{%- endblock -%}
+
+{%- block og_title -%}
+  SnowTricks - {{ oldTrick.name|capitalize }}
+{%- endblock -%}
+
+{%- block og_type -%}
+  website
+{%- endblock -%}
+
+{%- block og_url -%}
+  {{ app.request.schemeAndHttpHost }}
+{%- endblock -%}
+
+{%- block title -%}
+  {{ oldTrick.name|capitalize }} - Édition
+{%- endblock -%}
+
+{% block body %}
+  <section class="fixed w-full h-screen opacity-50 z-0 -mt-10 md:-mt-24">
+    {% if trick.tricksMedia is empty %}
+      <img src="{{ asset('build/images/hero_02.jpg') }}"
+           alt="SnowTricks hero image"
+           class="w-full h-full object-cover"
+           width="1920"
+           height="1280"
+      >
+    {% else %}
+      {% for trickMedium in trick.tricksMedia %}
+        {% if true == trickMedium.isCoverImage %}
+          <img src="{{ asset('/uploads/tricks/' ~ trickMedium.media.url) }}"
+               alt="{{ trickMedium.media.altText }}"
+               class="w-full h-full object-cover"
+               width="1920"
+               height="1280"
+          >
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+  </section>
+  <section class="container w-5/6 mx-auto mt-10 md:mt-24 rounded-md shadow-2xl">
+    <div class="relative bg-gray-300 overflow-hidden z-10 rounded-t-md">
+      <div class="container max-w-screen-xl mx-auto z-10 relative my-20 lg:my-60 px-8 md:px-0">
+        <div class="text-center border-2 rounded-md border-yellow-500 px-10 py-6 sm:10/12 md:w-2/3 lg:w-1/2 mx-auto bg-gray-100 bg-opacity-40">
+          <h1 class="text-3xl break-words text-yellow-500 font-bold font-jura sm:text-5xl lg:text-7xl">{{ oldTrick.name|capitalize }}</h1>
+          <hr class="border border-yellow-500 w-1/4 mx-auto my-3">
+          <h2 class="text-sm lg:text-xl font-jura">{{ trick.category.name|capitalize }}</h2>
+        </div>
+      </div>
+      <div class="z-0 absolute inset-0">
+        {% if trick.tricksMedia is empty %}
+          <img src="{{ asset('build/images/hero_02.jpg') }}"
+               alt="SnowTricks hero image"
+               class="w-full h-full object-cover"
+               width="1920"
+               height="1280"
+          >
+        {% else %}
+          {% for trickMedium in trick.tricksMedia %}
+            {% if true == trickMedium.isCoverImage %}
+              <img src="{{ asset('/uploads/tricks/' ~ trickMedium.media.url) }}"
+                   alt="{{ trickMedium.media.altText }}"
+                   class="w-full h-full lg:h-auto object-cover"
+                   width="1920"
+                   height="1280"
+              >
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+        <div class="flex flex-row absolute top-2 right-2 bg-white px-4 py-2 rounded-sm shadow-md justify-between items-center">
+          <div class="modal-open"
+               data-id="{{ trick.id }}"
+               data-action="cover-update"
+          >
+            <i class="cursor-pointer fas fa-pen text-blue-700 hover:text-blue-800"></i>
+          </div>
+        </div>
+        <div class="pt-8 md:pt-0">
+          <div class="absolute text-center bottom-8 sm:bottom-12 inset-x-0">
+            <a href="#trick_edit_section"
+               class="px-6 lg:px-8 py-2 lg:py-4 transition duration-500 delay-100 ease-out bg-yellow-500 hover:bg-yellow-600 rounded-md text-white shadow-lg"
+               aria-label="Cliquer pour modifier le trick"
+            >
+              Modifier le trick
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <section
+            class="relative z-10 pb-20 container w-full mx-auto pt-10 md:pt-10 px-10 md:px-44 bg-white rounded-b-md"
+            id="trick_edit_section">
+      <h3 class="font-jura font-bold text-center lg:text-left text-xl lg:text-2xl mb-10 mb-6 lg:border-l-4 border-yellow-500 lg:pl-4">
+        Modifier les médias
+      </h3>
+      <div class="hidden xl:grid xl:grid-cols-3 2xl:grid-cols-4 gap-3 flex-wrap mb-10 justify-start" id="media-gallery">
+        {% if trick.tricksMedia is not empty %}
+          {% for key, trickMedium in trick.tricksMedia %}
+            {% if 'image' == trickMedium.media.type %}
+              <div>
+                <div class="overflow-hidden relative border-l-4 border-yellow-500 mb-6">
+                  <img src="{{ asset('/uploads/tricks/' ~ trickMedium.media.url) }}"
+                       alt="{{ trickMedium.media.altText }}"
+                       class="w-full md:h-48 max-h-36 md:max-h-48 object-cover"
+                       width="300"
+                       height="200"
+                  >
+                  <div class="flex flex-row absolute top-2 right-2 bg-white px-4 py-1 rounded-sm shadow-md justify-between items-center">
+                    <div class="modal-open"
+                         data-id="{{ trickMedium.media.id }}"
+                         data-action="update"
+                         data-slug="{{ trick.slug }}"
+                    >
+                      <i class="cursor-pointer fas fa-pen mr-4 text-blue-700 hover:text-blue-800"></i>
+                    </div>
+                    <div class="modal-open"
+                         data-id="{{ trickMedium.media.id }}"
+                         data-action="delete"
+                         data-slug="{{ trick.slug }}"
+                    >
+                      <i class="cursor-pointer fas fa-trash-alt ml-4 text-red-600 hover:text-red-700"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% elseif 'youtube' == trickMedium.media.type %}
+              <div>
+                <div class="overflow-hidden relative border-l-4 border-yellow-500 cursor-pointer mb-6">
+                  <iframe src="https://www.youtube.com/embed/{{ trickMedium.media.url }}"
+                          class="max-w-full lg:max-w-5xl max-h-screen"
+                          width="283"
+                          height="192"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowfullscreen
+                  >
+                  </iframe>
+                  <div class="flex flex-row absolute top-2 right-2 bg-white px-4 py-1 rounded-sm shadow-md justify-between items-center">
+                    <div class="modal-open"
+                         data-id="{{ trickMedium.media.id }}"
+                         data-action="update"
+                         data-slug="{{ trick.slug }}"
+                    >
+                      <i class="cursor-pointer fas fa-pen mr-4 text-blue-700 hover:text-blue-800"></i>
+                    </div>
+                    <div class="modal-open"
+                         data-id="{{ trickMedium.media.id }}"
+                         data-action="delete"
+                         data-slug="{{ trick.slug }}"
+                    >
+                      <i class="cursor-pointer fas fa-trash-alt ml-4 text-red-600 hover:text-red-700"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% elseif 'vimeo' == trickMedium.media.type %}
+              <div>
+                <div class="overflow-hidden relative border-l-4 border-yellow-500 cursor-pointer mb-6">
+                  <iframe src="https://player.vimeo.com/video/{{ trickMedium.media.url }}"
+                          class="max-w-full lg:max-w-5xl max-h-screen"
+                          width="283"
+                          height="192"
+                          allow="autoplay; fullscreen; picture-in-picture"
+                          allowfullscreen
+                  >
+                  </iframe>
+                  <div class="flex flex-row absolute top-2 right-2 bg-white px-4 py-1 rounded-sm shadow-md justify-between items-center">
+                    <div class="modal-open"
+                         data-id="{{ trickMedium.media.id }}"
+                         data-action="update"
+                         data-slug="{{ trick.slug }}"
+                    >
+                      <i class="cursor-pointer fas fa-pen mr-4 text-blue-700 hover:text-blue-800"></i>
+                    </div>
+                    <div class="modal-open"
+                         data-id="{{ trickMedium.media.id }}"
+                         data-action="delete"
+                         data-slug="{{ trick.slug }}"
+                    >
+                      <i class="cursor-pointer fas fa-trash-alt ml-4 text-red-600 hover:text-red-700"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+      </div>
+      <div class="text-center xl:hidden">
+        <button class="px-6 py-2 transition duration-500 delay-100 ease-out bg-yellow-500 hover:bg-yellow-600 rounded-md text-white mb-10 md:mb-20"
+                id="show-media">
+          Afficher / masquer
+        </button>
+      </div>
+      <hr class="border w-1/2 mx-auto my-10">
+      <div class="container mx-auto" id="trick-main-infos">
+        <h3 class="font-jura font-bold text-center lg:text-left text-xl lg:text-2xl mb-6 lg:border-l-4 border-yellow-500 lg:pl-4">
+          Modifier le trick
+        </h3>
+        {{ form_start(form) }}
+        <div class="mb-16 flex flex-col lg:flex-row">
+          <div class="container w-full lg:w-2/3 mb-10 lg:mb-0 lg:border-r border-gray-500 lg:pr-20">
+            <div class="mb-8 w-full">
+              {{ form_row(form.name, {
+              'label_attr': {
+              'class': 'text-2xl text-gray-800'
+              },
+              'attr': {
+              'class': 'w-full pl-2 py-3'
+              }}) }}
+            </div>
+            <div class="mb-8 w-full">
+              {{ form_row(form.description, {
+              'label_attr': {
+              'class': 'text-2xl text-gray-800'
+              },
+              'attr': {
+              'class': 'w-full pl-2 py-3'
+              }}) }}
+            </div>
+            <div class="mb-16 w-full">
+              {{ form_label(form.category, null, {
+                'label_attr': {'class': 'text-2xl text-left text-gray-800'
+                }}) }}
+              <div class="relative mx-auto w-full">
+                {{ form_widget(form.category, {
+                  'attr': {
+                    'class': 'appearance-none w-full pl-2 py-3'
+                  }}) }}
+                <div class="absolute right-0 inset-y-0 flex items-center pointer-events-none z-10">
+                  <i class="fas fa-chevron-down text-gray-500 w-5 h-5 pr-6 text-sm"></i>
+                </div>
+              </div>
+            </div>
+            <div>
+              <h3 class="font-jura font-bold text-center lg:text-left text-xl lg:text-2xl mb-6 lg:border-l-4 border-yellow-500 lg:pl-4">
+                Nouveaux médias
+              </h3>
+              <div>
+                <ul class="medias w-full"
+                    data-prototype="{{ formMacros.printMediaRow(form.tricksMedia.vars.prototype)|e('html_attr') }}"
+                >
+                </ul>
+                <div class="lg:flex lg:justify-between lg:mb-10">
+                  <!--      Render new Media Collection upload fields-->
+                  <button type="button"
+                          class="js-add-item-link inline-block w-full lg:w-1/2 bg-gray-600 hover:bg-gray-500 border-2 border-gray-600 hover:border-gray-500 transition duration-500 delay-100 ease-out text-white px-6 py-2 rounded-md mb-6"
+                          data-collection-holder-class="medias"
+                  >
+                    <i class="fas fa-plus mr-2 text-sm"></i>
+                    Ajouter un nouveau média
+                  </button>
+                </div>
+                {{ include('tricks/_form_collection_errors.html.twig') }}
+              </div>
+            </div>
+          </div>
+          <div class="container w-full lg:w-1/3 lg:pl-16">
+            <div class="flex flex-col justify-between items-start text-gray-500 mb-6">
+              <div class="pb-2 lg:pb-0 lg:mb-10">
+                <p class="text-sm lg:text-base font-light">Auteur : <span
+                          class="font-bold">{{ trick.author.username }}</span>
+                </p>
+              </div>
+              <div class="pb-2 lg:pb-0 lg:mb-10">
+                <p class="text-sm lg:text-base font-light">Contributeur(s)&nbsp;:
+                  {%- if trick.users is not empty -%}
+                    {% for contributor in trick.users %}
+                      <span class="font-bold">{{ contributor.username }}</span>{% if not loop.last %}&nbsp;-{% endif %}
+                    {% endfor %}
+                  {% else %}
+                    <span class="font-bold">-</span>
+                  {%- endif -%}
+                </p>
+              </div>
+              <p class="pb-2 lg:pb-0 lg:mb-10 text-sm lg:text-base font-light">Date de création
+                : {{ trick.createdAt|date('d/m/Y à H:i', 'Europe/Paris') }}</p>
+              <p class="text-sm lg:text-base font-light">Date de modification
+                : {{ trick.updatedAt|date('d/m/Y à H:i', 'Europe/Paris') }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-col lg:flex-row justify-between lg:justify-end text-center lg:text-right mt-auto">
+          <a href="{{ path('trick_detail', {slug: trick.slug}) }}"
+             class="inline-block order-3 lg:order-1 bg-none border-2 border-gray-500 hover:border-gray-600 transition duration-500 delay-100 ease-out text-gray-500 hover:text-gray-600 px-2 lg:px-6 py-2 rounded-md lg:mr-6"
+          >
+            Annuler
+          </a>
+          <button class="modal-open inline-block order-2 border-2 border-red-500 hover:border-red-600 bg-red-500 hover:bg-red-600 transition duration-500 delay-100 ease-out text-white px-2 lg:px-6 py-2 rounded-md mb-6 lg:mb-0 lg:mr-6"
+                  type="button"
+                  data-id="{{ trick.id }}"
+                  data-name="{{ trick.name }}"
+                  data-action="trick-delete"
+          >
+            <i class="fas fa-times hidden lg:visible pr-2"></i>
+            Supprimer
+          </button>
+          <button class="inline-block order-1 lg:order-3 border-2 border-green-500 hover:border-green-600 bg-green-500 hover:bg-green-600 transition duration-500 delay-100 ease-out text-white px-2 lg:px-6 py-2 rounded-md mb-6 lg:mb-0"
+                  type="submit">
+            <i class="fas fa-save hidden lg:visible pr-2"></i>
+            Enregistrer
+          </button>
+        </div>
+      </div>
+    </section>
+  </section>
+  {{ form_end(form) }}
+  {% include '_parts/_modal.html.twig' %}
+{% endblock %}
+
+{% block javascripts %}
+  <script>
+      let hasErrors = false;
+      let mediaHasErrors = false;
+  </script>
+  {% if not form.vars.valid %}
+    <script>
+        hasErrors = true;
+    </script>
+  {% endif %}
+  {{ parent() }}
+{% endblock %}
