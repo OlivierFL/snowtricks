@@ -80,8 +80,10 @@ class MediaHandler
             'isCoverImage' => true,
             'trick' => $trick->getId(),
         ]);
-        $oldCoverImage->setIsCoverImage(false);
-        $this->em->persist($oldCoverImage);
+        if (null !== $oldCoverImage) {
+            $oldCoverImage->setIsCoverImage(false);
+            $this->em->persist($oldCoverImage);
+        }
 
         /** @var TricksMedia $tricksMedia */
         $tricksMedia = $form->get('cover_image')->getData();
