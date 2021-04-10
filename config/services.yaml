@@ -5,6 +5,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     uploads_directory: '%kernel.project_dir%/public/uploads'
+    tricks_list_limit: '%env(TRICKS_LIST_LIMIT)%'
 
 services:
     # default configuration for services in *this* file

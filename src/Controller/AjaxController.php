@@ -53,15 +53,16 @@ class AjaxController extends AbstractController
     }
 
     /**
-     * @Route("/comments/load-more/{offset}/{limit}",
+     * @Route("{id}/comments/load-more/{offset}/{limit}",
      *     name="load_more_comments",
      *     options={"expose": true},
-     *     requirements={"offset": "\d+", "limit": "\d+"}
+     *     requirements={"offset": "\d+", "limit": "\d+", "id": "\d+"}
      * )
      *
      * @param CommentRepository $repository
      * @param int               $offset
      * @param int               $limit
+     * @param int               $id
      *
      * @throws ExceptionInterface
      *
@@ -69,10 +70,14 @@ class AjaxController extends AbstractController
      */
     public function loadMoreComments(
         CommentRepository $repository,
+        int $id,
         int $offset = 0,
         int $limit = 4
     ): JsonResponse {
-        return $this->loadMoreResults($repository, $limit, $offset, 'updatedAt', ['isValid' => true]);
+        return $this->loadMoreResults($repository, $limit, $offset, 'updatedAt', [
+            'isValid' => true,
+            'trick' => $id,
+        ]);
     }
 
     /**

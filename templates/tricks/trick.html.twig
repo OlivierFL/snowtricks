@@ -80,9 +80,6 @@
             <a href="{{ path('trick_edit', {slug: trick.slug}) }}">
               <i class="cursor-pointer fas fa-pen text-blue-700 hover:text-blue-800"></i>
             </a>
-            {% if app.user.username == trick.author.username %}
-              <i class="cursor-pointer fas fa-trash-alt ml-4 text-red-600 hover:text-red-700"></i>
-            {% endif %}
           </div>
         {% endif %}
       </div>
@@ -211,8 +208,8 @@
         {% include('tricks/_comment_form.html.twig') %}
       {% else %}
         <div class="text-center">
-          <p>Veuillez <a href="{{ path('app_login') }}"
-                         class="text-yellow-500">vous
+          <p id="comment-message">Veuillez <a href="{{ path('app_login') }}"
+                                              class="text-yellow-500">vous
               connecter</a>
             pour
             poster un commentaire</p>
@@ -253,6 +250,7 @@
         {% else %}
           <button class="flex flex-row max-w-2xl items-center mx-auto px-6 py-2 transition duration-500 delay-100 ease-out bg-yellow-500 hover:bg-yellow-600 rounded-md text-white shadow-lg"
                   id="load-more-comments-btn"
+                  data-trick-id="{{ trick.id }}"
                   aria-label="Voir plus de commentaires"
           >
             <svg class="hidden" id="spinner-comments" version="1.1" xmlns="http://www.w3.org/2000/svg"

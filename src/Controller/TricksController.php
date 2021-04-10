@@ -57,7 +57,7 @@ class TricksController extends AbstractController
             $entityManager->persist($comment);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Votre commentaire a été soumis pour validation');
+            $this->addFlash('success', Comment::COMMENT_SUBMITTED);
         }
 
         return $this->render('tricks/trick.html.twig', [
@@ -196,7 +196,7 @@ class TricksController extends AbstractController
         return $paginator->paginate(
             $commentsQuery,
             $page,
-            2
+            4
         );
     }
 

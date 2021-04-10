@@ -21,7 +21,8 @@ function loadResults(type, limit, offset) {
     $.getJSON(
         Routing.generate('load_more_' + type, {
             offset: offset,
-            limit: limit
+            limit: limit,
+            id: $('#load-more-comments-btn').data('trick-id')
         }), function (results) {
             if (0 === results.length) {
                 showNoMoreResultsButton(type);
