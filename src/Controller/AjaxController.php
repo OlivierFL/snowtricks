@@ -8,6 +8,8 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Exception\ExceptionInterface;
+use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
 
 class AjaxController extends AbstractController
@@ -38,6 +40,8 @@ class AjaxController extends AbstractController
      * @param int             $offset
      * @param int             $limit
      *
+     * @throws ExceptionInterface
+     *
      * @return JsonResponse
      */
     public function loadMoreTricks(
@@ -59,6 +63,8 @@ class AjaxController extends AbstractController
      * @param int               $offset
      * @param int               $limit
      *
+     * @throws ExceptionInterface
+     *
      * @return JsonResponse
      */
     public function loadMoreComments(
@@ -76,6 +82,8 @@ class AjaxController extends AbstractController
      * @param string                           $criteria
      * @param null|array                       $options
      *
+     * @throws ExceptionInterface
+     *
      * @return JsonResponse
      */
     private function loadMoreResults(
@@ -87,11 +95,14 @@ class AjaxController extends AbstractController
     ): JsonResponse {
         $query = $repository->findBy($options ?? [], [$criteria => 'DESC'], $limit, $offset);
 
-        $data = $this->serializer->serialize($query, 'json', [
+        $data = $this->serializer->normalize($query, null, [
+            AbstractObjectNormalizer::ENABLE_MAX_DEPTH => true,
             'circular_reference_handler' => function ($object) {
                 return $object->getId();
             },
         ]);
+
+        $data = $this->serializer->serialize($data, 'json');
 
         return new JsonResponse($data, 200, [], true);
     }

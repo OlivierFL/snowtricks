@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\TricksMediaRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -21,12 +22,14 @@ class TricksMedia
     private ?int $id;
 
     /**
+     * @MaxDepth(1)
      * @ORM\ManyToOne(targetEntity=Trick::class, inversedBy="tricksMedia")
      * @ORM\JoinColumn(nullable=false)
      */
     private ?Trick $trick;
 
     /**
+     * @MaxDepth(1)
      * @ORM\ManyToOne(targetEntity=Media::class, inversedBy="tricksMedia", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      * @Assert\Valid

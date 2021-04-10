@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 /**
  * @ORM\Entity(repositoryClass=MediaRepository::class)
@@ -42,6 +43,7 @@ class Media
     private ?string $altText;
 
     /**
+     * @MaxDepth(1)
      * @ORM\OneToMany(targetEntity=TricksMedia::class, mappedBy="media", orphanRemoval=true, cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
