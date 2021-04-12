@@ -18,11 +18,12 @@ $("#load-more-tricks-btn").click(function () {
 function loadResults(type, limit, offset) {
     let spinner = $('#spinner-' + type);
     showSpinner(spinner);
+    let id = $('#load-more-comments-btn').data('trick-id') ?? null;
     $.getJSON(
         Routing.generate('load_more_' + type, {
-            offset: offset,
-            limit: limit,
-            id: $('#load-more-comments-btn').data('trick-id')
+            offset,
+            limit,
+            id
         }), function (results) {
             if (0 === results.length) {
                 showNoMoreResultsButton(type);

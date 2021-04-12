@@ -65,7 +65,7 @@ class RegistrationController extends AbstractController
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
 
-            $this->addFlash('success', 'Inscription réussie ! Pour valider votre compte, un email vous a été envoyé');
+            $this->addFlash('success', 'Successful registration ! An email has been sent to validate your account');
 
             return $this->redirectToRoute('app_login');
         }
@@ -101,7 +101,7 @@ class RegistrationController extends AbstractController
             return $this->redirectToRoute('app_register');
         }
 
-        $this->addFlash('success', 'Votre inscription est validée !');
+        $this->addFlash('success', 'Registration confirmed !');
 
         return $this->redirectToRoute('home');
     }

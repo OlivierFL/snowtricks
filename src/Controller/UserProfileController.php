@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\EditProfileFormType;
+use App\Repository\CommentRepository;
+use App\Repository\TrickRepository;
 use App\Service\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -58,11 +60,13 @@ class UserProfileController extends AbstractController
     /**
      * @Route("/tricks", name="tricks")
      *
+     * @param TrickRepository $trickRepository
+     *
      * @return Response
      */
-    public function tricks(): Response
+    public function tricks(TrickRepository $trickRepository): Response
     {
-        $tricks = $this->getUser()->getAuthorTricks();
+        $tricks = $trickRepository->findBy(['author' => $this->getUser()], ['createdAt' => 'DESC']);
 
         return $this->render('user_profile/profile_tricks.html.twig', [
             'tricks' => $tricks,
@@ -72,11 +76,13 @@ class UserProfileController extends AbstractController
     /**
      * @Route("/comments", name="comments")
      *
+     * @param CommentRepository $commentRepository
+     *
      * @return Response
      */
-    public function comments(): Response
+    public function comments(CommentRepository $commentRepository): Response
     {
-        $comments = $this->getUser()->getComments();
+        $comments = $commentRepository->findBy(['author' => $this->getUser()], ['createdAt' => 'DESC']);
 
         return $this->render('user_profile/profile_comments.html.twig', [
             'comments' => $comments,
