@@ -32,14 +32,23 @@
           <td class="border border-gray-700 px-6 py-4">{{ trick.updatedAt|date('d/m/Y à H:i', 'Europe/Paris') }}</td>
           <td class="border border-gray-700 p-1 lg:px-2 lg:py-4 xl:px-4 text-center">
             <a href="{{ path('trick_edit', {slug: trick.slug}) }}"
-               class="px-4 py-2 inline-block border border-blue-700 text-blue-700 hover:bg-blue-700 hover:text-white rounded-md hover:shadow-lg transition duration-500 delay-100 ease-out lg:mb-2"
+               class="px-4 py-2 inline-block border border-blue-700 text-blue-700 hover:bg-blue-700 hover:text-white rounded-md hover:shadow-lg transition duration-500 delay-100 ease-out 2xl:mr-4 lg:mb-2"
             >
               <i class="fas fa-pen lg:mr-2"></i><span class="hidden lg:inline-block">Modifier</span>
             </a>
+            <button class="modal-open inline-block order-2 border border-red-500 hover:border-red-600 hover:bg-red-600 transition duration-500 delay-100 ease-out text-red-600 hover:text-white px-4 lg:px-6 py-2 rounded-md mb-6 lg:mb-0"
+                    type="button"
+                    data-id="{{ trick.id }}"
+                    data-name="{{ trick.name }}"
+                    data-action="trick-delete"
+            >
+              <i class="fas fa-times lg:pr-2"></i><span class="hidden lg:inline-block">Supprimer</span>
+            </button>
           </td>
         </tr>
       {% endfor %}
       </tbody>
     </table>
   </div>
+  {{ include('_parts/_modal.html.twig') }}
 {% endblock %}

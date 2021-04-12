@@ -105,6 +105,7 @@ class TricksController extends AbstractController
     /**
      * @Route("/tricks/{slug}/edit",
      *     name="trick_edit",
+     *     options={"expose": true},
      *     priority=1
      * )
      *

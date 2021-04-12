@@ -170,7 +170,7 @@
               >
             </div>
           {% else %}
-            <div class="flex justify-center items-center w-6 h-6 lg:w-7 lg:h-7 rounded-full border-2 border-yellow-500 bg-gray-500 text-white p-4 lg:p-4"
+            <div class="flex justify-center items-center w-6 h-6 lg:w-7 lg:h-7 rounded-full border-2 border-yellow-500 bg-gray-500 text-white p-4"
                  title="{{ trick.author.username|capitalize }}"
             >
               <div class="text-xl cursor-default">{{ trick.author.username|slice(0, 1)|capitalize }}</div>
@@ -191,7 +191,7 @@
                        height="44"
                   >
                 {% else %}
-                  <div class="flex justify-center items-center w-6 h-6 lg:w-8 lg:h-8 rounded-full border-2 border-yellow-500 bg-gray-500 text-white p-5{% if not loop.first %} -ml-2{% endif %}"
+                  <div class="flex justify-center items-center w-6 h-6 lg:w-7 lg:h-7 rounded-full border-2 border-yellow-500 bg-gray-500 text-white p-4{% if not loop.first %} -ml-2{% endif %}"
                        title="{{ contributor.username|capitalize }}"
                   >
                     <div class="text-xl cursor-default">{{ contributor.username|slice(0, 1)|capitalize }}</div>

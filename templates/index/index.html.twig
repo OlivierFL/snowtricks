@@ -77,7 +77,7 @@
          id="tricks-list"
     >
       {% for trick in tricks %}
-        <div class="bg-gray-100 rounded-md shadow-lg overflow-hidden tricks">
+        <div class="flex flex-col bg-gray-100 rounded-md shadow-lg overflow-hidden tricks">
           <a href="{{ path('trick_detail', { slug: trick.slug }) }}">
             {% if trick.tricksMedia is not empty %}
               {% for trickMedium in trick.tricksMedia %}
@@ -105,14 +105,14 @@
               </div>
             {% endif %}
           </a>
-          <div class="flex flex-row justify-between items-center p-4">
+          <div class="flex flex-row mt-auto justify-between items-center p-4">
             <a href="{{ path('trick_detail', { slug: trick.slug }) }}" class="p-2 font-bold">{{ trick.name }}</a>
             <div class="ml-auto flex">
               {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                 <a href="{{ path('trick_edit', {slug: trick.slug}) }}">
                   <i class="cursor-pointer fas fa-pen mr-2 text-blue-700 hover:text-blue-800"></i>
                 </a>
-                {% if app.user.username == trick.author.username %}
+                {% if app.user.username == trick.author.username or is_granted('ROLE_ADMIN') %}
                   <div class="modal-open"
                        data-id="{{ trick.id }}"
                        data-name="{{ trick.name }}"

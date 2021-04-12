@@ -41,6 +41,6 @@ class TrickVoter extends Voter
         /** @var Trick $trick */
         $trick = $subject;
 
-        return $trick->getAuthor() === $user;
+        return $trick->getAuthor() === $user || \in_array('ROLE_ADMIN', $user->getRoles(), true);
     }
 }
