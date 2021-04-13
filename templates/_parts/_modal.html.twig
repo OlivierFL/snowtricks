@@ -14,12 +14,13 @@
       <!--Body-->
       <div class="modal-body">
         {% if trick is defined %}
-        <!--        Media display-->
         {% if currentPath == path('trick_detail', {slug: trick.slug}) %}
+        <!--        Media display-->
         {% include '_parts/_media_modal.html.twig' %}
         {% endif %}
-        <!--        Media update, delete, cover image update, and Trick delete-->
+
         {% if currentPath == path('trick_edit', {slug: trick.slug}) %}
+        <!--        Media update, delete, cover image update, and Trick delete-->
         {% include '_parts/_update_media_modal.html.twig' %}
         {% include '_parts/_update_cover_modal.html.twig' %}
         {% include '_parts/_delete_media_modal.html.twig' %}
@@ -27,9 +28,14 @@
         {% endif %}
         {% endif %}
 
-        <!--        Comment moderation-->
         {% if currentPath == path('admin_comments') %}
+        <!--        Comment moderation-->
         {% include '_parts/_comment_moderation_modal.html.twig' %}
+        {% endif %}
+
+        {% if currentPath == path('admin_tricks') or currentPath == path('home') %}
+        <!--        Trick deletion-->
+        {% include '_parts/_delete_trick_modal.html.twig' %}
         {% endif %}
       </div>
     </div>
