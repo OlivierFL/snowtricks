@@ -13,19 +13,19 @@ class TricksControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/#tricks');
 
         self::assertResponseIsSuccessful();
-        self::assertCount(4, $crawler->filter('.tricks'), 'Default homepage Tricks section contains 4 Tricks');
+        self::assertCount(8, $crawler->filter('.tricks'), 'Default homepage Tricks section contains 8 Tricks');
     }
 
     public function testTrickDetailPage(): void
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', '/tricks/mute');
+        $crawler = $client->request('GET', '/tricks/nose');
 
         self::assertResponseIsSuccessful();
-        self::assertPageTitleSame('Mute - SnowTricks', 'Trick page title is equal to Mute');
+        self::assertPageTitleSame('Nose - SnowTricks', 'Trick page title is equal to Nose');
         $h1 = $crawler->filter('h1')->first()->text();
-        self::assertEquals('Mute', $h1, 'Trick H1 title is equal to Mute');
-        self::assertCount(4, $crawler->filter('.comments'), 'Tricks section contains 4 comments by default');
+        self::assertEquals('Nose', $h1, 'Trick H1 title is equal to Nose');
+        self::assertCount(2, $crawler->filter('.comments'), 'Tricks section contains 2 comments by default');
         $notConnectedMessage = $crawler->filter('#comment-message')->text();
         self::assertEquals('Veuillez vous connecter pour poster un commentaire', $notConnectedMessage, 'Page does not display comment form when user is not connected');
     }
@@ -37,13 +37,13 @@ class TricksControllerTest extends WebTestCase
         $testUser = $userRepository->findOneByEmail('admin@example.com');
         $client->loginUser($testUser);
 
-        $crawler = $client->request('GET', '/tricks/mute');
+        $crawler = $client->request('GET', '/tricks/nose');
 
         self::assertResponseIsSuccessful();
-        self::assertPageTitleSame('Mute - SnowTricks', 'Trick page title is equal to Mute');
+        self::assertPageTitleSame('Nose - SnowTricks', 'Trick page title is equal to Nose');
         $h1 = $crawler->filter('h1')->first()->text();
-        self::assertEquals('Mute', $h1, 'Trick H1 title is equal to Mute');
-        self::assertCount(4, $crawler->filter('.comments'), 'Tricks section contains 4 comments by default');
+        self::assertEquals('Nose', $h1, 'Trick H1 title is equal to Nose');
+        self::assertCount(2, $crawler->filter('.comments'), 'Tricks section contains 2 comments by default');
         $commentFormLabel = $crawler->filter('label[for="comment_form_content"]')->text();
         self::assertStringContainsString('Votre commentaire', $commentFormLabel, 'Comment form is available when user is connected');
     }

@@ -35,13 +35,13 @@ class AjaxControllerTest extends WebTestCase
     public function testLoadMoreComments(): void
     {
         $client = static::createClient();
-        $client->xmlHttpRequest('GET', '/1/comments/load-more/4');
+        $client->xmlHttpRequest('GET', '/13/comments/load-more/4');
 
         $response = $client->getResponse()->getContent();
         $response = json_decode($response, true, 512, JSON_THROW_ON_ERROR);
 
         self::assertResponseIsSuccessful();
         self::isJson();
-        self::assertCount(1, $response, 'Load more Comments endpoint returns 1 Comment');
+        self::assertCount(2, $response, 'Load more Comments endpoint returns 2 Comment');
     }
 }
