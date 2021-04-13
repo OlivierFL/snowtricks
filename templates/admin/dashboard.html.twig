@@ -11,44 +11,33 @@
     <div class="mb-4 lg:w-1/2">
       <h2 class="font-jura font-bold mb-4 text-xl lg:text-2xl">Les derniers
         tricks publiés</h2>
-      <ul>
-        <li class="lg:mb-6">
-          <a href=""
-             class="inline-block p-2 lg:px-8 hover:shadow-lg lg:py-2 rounded-md transition duration-500 delay-100 ease-out hover:bg-yellow-500 hover:text-white">Nom
-            du trick</a>
-        </li>
-        <li class="lg:mb-6">
-          <a href=""
-             class="inline-block p-2 lg:px-8 hover:shadow-lg lg:py-2 rounded-md transition duration-500 delay-100 ease-out hover:bg-yellow-500 hover:text-white">Nom
-            du trick</a>
-        </li>
-        <li class="lg:mb-6">
-          <a href=""
-             class="inline-block p-2 lg:px-8 hover:shadow-lg lg:py-2 rounded-md transition duration-500 delay-100 ease-out hover:bg-yellow-500 hover:text-white">Nom
-            du trick</a>
-        </li>
-      </ul>
+      {% for trick in tricks %}
+        <ul>
+          <li class="lg:mb-6">
+            <a href="{{ path('trick_detail', { slug: trick.slug }) }}"
+               class="inline-block p-2 lg:px-8 hover:shadow-lg lg:py-2 rounded-md transition duration-500 delay-100 ease-out hover:bg-yellow-500 hover:text-white"
+            >
+              {{ trick.name }}
+            </a>
+          </li>
+        </ul>
+      {% endfor %}
     </div>
     <div class="lg:w-1/2">
       <h2 class="font-jura font-bold mb-4 text-xl lg:text-2xl">Les derniers
         commentaires publiés</h2>
-      <ul>
-        <li class="lg:mb-6">
-          <a href=""
-             class="inline-block p-2 lg:px-8 hover:shadow-lg lg:py-2 rounded-md transition duration-500 delay-100 ease-out hover:bg-yellow-500 hover:text-white">Lorem
-            ipsum dolor sit amet, consec...</a>
-        </li>
-        <li class="lg:mb-6">
-          <a href=""
-             class="inline-block p-2 lg:px-8 hover:shadow-lg lg:py-2 rounded-md transition duration-500 delay-100 ease-out hover:bg-yellow-500 hover:text-white">Lorem
-            ipsum dolor sit amet, consec...</a>
-        </li>
-        <li class="lg:mb-6">
-          <a href=""
-             class="inline-block p-2 lg:px-8 hover:shadow-lg lg:py-2 rounded-md transition duration-500 delay-100 ease-out hover:bg-yellow-500 hover:text-white">Lorem
-            ipsum dolor sit amet.</a>
-        </li>
-      </ul>
+      {% for comment in comments %}
+        <ul>
+          <li class="lg:mb-6">
+            <a href="{{ path('admin_comments') }}"
+               class="inline-block p-2 lg:px-8 hover:shadow-lg lg:py-2 rounded-md transition duration-500 delay-100 ease-out hover:bg-yellow-500 hover:text-white"
+            >
+              {{ comment.content|slice(0, 70) }}
+            </a>
+          </li>
+        </ul>
+      {% endfor %}
+
     </div>
   </div>
 {% endblock %}

@@ -19,6 +19,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class User implements UserInterface
 {
+    public const PROFILE_UPDATED = 'Profile successfully updated';
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -107,13 +109,14 @@ class User implements UserInterface
      *
      * @MaxDepth(1)
      * @ORM\OneToMany(targetEntity=Trick::class, mappedBy="author", orphanRemoval=true)
-     * @OrderBy({"updatedAt": "DESC"})
+     * @OrderBy({"createdAt": "DESC"})
      */
     private Collection $authorTricks;
 
     /**
      * @MaxDepth(1)
      * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="author", orphanRemoval=true)
+     * @OrderBy({"createdAt": "DESC"})
      */
     private Collection $comments;
 

@@ -16,6 +16,9 @@ class Comment
 {
     use TimestampableEntity;
 
+    public const COMMENT_PUBLISHED = 'Comment published';
+    public const COMMENT_MODERATED = 'Comment moderated';
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

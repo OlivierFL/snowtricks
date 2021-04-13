@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Repository\CommentRepository;
+use App\Repository\TrickRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,18 +18,37 @@ class AdminController extends AbstractController
 {
     /**
      * @Route("/dashboard", name="dashboard")
+     *
+     * @param TrickRepository   $trickRepository
+     * @param CommentRepository $commentRepository
+     *
+     * @return Response
      */
-    public function index(): Response
+    public function index(TrickRepository $trickRepository, CommentRepository $commentRepository): Response
     {
-        return $this->render('admin/dashboard.html.twig');
+        $tricks = $trickRepository->findBy([], ['createdAt' => 'DESC'], 3);
+        $comments = $commentRepository->findBy([], ['createdAt' => 'DESC'], 3);
+
+        return $this->render('admin/dashboard.html.twig', [
+            'tricks' => $tricks,
+            'comments' => $comments,
+        ]);
     }
 
     /**
      * @Route("/tricks", name="tricks")
+     *
+     * @param TrickRepository $trickRepository
+     *
+     * @return Response
      */
-    public function showTricks(): Response
+    public function showTricks(TrickRepository $trickRepository): Response
     {
-        return $this->render('admin/tricks.html.twig');
+        $tricks = $trickRepository->findBy([], ['createdAt' => 'DESC']);
+
+        return $this->render('admin/tricks.html.twig', [
+            'tricks' => $tricks,
+        ]);
     }
 
     /**
@@ -67,9 +88,9 @@ class AdminController extends AbstractController
         $comment->setIsValid($isValid);
 
         if ($isValid) {
-            $this->addFlash('success', 'Le commentaire a été publié');
+            $this->addFlash('success', Comment::COMMENT_PUBLISHED);
         } else {
-            $this->addFlash('success', 'Le commentaire a été modéré');
+            $this->addFlash('success', Comment::COMMENT_MODERATED);
         }
 
         $entityManager = $this->getDoctrine()->getManager();

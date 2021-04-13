@@ -8,6 +8,7 @@ use App\Entity\TricksMedia;
 use App\Form\CoverImageType;
 use App\Form\MediaType;
 use App\Repository\TrickRepository;
+use App\Service\FileUploader;
 use App\Service\MediaHandler;
 use Doctrine\ORM\EntityManagerInterface;
 use JsonException;
@@ -135,12 +136,16 @@ class MediaController extends AbstractController
      * @param Media                  $media
      * @param TrickRepository        $trickRepository
      * @param EntityManagerInterface $em
+     * @param FileUploader           $fileUploader
      *
      * @return Response
      */
-    public function delete(string $slug, Media $media, TrickRepository $trickRepository, EntityManagerInterface $em): Response
+    public function delete(string $slug, Media $media, TrickRepository $trickRepository, EntityManagerInterface $em, FileUploader $fileUploader): Response
     {
         $trick = $trickRepository->findOneBy(['slug' => $slug]);
+
+        $fileUploader->remove($media->getUrl());
+
         $em->remove($media);
         $em->flush();
 
