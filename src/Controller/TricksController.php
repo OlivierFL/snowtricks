@@ -3,11 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Comment;
+use App\Entity\Media;
 use App\Entity\Trick;
 use App\Form\CommentFormType;
 use App\Form\TrickType;
 use App\Repository\CommentRepository;
 use App\Security\TrickVoter;
+use App\Service\FileUploader;
 use App\Service\TrickHandler;
 use Doctrine\ORM\EntityManagerInterface;
 use JsonException;
@@ -158,12 +160,19 @@ class TricksController extends AbstractController
      *
      * @param Trick                  $trick
      * @param EntityManagerInterface $em
+     * @param FileUploader           $fileUploader
      *
      * @return Response
      */
-    public function delete(Trick $trick, EntityManagerInterface $em): Response
+    public function delete(Trick $trick, EntityManagerInterface $em, FileUploader $fileUploader): Response
     {
         $this->denyAccessUnlessGranted(TrickVoter::TRICK_DELETE, $trick);
+
+        foreach ($trick->getTricksMedia() as $trickMedia) {
+            if (Media::IMAGE === $trickMedia->getMedia()->getType()) {
+                $fileUploader->remove($trickMedia->getMedia()->getUrl());
+            }
+        }
 
         $em->remove($trick);
         $em->flush();
