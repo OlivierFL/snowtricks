@@ -49,7 +49,7 @@ class AjaxController extends AbstractController
         int $offset = 0,
         int $limit = 4
     ): JsonResponse {
-        return $this->loadMoreResults($repository, $limit, $offset, 'createdAt');
+        return $this->loadMoreResults($repository, $limit, $offset, 'createdAt', [], true);
     }
 
     /**
@@ -86,6 +86,7 @@ class AjaxController extends AbstractController
      * @param int                              $offset
      * @param string                           $criteria
      * @param null|array                       $options
+     * @param bool                             $tricks
      *
      * @throws ExceptionInterface
      *
@@ -96,7 +97,8 @@ class AjaxController extends AbstractController
         int $limit,
         int $offset,
         string $criteria,
-        array $options = null
+        array $options = null,
+        bool $tricks = false
     ): JsonResponse {
         $query = $repository->findBy($options ?? [], [$criteria => 'DESC'], $limit, $offset);
 
@@ -107,7 +109,25 @@ class AjaxController extends AbstractController
             },
         ]);
 
-        $data = $this->serializer->serialize($data, 'json');
+        if ($tricks) {
+            if (null !== $this->getUser()) {
+                $user = $this->serializer->normalize($this->getUser(), null, [
+                    AbstractObjectNormalizer::ENABLE_MAX_DEPTH => true,
+                    'circular_reference_handler' => function ($object) {
+                        return $object->getId();
+                    },
+                ]);
+            }
+            $data = $this->serializer->serialize(
+                [
+                    'tricks' => $data,
+                    'user' => $user ?? null,
+                ],
+                'json'
+            );
+        } else {
+            $data = $this->serializer->serialize($data, 'json');
+        }
 
         return new JsonResponse($data, 200, [], true);
     }

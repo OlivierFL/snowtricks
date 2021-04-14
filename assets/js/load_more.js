@@ -25,7 +25,7 @@ function loadResults(type, limit, offset) {
             limit,
             id
         }), function (results) {
-            if (0 === results.length) {
+            if (0 === results.length || 0 === results.tricks?.length) {
                 showNoMoreResultsButton(type);
                 return;
             }
