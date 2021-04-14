@@ -42,6 +42,6 @@ class AjaxControllerTest extends WebTestCase
 
         self::assertResponseIsSuccessful();
         self::isJson();
-        self::assertCount(2, $response, 'Load more Comments endpoint returns 2 Comment');
+        self::assertCount(1, $response, 'Load more Comments endpoint returns 1 Comment');
     }
 }

@@ -25,7 +25,7 @@ class TricksControllerTest extends WebTestCase
         self::assertPageTitleSame('Nose - SnowTricks', 'Trick page title is equal to Nose');
         $h1 = $crawler->filter('h1')->first()->text();
         self::assertEquals('Nose', $h1, 'Trick H1 title is equal to Nose');
-        self::assertCount(2, $crawler->filter('.comments'), 'Tricks section contains 2 comments by default');
+        self::assertCount(4, $crawler->filter('.comments'), 'Tricks section contains 4 comments by default');
         $notConnectedMessage = $crawler->filter('#comment-message')->text();
         self::assertEquals('Veuillez vous connecter pour poster un commentaire', $notConnectedMessage, 'Page does not display comment form when user is not connected');
     }
@@ -43,7 +43,7 @@ class TricksControllerTest extends WebTestCase
         self::assertPageTitleSame('Nose - SnowTricks', 'Trick page title is equal to Nose');
         $h1 = $crawler->filter('h1')->first()->text();
         self::assertEquals('Nose', $h1, 'Trick H1 title is equal to Nose');
-        self::assertCount(2, $crawler->filter('.comments'), 'Tricks section contains 2 comments by default');
+        self::assertCount(4, $crawler->filter('.comments'), 'Tricks section contains 4 comments by default');
         $commentFormLabel = $crawler->filter('label[for="comment_form_content"]')->text();
         self::assertStringContainsString('Votre commentaire', $commentFormLabel, 'Comment form is available when user is connected');
     }
