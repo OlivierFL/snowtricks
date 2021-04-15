@@ -1,6 +1,7 @@
 import Routing from './helper/routing';
 import {displayComments} from "./load_more_comments";
 import {displayTricks} from "./load_more_tricks";
+import {getModalsList, openModal} from "./modal";
 
 const tricksLimit = $('.tricks').length;
 let tricksOffset = tricksLimit;
@@ -37,6 +38,7 @@ function loadResults(type, limit, offset) {
                 tricksOffset += tricksLimit;
             }
         }).done(function () {
+        refreshModalsList();
         hideSpinner(spinner);
     });
 }
@@ -56,5 +58,16 @@ function showNoMoreResultsButton(type) {
         $('#load-more-comments-btn').html('Plus aucun commentaire').removeClass('bg-yellow-500 hover:bg-yellow-600').addClass('cursor-not-allowed text-black bg-gray-100');
     } else {
         $('#load-more-tricks-btn').html('Plus aucun résultat').removeClass('bg-yellow-500 hover:bg-yellow-600').addClass('cursor-not-allowed text-black bg-gray-100');
+    }
+}
+
+function refreshModalsList() {
+    let modalsList = getModalsList();
+    if (null === modalsList) {
+        return;
+    }
+    for (const element of modalsList) {
+        element.removeEventListener('click', openModal);
+        element.addEventListener('click', openModal);
     }
 }

@@ -2,33 +2,42 @@ import {displayMedia, displayModalForm} from "./media";
 import {handleComment} from "./comment";
 
 // Handle modal opening
-let openModal = document.querySelectorAll('.modal-open');
+let modalsList = getModalsList();
 
-if (null !== openModal) {
-    for (const element of openModal) {
-        element.addEventListener('click', function (event) {
-            event.preventDefault();
-            if ($(this).data('media-id')) {
-                displayMedia({
-                    'type': $(this).data('type'),
-                    'id': $(this).data('media-id')
-                });
-            } else if ('comment' === $(this).data('type')) {
-                handleComment({
-                    'action': $(this).data('action'),
-                    'id': $(this).data('id')
-                });
-            } else {
-                displayModalForm({
-                    'id': $(this).data('id'),
-                    'slug': $(this).data('slug'),
-                    'name': $(this).data('name'),
-                    'action': $(this).data('action'),
-                });
-            }
-            toggleModal();
-        })
+if (null !== modalsList) {
+    for (const modal of modalsList) {
+        modal.addEventListener('click', openModal);
     }
+}
+
+export function getModalsList() {
+    return document.querySelectorAll('.modal-open');
+}
+
+export function openModal() {
+    open.call(this);
+}
+
+function open() {
+    if ($(this).data('media-id')) {
+        displayMedia({
+            'type': $(this).data('type'),
+            'id': $(this).data('media-id')
+        });
+    } else if ('comment' === $(this).data('type')) {
+        handleComment({
+            'action': $(this).data('action'),
+            'id': $(this).data('id')
+        });
+    } else {
+        displayModalForm({
+            'id': $(this).data('id'),
+            'slug': $(this).data('slug'),
+            'name': $(this).data('name'),
+            'action': $(this).data('action'),
+        });
+    }
+    toggleModal();
 }
 
 // Handle close modal when clicking out of the modal
