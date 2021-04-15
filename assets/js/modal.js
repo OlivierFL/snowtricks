@@ -18,6 +18,17 @@ export function openModal() {
     open.call(this);
 }
 
+export function refreshModalsList() {
+    modalsList = getModalsList();
+    if (null === modalsList) {
+        return;
+    }
+    for (const element of modalsList) {
+        element.removeEventListener('click', openModal);
+        element.addEventListener('click', openModal);
+    }
+}
+
 function open() {
     if ($(this).data('media-id')) {
         displayMedia({
@@ -50,13 +61,31 @@ if (null != overlay) {
 }
 
 // Handle close modal when clicking close button on the modal
-let closeModal = document.querySelectorAll('.modal-close');
-if (null !== closeModal) {
-    for (const element of closeModal) {
-        element.addEventListener('click', function () {
-            clearModalData();
-            toggleModal();
-        });
+let closeModalsList = getCloseModalsList();
+
+function closeModal() {
+    clearModalData();
+    toggleModal();
+}
+
+if (null !== closeModalsList) {
+    for (const element of closeModalsList) {
+        element.addEventListener('click', closeModal);
+    }
+}
+
+function getCloseModalsList() {
+    return document.querySelectorAll('.modal-close');
+}
+
+export function refreshCloseModalsList() {
+    closeModalsList = getCloseModalsList();
+    if (null === closeModalsList) {
+        return;
+    }
+    for (const closeElement of closeModalsList) {
+        closeElement.removeEventListener('click', closeModal);
+        closeElement.addEventListener('click', closeModal);
     }
 }
 
