@@ -206,7 +206,7 @@ class TricksController extends AbstractController
         return $paginator->paginate(
             $commentsQuery,
             $page,
-            4
+            $this->getParameter('comments_list_limit')
         );
     }
 

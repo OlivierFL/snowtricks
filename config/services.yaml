@@ -6,6 +6,7 @@
 parameters:
     uploads_directory: '%kernel.project_dir%/public/uploads'
     tricks_list_limit: '%env(TRICKS_LIST_LIMIT)%'
+    comments_list_limit: '%env(COMMENTS_LIST_LIMIT)%'
 
 services:
     # default configuration for services in *this* file
