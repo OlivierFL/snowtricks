@@ -1,7 +1,7 @@
 import {displayMedia, displayModalForm} from "./media";
 import {handleComment} from "./comment";
 
-// Handle modal opening when clicking on image/video thumbnails
+// Handle modal opening
 let openModal = document.querySelectorAll('.modal-open');
 
 if (null !== openModal) {
