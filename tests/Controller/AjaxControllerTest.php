@@ -16,7 +16,7 @@ class AjaxControllerTest extends WebTestCase
 
         self::assertResponseIsSuccessful();
         self::isJson();
-        self::assertCount(4, $response, 'Load more Tricks endpoint returns 4 Tricks');
+        self::assertCount(2, $response, 'Load more Tricks endpoint returns 2 Tricks');
     }
 
     public function testLoadMoreTricksWithCustomLimit(): void
