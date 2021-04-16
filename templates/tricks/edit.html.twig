@@ -300,15 +300,17 @@
           >
             Annuler
           </a>
-          <button class="modal-open inline-block order-2 border-2 border-red-500 hover:border-red-600 bg-red-500 hover:bg-red-600 transition duration-500 delay-100 ease-out text-white px-2 lg:px-6 py-2 rounded-md mb-6 lg:mb-0 lg:mr-6"
-                  type="button"
-                  data-id="{{ trick.id }}"
-                  data-name="{{ trick.name }}"
-                  data-action="trick-delete"
-          >
-            <i class="fas fa-times hidden lg:visible pr-2"></i>
-            Supprimer
-          </button>
+          {% if app.user.username == trick.author.username or is_granted('ROLE_ADMIN') %}
+            <button class="modal-open inline-block order-2 border-2 border-red-500 hover:border-red-600 bg-red-500 hover:bg-red-600 transition duration-500 delay-100 ease-out text-white px-2 lg:px-6 py-2 rounded-md mb-6 lg:mb-0 lg:mr-6"
+                    type="button"
+                    data-id="{{ trick.id }}"
+                    data-name="{{ trick.name }}"
+                    data-action="trick-delete"
+            >
+              <i class="fas fa-times hidden lg:visible pr-2"></i>
+              Supprimer
+            </button>
+          {% endif %}
           <button class="inline-block order-1 lg:order-3 border-2 border-green-500 hover:border-green-600 bg-green-500 hover:bg-green-600 transition duration-500 delay-100 ease-out text-white px-2 lg:px-6 py-2 rounded-md mb-6 lg:mb-0"
                   type="submit">
             <i class="fas fa-save hidden lg:visible pr-2"></i>
