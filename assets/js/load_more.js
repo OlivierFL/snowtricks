@@ -1,6 +1,7 @@
 import Routing from './helper/routing';
 import {displayComments} from "./load_more_comments";
 import {displayTricks} from "./load_more_tricks";
+import {refreshModalsListeners} from "./modal";
 
 const tricksLimit = $('.tricks').length;
 let tricksOffset = tricksLimit;
@@ -18,12 +19,14 @@ $("#load-more-tricks-btn").click(function () {
 function loadResults(type, limit, offset) {
     let spinner = $('#spinner-' + type);
     showSpinner(spinner);
+    let id = $('#load-more-comments-btn').data('trick-id') ?? null;
     $.getJSON(
         Routing.generate('load_more_' + type, {
-            offset: offset,
-            limit: limit
+            offset,
+            limit,
+            id
         }), function (results) {
-            if (0 === results.length) {
+            if (0 === results.length || 0 === results.tricks?.length) {
                 showNoMoreResultsButton(type);
                 return;
             }
@@ -35,6 +38,7 @@ function loadResults(type, limit, offset) {
                 tricksOffset += tricksLimit;
             }
         }).done(function () {
+        refreshModalsListeners('open');
         hideSpinner(spinner);
     });
 }

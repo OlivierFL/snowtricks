@@ -29,7 +29,7 @@ class IndexController extends AbstractController
         $tricksPaginated = $paginator->paginate(
             $query,
             $page,
-            4
+            $this->getParameter('tricks_list_limit')
         );
 
         return $this->render('index/index.html.twig', [

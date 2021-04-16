@@ -1,34 +1,64 @@
 import {displayMedia, displayModalForm} from "./media";
 import {handleComment} from "./comment";
 
-// Handle modal opening when clicking on image/video thumbnails
-let openModal = document.querySelectorAll('.modal-open');
+// Handle modal opening
+let modalsList = getModalsList();
 
-if (null !== openModal) {
-    for (const element of openModal) {
-        element.addEventListener('click', function (event) {
-            event.preventDefault();
-            if ($(this).data('media-id')) {
-                displayMedia({
-                    'type': $(this).data('type'),
-                    'id': $(this).data('media-id')
-                });
-            } else if ('comment' === $(this).data('type')) {
-                handleComment({
-                    'action': $(this).data('action'),
-                    'id': $(this).data('id')
-                });
-            } else {
-                displayModalForm({
-                    'id': $(this).data('id'),
-                    'slug': $(this).data('slug'),
-                    'name': $(this).data('name'),
-                    'action': $(this).data('action'),
-                });
-            }
-            toggleModal();
-        })
+if (null !== modalsList) {
+    for (const modal of modalsList) {
+        modal.addEventListener('click', openModal);
     }
+}
+
+export function getModalsList() {
+    return document.querySelectorAll('.modal-open');
+}
+
+export function openModal() {
+    open.call(this);
+}
+
+export function refreshModalsListeners(type) {
+    if ('open' === type) {
+        modalsList = getModalsList();
+    }
+    if ('close' === type) {
+        modalsList = getCloseModalsList();
+    }
+    if (null === modalsList) {
+        return;
+    }
+    refreshListeners(type);
+}
+
+function refreshListeners(type) {
+    for (const element of modalsList) {
+        element.removeEventListener('click', 'open' === type ? openModal : closeModal);
+        element.addEventListener('click', 'open' === type ? openModal : closeModal);
+
+    }
+}
+
+function open() {
+    if ($(this).data('media-id')) {
+        displayMedia({
+            'type': $(this).data('type'),
+            'id': $(this).data('media-id')
+        });
+    } else if ('comment' === $(this).data('type')) {
+        handleComment({
+            'action': $(this).data('action'),
+            'id': $(this).data('id')
+        });
+    } else {
+        displayModalForm({
+            'id': $(this).data('id'),
+            'slug': $(this).data('slug'),
+            'name': $(this).data('name'),
+            'action': $(this).data('action'),
+        });
+    }
+    toggleModal();
 }
 
 // Handle close modal when clicking out of the modal
@@ -41,14 +71,21 @@ if (null != overlay) {
 }
 
 // Handle close modal when clicking close button on the modal
-let closeModal = document.querySelectorAll('.modal-close');
-if (null !== closeModal) {
-    for (const element of closeModal) {
-        element.addEventListener('click', function () {
-            clearModalData();
-            toggleModal();
-        });
+let closeModalsList = getCloseModalsList();
+
+function closeModal() {
+    clearModalData();
+    toggleModal();
+}
+
+if (null !== closeModalsList) {
+    for (const element of closeModalsList) {
+        element.addEventListener('click', closeModal);
     }
+}
+
+function getCloseModalsList() {
+    return document.querySelectorAll('.modal-close');
 }
 
 // Handle close modal when hitting "Escape" key on keyboard

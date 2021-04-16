@@ -2,7 +2,7 @@
 
 <div class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center z-50 py-12">
   <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
-  <div class="modal-container bg-none px-6 lg:px-0 lg:max-h-full lg:max-w-6xl mx-auto z-50 {% if trick is defined %}{% if currentPath == path('trick_detail', {slug: trick.slug}) %}overflow-hidden{% else %}overflow-y-auto{% endif %}{% endif %}">
+  <div class="modal-container bg-none px-0 max-h-screen py-10 mb-10 lg:max-h-full w-11/12 lg:max-w-6xl mx-auto z-50 {% if trick is defined %}{% if currentPath == path('trick_detail', {slug: trick.slug}) %}overflow-hidden{% else %}overflow-y-auto{% endif %}{% endif %}">
     <!--Close button-->
     <div class="modal-close absolute top-0 right-0 cursor-pointer flex flex-col items-center mt-20 lg:mt-4 mr-6 lg:mr-4 text-white text-sm z-50">
       <svg class="fill-current text-white" xmlns="http://www.w3.org/2000/svg" width="18" height="18"

@@ -12,7 +12,7 @@
     </div>
 
     <button type="button"
-            class="md:hidden w-10 h-10 flex flex-col justify-center items-center navbar-toggle cursor-pointer"
+            class="lg:hidden w-10 h-10 flex flex-col justify-center items-center navbar-toggle cursor-pointer"
             aria-label="Open navigation menu">
       <span class="block w-6 h-0.5 m-1 bg-yellow-500 transition ease-in-out icon-bar"></span>
       <span class="block w-6 h-0.5 m-1 bg-yellow-500 transition ease-in-out icon-bar"></span>
@@ -30,6 +30,11 @@
              class="text-xl sm:text-base rounded-md transition duration-500 delay-100 ease-out hover:bg-yellow-500 hover:text-white px-8 sm:px-5 py-6 sm:py-3">Figures</a>
         </li>
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+          <li class="mb-10 sm:mb-0">
+            <a href="{{ path('trick_new') }}"
+               class="text-xl sm:text-base rounded-md transition duration-500 delay-100 ease-out hover:bg-yellow-500 hover:text-white px-8 sm:px-5 py-6 sm:py-3">Ajouter
+              un trick</a>
+          </li>
           <li class="mb-10 sm:mb-0">
             <a href="{{ path('profile_index') }}"
                class="text-xl sm:text-base rounded-md transition duration-500 delay-100 ease-out hover:bg-yellow-500 hover:text-white px-8 sm:px-5 py-6 sm:py-3">Mon

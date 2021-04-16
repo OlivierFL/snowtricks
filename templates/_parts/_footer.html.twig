@@ -14,6 +14,11 @@
           </li>
           {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             <li class="py-4">
+              <a href="{{ path('trick_new') }}"
+                 class="rounded-md hover:bg-yellow-500 transition duration-500 delay-100 ease-out px-5 py-3">Ajouter un
+                trick</a>
+            </li>
+            <li class="py-4">
               <a href="{{ path('profile_index') }}"
                  class="rounded-md hover:bg-yellow-500 transition duration-500 delay-100 ease-out px-5 py-3">Mon
                 profil</a>

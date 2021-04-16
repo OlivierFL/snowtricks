@@ -79,7 +79,7 @@
       }}) }}
     <div class="mb-4">
       <div class="relative mx-auto w-full">
-        <div class="absolute inset-y-0 flex items-center pointer-events-none">
+        <div class="absolute inset-y-0 flex items-center pointer-events-none z-10">
           {% if form_errors(registrationForm.email) %}
             <i class="fas fa-exclamation-circle text-red-500 w-5 h-5 pl-4"></i>
           {% else %}
@@ -101,7 +101,7 @@
       }}) }}
     <div class="mb-4">
       <div class="relative mb-1 mx-auto w-full">
-        <div class="absolute inset-y-0 flex items-center pointer-events-none">
+        <div class="absolute inset-y-0 flex items-center pointer-events-none z-10">
           <i class="fas fa-key text-gray-500 w-5 h-5 pl-4"></i>
         </div>
         {{ form_widget(registrationForm.password.plainPassword.first, {
@@ -118,7 +118,7 @@
       }}) }}
     <div class="mb-4">
       <div class="relative mb-1 mx-auto w-full">
-        <div class="absolute inset-y-0 flex items-center pointer-events-none">
+        <div class="absolute inset-y-0 flex items-center pointer-events-none z-10">
           {% if form_errors(registrationForm.password.plainPassword.first) %}
             <i class="fas fa-exclamation-circle text-red-500 w-5 h-5 pl-4"></i>
           {% else %}

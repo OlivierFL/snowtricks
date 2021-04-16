@@ -80,9 +80,6 @@
             <a href="{{ path('trick_edit', {slug: trick.slug}) }}">
               <i class="cursor-pointer fas fa-pen text-blue-700 hover:text-blue-800"></i>
             </a>
-            {% if app.user.username == trick.author.username %}
-              <i class="cursor-pointer fas fa-trash-alt ml-4 text-red-600 hover:text-red-700"></i>
-            {% endif %}
           </div>
         {% endif %}
       </div>
@@ -152,7 +149,7 @@
       <hr class="border w-1/2 mx-auto my-10">
       <h3 class="font-jura font-bold text-center lg:text-left text-xl lg:text-2xl mb-6 lg:border-l-4 border-yellow-500 lg:pl-4">
         Comment réaliser le trick</h3>
-      <div class="text-left mb-8 lg:mb-16">
+      <div class="text-left mb-16">
         <p>{{ trick.description }}</p>
       </div>
       <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center text-gray-500 mb-6">
@@ -211,8 +208,8 @@
         {% include('tricks/_comment_form.html.twig') %}
       {% else %}
         <div class="text-center">
-          <p>Veuillez <a href="{{ path('app_login') }}"
-                         class="text-yellow-500">vous
+          <p id="comment-message">Veuillez <a href="{{ path('app_login') }}"
+                                              class="text-yellow-500">vous
               connecter</a>
             pour
             poster un commentaire</p>
@@ -253,6 +250,7 @@
         {% else %}
           <button class="flex flex-row max-w-2xl items-center mx-auto px-6 py-2 transition duration-500 delay-100 ease-out bg-yellow-500 hover:bg-yellow-600 rounded-md text-white shadow-lg"
                   id="load-more-comments-btn"
+                  data-trick-id="{{ trick.id }}"
                   aria-label="Voir plus de commentaires"
           >
             <svg class="hidden" id="spinner-comments" version="1.1" xmlns="http://www.w3.org/2000/svg"
