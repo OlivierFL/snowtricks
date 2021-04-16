@@ -1,7 +1,7 @@
 import Routing from './helper/routing';
 import {displayComments} from "./load_more_comments";
 import {displayTricks} from "./load_more_tricks";
-import {refreshModalsList} from "./modal";
+import {refreshModalsListeners} from "./modal";
 
 const tricksLimit = $('.tricks').length;
 let tricksOffset = tricksLimit;
@@ -38,7 +38,7 @@ function loadResults(type, limit, offset) {
                 tricksOffset += tricksLimit;
             }
         }).done(function () {
-        refreshModalsList();
+        refreshModalsListeners('open');
         hideSpinner(spinner);
     });
 }

@@ -18,7 +18,17 @@ export function openModal() {
     open.call(this);
 }
 
-export function refreshModalsList() {
+export function refreshModalsListeners(type) {
+    if ('open' === type) {
+        refreshOpenModalsListeners();
+    }
+
+    if ('close' === type) {
+        refreshCloseModalsListeners();
+    }
+}
+
+function refreshOpenModalsListeners() {
     modalsList = getModalsList();
     if (null === modalsList) {
         return;
@@ -78,7 +88,7 @@ function getCloseModalsList() {
     return document.querySelectorAll('.modal-close');
 }
 
-export function refreshCloseModalsList() {
+function refreshCloseModalsListeners() {
     closeModalsList = getCloseModalsList();
     if (null === closeModalsList) {
         return;
