@@ -18,14 +18,24 @@ export function openModal() {
     open.call(this);
 }
 
-export function refreshModalsList() {
-    modalsList = getModalsList();
+export function refreshModalsListeners(type) {
+    if ('open' === type) {
+        modalsList = getModalsList();
+    }
+    if ('close' === type) {
+        modalsList = getCloseModalsList();
+    }
     if (null === modalsList) {
         return;
     }
+    refreshListeners(type);
+}
+
+function refreshListeners(type) {
     for (const element of modalsList) {
-        element.removeEventListener('click', openModal);
-        element.addEventListener('click', openModal);
+        element.removeEventListener('click', 'open' === type ? openModal : closeModal);
+        element.addEventListener('click', 'open' === type ? openModal : closeModal);
+
     }
 }
 
@@ -76,17 +86,6 @@ if (null !== closeModalsList) {
 
 function getCloseModalsList() {
     return document.querySelectorAll('.modal-close');
-}
-
-export function refreshCloseModalsList() {
-    closeModalsList = getCloseModalsList();
-    if (null === closeModalsList) {
-        return;
-    }
-    for (const closeElement of closeModalsList) {
-        closeElement.removeEventListener('click', closeModal);
-        closeElement.addEventListener('click', closeModal);
-    }
 }
 
 // Handle close modal when hitting "Escape" key on keyboard

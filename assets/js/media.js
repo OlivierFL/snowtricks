@@ -1,5 +1,5 @@
 import Routing from "./helper/routing";
-import {refreshCloseModalsList} from "./modal";
+import {refreshModalsListeners} from "./modal";
 
 let imageElement = $('.modal-body #image');
 let videoElement = $('.modal-body #video');
@@ -74,7 +74,7 @@ function displayUpdateMediaForm(data) {
         slug: data.slug
     }), function (result) {
         $('#update-media-form-content').html(result);
-        refreshCloseModalsList();
+        refreshModalsListeners('close');
         updateMediaElement.removeClass('hidden');
     });
 }
@@ -97,7 +97,7 @@ function displayCoverForm(data) {
                      height="100"
                 >`;
         }
-        refreshCloseModalsList();
+        refreshModalsListeners('close');
     });
     updateCoverImageElement.removeClass('hidden');
 }
